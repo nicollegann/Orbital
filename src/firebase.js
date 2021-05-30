@@ -11,5 +11,12 @@ const app = firebase.initializeApp({
     appId: process.env.REACT_APP_FIREBASE_APP_ID
 })
 
+const config = {
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+}
+const secondaryApp = firebase.initializeApp(config, "Secondary"); 
+
 export const auth = app.auth();
+export const secAuth = secondaryApp.auth();
 export default app;

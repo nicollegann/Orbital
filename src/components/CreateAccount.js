@@ -7,7 +7,7 @@ export default function CreateAccount() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const { signup } = useAuth();
+    const { createAccount, getEmail } = useAuth();
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
@@ -16,15 +16,21 @@ export default function CreateAccount() {
     
     async function handleSubmit(event) {
         event.preventDefault();
-        
+
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
             return setError("Passwords do not match.");
+        }
+
+        const currentEmail = getEmail();
+        if (currentEmail !== "toinfinityandbeyond.orbital@gmail.com") {
+            return setError("You do not have admin permission.")
         }
 
         try {
             setError("");
             setLoading(true);
-            await signup(emailRef.current.value, passwordRef.current.value);
+            
+            await createAccount(emailRef.current.value, passwordRef.current.value);
             setMessage("Successfully created new account.")
             //history.push("/")
         } catch {

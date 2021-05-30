@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth } from '../firebase';
+import { auth, secAuth } from '../firebase';
 
 const AuthContext = React.createContext();
 
@@ -11,8 +11,14 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true)
 
+    /*
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password);    
+    }*/
+
+    function createAccount(email, password) {
+        secAuth.createUserWithEmailAndPassword(email, password)
+            .then(secAuth.signOut());
     }
 
     function login(email, password) {
@@ -36,6 +42,12 @@ export function AuthProvider({ children }) {
         return currentUser.updatePassword(password);
     }
 
+    function getEmail() {
+        if (currentUser != null) {
+            return currentUser.email
+        }
+    }
+
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user)
@@ -48,11 +60,11 @@ export function AuthProvider({ children }) {
     const value = {
         currentUser,
         login,
-        signup,
+        createAccount,
         logout,
         resetPassword,
-        //updateEmail,
         updatePassword,
+        getEmail,
     }
 
     return (
