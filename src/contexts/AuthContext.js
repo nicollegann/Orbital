@@ -1,32 +1,26 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth, secAuth } from '../firebase';
+import { auth, secAuth } from '../firebase'
 
-const AuthContext = React.createContext();
+const AuthContext = React.createContext()
 
 export function useAuth() {
-    return useContext(AuthContext);
+    return useContext(AuthContext)
 }
 
 export function AuthProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState();
+    const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
 
-    /*
     function signup(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password);    
-    }*/
-
-    function createAccount(email, password) {
-        secAuth.createUserWithEmailAndPassword(email, password)
-            .then(secAuth.signOut());
+        return auth.createUserWithEmailAndPassword(email, password)  
     }
 
     function login(email, password) {
-        return auth.signInWithEmailAndPassword(email, password);
+        return auth.signInWithEmailAndPassword(email, password)
     }
 
     function logout() {
-        return auth.signOut();
+        return auth.signOut()
     }
 
     function resetPassword(email) {
@@ -39,7 +33,12 @@ export function AuthProvider({ children }) {
     }*/
 
     function updatePassword(password) {
-        return currentUser.updatePassword(password);
+        return currentUser.updatePassword(password)
+    }
+
+    function createAccount(email, password) {
+        secAuth.createUserWithEmailAndPassword(email, password)
+            .then(secAuth.signOut())
     }
 
     function getEmail() {
@@ -54,17 +53,19 @@ export function AuthProvider({ children }) {
             setLoading(false)
         })
 
-        return unsubscribe;
+        return unsubscribe
     }, []) 
    
     const value = {
         currentUser,
         login,
-        createAccount,
+        signup,
         logout,
         resetPassword,
+        //updateEmail,
         updatePassword,
-        getEmail,
+        createAccount,
+        getEmail
     }
 
     return (

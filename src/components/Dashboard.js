@@ -1,37 +1,34 @@
-import React, { useState } from 'react'
-import { Card, Button, Alert } from 'react-bootstrap'
-import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import React from "react"
+import NavigationBar from "./NavigationBar"
+import { Container, Image, Row, Col, Card } from "react-bootstrap"
+import Attendance from "./images/attendance.png"
+import Observation from "./images/observation.png"
+import Schedule from "./images/schedule.png"
+import Feedback from "./images/feedback.png"
+import GetData from "./GetUserData"
+import { useHistory } from "react-router-dom"
 
-export default function Dashboard() {
-    const [error, setError] = useState("");
-    const { logout } = useAuth();
-    const history = useHistory();
-    
-    async function handleLogout() {
-        setError("")
 
-        try {
-            await logout()
-            history.push("/login")
-        } catch {
-            setError("Failed to log out.")
-        }
-    }
-    
-    
-    return (
-        <div>
-            <Card>
-            <Card.Body>
-                <h2 className="text-center mb-4">Dashboard</h2>
-                <Link to="/profile" className="btn btn-primary w-100 mt-3">My Profile</Link>
-            </Card.Body>
-            </Card>
-            <div className="w-100 text-center mt-2">
-                {error && <Alert variant="danger">{error}</Alert>}
-                <Button variant="link" onClick={handleLogout}>Logout</Button>
-            </div>
-        </div>
-    )
+export default function Dashboard() {    
+  const getData = GetData()
+  const history = useHistory()
+  
+  return (
+    <>
+      <NavigationBar />
+      <Container fluid="md">
+      <Row>
+        <Card bg="light" border="light" className="mt-4">
+          <Card.Title style={{ fontSize: "25px" }}>Welcome, {getData[0] && getData[0].Name} </Card.Title>
+        </Card>
+      </Row>
+      <Row className="mt-5">
+        <Col><Image src={Attendance} alt="Attendance-img" roundedCircle onClick={ () => history.push("/mark-attendance") } /></Col>
+        <Col><Image src={Observation} alt="Observation-img" roundedCircle onClick={ () => history.push("/tutee-observation") }/></Col>
+        <Col><Image src={Schedule} alt="Schedule-img" roundedCircle onClick={ () => history.push("/schedule") }/></Col>
+        <Col><Image src={Feedback} alt="Feedback-img" roundedCircle onClick={ () => history.push("/feedback") }/></Col>
+      </Row>
+      </Container>
+    </>
+  )
 }
