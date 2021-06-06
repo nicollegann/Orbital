@@ -42,7 +42,7 @@ export default function ChangePassword() {
       <NavigationBar />
       <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
         <Card.Body>
-          <h2 className="text-center mb-4">Update Profile</h2>
+          <h2 className="text-center mb-4">Change Password</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <Form onSubmit={handleSubmit}>
@@ -58,7 +58,7 @@ export default function ChangePassword() {
               <Form.Label>Password Confirmation</Form.Label>
               <Form.Control type="password" ref={passwordConfirmRef} placeholder="Minimum 6 characters"/>
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">Update</Button>
+            <Button disabled={loading} className="w-100" type="submit">Confirm</Button>
           </Form>
         </Card.Body>
       </Card>
