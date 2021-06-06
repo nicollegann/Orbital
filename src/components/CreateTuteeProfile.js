@@ -61,13 +61,13 @@ export default function CreateAccount() {
               {error && <Alert variant="danger">{error}</Alert>}
               {message && <Alert variant="success">{message}</Alert>}
               <Form onSubmit={handleSubmit}>
-                <Form.Group id="email" className="mb-3">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control type="email" ref={emailRef} required />
-                </Form.Group>
                 <Form.Group id="name" className="mb-3">
                   <Form.Label>Name</Form.Label>
                   <Form.Control type="text" ref={nameRef} required />
+                </Form.Group>
+                <Form.Group id="email" className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="email" ref={emailRef} required />
                 </Form.Group>
                 <Form.Group id="contact" className="mb-3">
                   <Form.Label>Contact Number</Form.Label>
