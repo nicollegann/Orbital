@@ -26,12 +26,13 @@ export default function Profile() {
           <br />
           <strong>Emergency Contact:</strong> {getData[0] && getData[0].EmergencyContact}
           <br />
-          <strong>Age:</strong> {getData[0] && getData[0].Age}
+          <strong>Date Of Birth:</strong> {getData[0] && getData[0].DateOfBirth}
           <br />
           <strong>School:</strong> {getData[0] && getData[0].School}
           <br />
           <Link to="/update-profile" className="btn btn-primary w-100 mt-3">Update Profile</Link>
-          <Link to="/create-account" className="btn btn-primary w-100 mt-3">Create Account</Link>
+          <Link to="/create-tutor-account" className="btn btn-primary w-100 mt-3">Create Tutor Account</Link>
+          <Link to="/create-tutee-profile" className="btn btn-primary w-100 mt-3">Create Tutee Profile</Link>
           <Link to="/change-password" className="btn btn-primary w-100 mt-3">Change Password</Link>
         </Card.Body>
       </Card>
