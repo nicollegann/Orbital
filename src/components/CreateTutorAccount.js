@@ -4,11 +4,11 @@ import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 import NavigationBar from "./NavigationBar"
 
-export default function CreateAccount() {   
+export default function CreateTutorAccount() {   
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { createAccount, getEmail } = useAuth()
+  const { createTutorAccount, getEmail } = useAuth()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
@@ -29,7 +29,7 @@ export default function CreateAccount() {
     try {
       setError("");
       setLoading(true);
-      await createAccount(emailRef.current.value, passwordRef.current.value);
+      await createTutorAccount(emailRef.current.value, passwordRef.current.value);
       setMessage("Successfully created new account.")
     } catch {
       setError("Failed to create an account.")
@@ -42,7 +42,7 @@ export default function CreateAccount() {
         <NavigationBar />
           <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
             <Card.Body>
-              <h2 className="text-center mb-4">Create New Account</h2>
+              <h2 className="text-center mb-4">Create New Tutor Account</h2>
               {error && <Alert variant="danger">{error}</Alert>}
               {message && <Alert variant="success">{message}</Alert>}
               <Form onSubmit={handleSubmit}>
