@@ -4,6 +4,8 @@ import { useAuth } from "../contexts/AuthContext"
 import { Card, Form, Button, Alert } from "react-bootstrap"
 import NavigationBar from "./NavigationBar"
 import GetData from "./GetUserData"
+import { Link } from "react-router-dom"
+
 
 function UpdateProfile() {
   const { currentUser } = useAuth()
@@ -11,7 +13,7 @@ function UpdateProfile() {
   const emailRef = useRef()
   const contactRef = useRef()
   const emergencyRef = useRef()
-  const ageRef = useRef()
+  const dobRef = useRef()
   const schoolRef = useRef()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
@@ -30,7 +32,7 @@ function UpdateProfile() {
         Email: currentUser.email,
         Contact: contactRef.current.value,
         EmergencyContact: emergencyRef.current.value,
-        Age: ageRef.current.value,
+        DateOfBirth: dobRef.current.value,
         School: schoolRef.current.value,
       })
       .then(() => setMessage("Successfully updated profile."))
@@ -68,8 +70,8 @@ function UpdateProfile() {
               <Form.Control ref={emergencyRef} type="tel" defaultValue={getData[0] && getData[0].EmergencyContact}/>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Age</Form.Label>
-              <Form.Control ref={ageRef} type="number" defaultValue={getData[0] && getData[0].Age}/>
+              <Form.Label>Date Of Birth</Form.Label>
+              <Form.Control ref={dobRef} type="date" defaultValue={getData[0] && getData[0].DateOfBirth}/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>School</Form.Label>
@@ -79,6 +81,10 @@ function UpdateProfile() {
           </Form>
         </Card.Body>
       </Card>
+      <div className="w-100 text-center mt-2">
+        <Link to="/profile">Back to Profile</Link>
+      </div>
+      <br></br>
     </>
   );
 };
