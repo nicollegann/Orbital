@@ -3,11 +3,11 @@ import { db } from "../firebase"
 import { useAuth } from "../contexts/AuthContext"
 import { Card, Form, Button, Alert } from "react-bootstrap"
 import NavigationBar from "./NavigationBar"
-import GetData from "./GetUserData"
+import { useGetProfile } from "../hooks/useGetData"
 import { Link } from "react-router-dom"
 
 
-function UpdateProfile() {
+export default function UpdateProfile() {
   const { currentUser } = useAuth()
   const nameRef = useRef()
   const emailRef = useRef()
@@ -25,15 +25,15 @@ function UpdateProfile() {
     setLoading(true)
     setError("")
     
-    db.collection("UserProfile")
+    db.collection("TutorProfile")
       .doc(currentUser.email)
       .set({
-        Name: nameRef.current.value,
-        Email: currentUser.email,
-        Contact: contactRef.current.value,
-        EmergencyContact: emergencyRef.current.value,
-        DateOfBirth: dobRef.current.value,
-        School: schoolRef.current.value,
+        name: nameRef.current.value,
+        email: currentUser.email,
+        contact: contactRef.current.value,
+        emergencyContact: emergencyRef.current.value,
+        dateOfBirth: dobRef.current.value,
+        school: schoolRef.current.value,
       })
       .then(() => setMessage("Successfully updated profile."))
       .catch(() => setError("Failed to update account."))
@@ -41,7 +41,7 @@ function UpdateProfile() {
     setLoading(false)
   }
 
-  const getData = GetData()
+  const getUserData = useGetProfile()
   
 
   return (
@@ -55,7 +55,7 @@ function UpdateProfile() {
           <Form onSubmit={saveData}>
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
-              <Form.Control ref={nameRef} type="text" defaultValue={getData[0] && getData[0].Name} />
+              <Form.Control ref={nameRef} type="text" defaultValue={getUserData && getUserData.name} />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
@@ -63,19 +63,19 @@ function UpdateProfile() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Contact No.</Form.Label>
-              <Form.Control ref={contactRef} type="tel" defaultValue={getData[0] && getData[0].Contact} />
+              <Form.Control ref={contactRef} type="tel" defaultValue={getUserData && getUserData.contact} />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Emergency Contact No.</Form.Label>
-              <Form.Control ref={emergencyRef} type="tel" defaultValue={getData[0] && getData[0].EmergencyContact}/>
+              <Form.Control ref={emergencyRef} type="tel" defaultValue={getUserData && getUserData.emergencyContact}/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Date Of Birth</Form.Label>
-              <Form.Control ref={dobRef} type="date" defaultValue={getData[0] && getData[0].DateOfBirth}/>
+              <Form.Control ref={dobRef} type="date" defaultValue={getUserData && getUserData.dateOfBirth}/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>School</Form.Label>
-              <Form.Control ref={schoolRef} type="text" defaultValue={getData[0] && getData[0].School}/>
+              <Form.Control ref={schoolRef} type="text" defaultValue={getUserData && getUserData.school}/>
             </Form.Group>
             <Button disabled={loading} className="w-100" type="submit">Update</Button>
           </Form>
@@ -88,6 +88,4 @@ function UpdateProfile() {
     </>
   );
 };
-
-export default UpdateProfile
 

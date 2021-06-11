@@ -5,7 +5,9 @@ export default function Feedback() {
   return (
     <>
       <NavigationBar />
-      <h1>Feedback Page</h1>
+      <h1>Mark Attendance</h1>
+
+      
     </> 
   )
 }

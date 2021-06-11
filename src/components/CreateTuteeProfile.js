@@ -1,54 +1,39 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 import NavigationBar from "./NavigationBar"
 import { db } from "../firebase"
 
-export default function CreateAccount() {   
-  const emailRef = useRef()
-  const { createTuteeProfile, getEmail } = useAuth()
+export default function CreateTuteeProfile() {   
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const nameRef = useRef()
+  const emailRef = useRef()
   const contactRef = useRef()
   const emergencyRef = useRef()
   const dobRef = useRef()
   const schoolRef = useRef()
 
-    
-  async function handleSubmit(event) {
+  // to save user data to firestore
+  const handleSubmit = (event) => {
     event.preventDefault()
+    setLoading(true)
+    setError("")
+    
+    db.collection("TuteeProfile")
+      .doc(nameRef.current.value)
+      .set({
+        name: nameRef.current.value,
+        email: emailRef.current.value,
+        contact: contactRef.current.value,
+        emergencyContact: emergencyRef.current.value,
+        dateOfBirth: dobRef.current.value,
+        school: schoolRef.current.value,
+      })
+      .then(() => setMessage("Successfully created new tutee profile."))
+      .catch(() => setError("Failed to create tutee profile."))
 
-    const currentEmail = getEmail();
-    if (currentEmail !== "toinfinityandbeyond.orbital@gmail.com") {
-      return setError("You do not have admin permission.")
-    }
-
-    try {
-        setError("");
-        setLoading(true);
-        await createTuteeProfile(emailRef.current.value);
-        setMessage("Successfully created new tutee profile.")
-
-            
-        db.collection("TuteeProfile")
-        .doc(emailRef.current.value)
-        .set({
-            Name: nameRef.current.value,
-            Email: emailRef.current.value,
-            Contact: contactRef.current.value,
-            EmergencyContact: emergencyRef.current.value,
-            DateOfBirth: dobRef.current.value,
-            School: schoolRef.current.value,
-        })
-        .then(() => setMessage("Successfully created new tutee profile."))
-        .catch(() => setError("Failed to create new tutee profile."))        
-
-    } catch {
-      setError("Failed to create a tutee profile.")
-    }
     setLoading(false)
   }
 
@@ -95,4 +80,3 @@ export default function CreateAccount() {
         </>
     );
 }
-

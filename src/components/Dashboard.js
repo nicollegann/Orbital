@@ -5,12 +5,12 @@ import Attendance from "./images/attendance.png"
 import Observation from "./images/observation.png"
 import Schedule from "./images/schedule.png"
 import Feedback from "./images/feedback.png"
-import GetData from "./GetUserData"
+import { useGetProfile } from "../hooks/useGetData"
 import { useHistory } from "react-router-dom"
 
 
 export default function Dashboard() {    
-  const getData = GetData()
+  const getUserData = useGetProfile()
   const history = useHistory()
   
   return (
@@ -19,7 +19,7 @@ export default function Dashboard() {
       <Container fluid="md">
       <Row>
         <Card bg="light" border="light" className="mt-4">
-          <Card.Title style={{ fontSize: "25px" }}>Welcome, {getData[0] && getData[0].Name} </Card.Title>
+          <Card.Title style={{ fontSize: "25px" }}>Welcome, {getUserData && getUserData.name} </Card.Title>
         </Card>
       </Row>
       <Row className="mt-5">

@@ -1,15 +1,15 @@
 import React from "react"
-import { Card, Alert } from "react-bootstrap"
+import { Card } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 import NavigationBar from "./NavigationBar"
-import GetData from "./GetUserData"
+import { useGetProfile } from "../hooks/useGetData"
 
 export default function Profile() {
   const { currentUser } = useAuth()
 
   // retrieve user data from firestore
-  const getData = GetData();
+  const getUserData = useGetProfile()
 
   return (
     <> 
@@ -17,18 +17,17 @@ export default function Profile() {
       <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
         <Card.Body>
           <h2 className="text-center mb-4">My Profile</h2>
-          {getData[1] && <Alert variant="danger">{getData[1]}</Alert>}
-          <strong>Name:</strong> {getData[0] && getData[0].Name}
+          <strong>Name:</strong> {getUserData && getUserData.name}
           <br />
           <strong>Email:</strong> {currentUser.email}
           <br />
-          <strong>Contact:</strong> {getData[0] && getData[0].Contact}
+          <strong>Contact:</strong> {getUserData && getUserData.contact}
           <br />
-          <strong>Emergency Contact:</strong> {getData[0] && getData[0].EmergencyContact}
+          <strong>Emergency Contact:</strong> {getUserData && getUserData.emergencyContact}
           <br />
-          <strong>Date Of Birth:</strong> {getData[0] && getData[0].DateOfBirth}
+          <strong>Date Of Birth:</strong> {getUserData && getUserData.dateOfBirth}
           <br />
-          <strong>School:</strong> {getData[0] && getData[0].School}
+          <strong>School:</strong> {getUserData && getUserData.school}
           <br />
           <Link to="/update-profile" className="btn btn-primary w-100 mt-3">Update Profile</Link>
           <Link to="/create-tutor-account" className="btn btn-primary w-100 mt-3">Create Tutor Account</Link>
@@ -42,3 +41,4 @@ export default function Profile() {
     </>
   )
 }
+
