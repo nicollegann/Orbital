@@ -9,12 +9,15 @@ import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import ChangePassword from "./ChangePassword"
 import ContactAdmin from "./ContactAdmin"
-import UpdateProfile from "./UpdateProfile"
+import UpdateTutorProfile from "./UpdateTutorProfile"
 import Attendance from "./Attendance"
 import Observation from "./Observation"
 import Schedule from "./Schedule"
 import Feedback from "./Feedback"
 import CreateTuteeProfile from "./CreateTuteeProfile"
+import SearchTuteeProfile from "./SearchTuteeProfile"
+import UpdateTuteeProfile from "./UpdateTuteeProfile"
+
 
 function App() {
   return (
@@ -27,7 +30,9 @@ function App() {
               <PrivateRoute path="/change-password" component={ChangePassword} />
               <PrivateRoute path="/create-tutor-account" component={CreateTutorAccount} />
               <PrivateRoute path="/create-tutee-profile" component={CreateTuteeProfile} />
-              <PrivateRoute path="/update-profile" component={UpdateProfile} />
+              <PrivateRoute path="/update-tutor-profile" component={UpdateTutorProfile} />
+              <PrivateRoute path="/update-tutee-profile" component={UpdateTuteeProfile} />
+              <PrivateRoute path="/search-tutee-profile" component={SearchTuteeProfile} />
               <PrivateRoute path="/mark-attendance" component={Attendance} />
               <PrivateRoute path="/tutee-observation" component={Observation} />
               <PrivateRoute path="/schedule" component={Schedule} />
