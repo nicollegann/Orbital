@@ -46,7 +46,9 @@ export const useGetCurrUserName = () => {
     .doc(getEmail())
     .get()
     .then((doc) => {
-      setCurrName(doc.data().name)
+      if (doc.exists) {
+        setCurrName(doc.data().name)
+      }
     })
   })
   return currName

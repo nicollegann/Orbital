@@ -5,12 +5,12 @@ import Attendance from "./images/attendance.png"
 import Observation from "./images/observation.png"
 import Schedule from "./images/schedule.png"
 import Feedback from "./images/feedback.png"
-import { useGetProfile } from "../hooks/useGetData"
+import { useGetCurrUserName } from "../hooks/useGetData"
 import { useHistory } from "react-router-dom"
 
 
 export default function Dashboard() {    
-  const getUserData = useGetProfile()
+  const getUserData = useGetCurrUserName()
   const history = useHistory()
   
   return (

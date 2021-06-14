@@ -8,7 +8,6 @@ import Login from "./Login"
 import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import ChangePassword from "./ChangePassword"
-import ContactAdmin from "./ContactAdmin"
 import UpdateProfile from "./UpdateProfile"
 import MarkAttendance from "./Attendance/MarkAttendance"
 import ViewAttendance from "./Attendance/ViewAttendance"
@@ -26,7 +25,6 @@ function App() {
               <PrivateRoute exact path="/" component = {Dashboard} />
               <PrivateRoute exact path="/profile" component={Profile} />
               <PrivateRoute path="/change-password" component={ChangePassword} />
-              <PrivateRoute path="/create-tutor-account" component={CreateTutorAccount} />
               <PrivateRoute path="/create-tutee-profile" component={CreateTuteeProfile} />
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
               <PrivateRoute path="/mark-attendance" component={MarkAttendance} />
@@ -36,7 +34,7 @@ function App() {
               <PrivateRoute path="/feedback" component={Feedback} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
-              <Route path="/contact-admin" component={ContactAdmin} />
+              <Route path="/create-account" component={CreateTutorAccount} />
             </Switch>
           </AuthProvider>
         </Router>
