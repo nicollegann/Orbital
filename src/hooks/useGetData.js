@@ -15,6 +15,7 @@ export const useGetTutee = () => {
         );
         setTutee(arr);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db]);
   return [tutee];
 };
@@ -33,6 +34,7 @@ export const useGetAttendance = (date) => {
       )
       setRecord(arr)
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db])
   return [record]
 }
@@ -70,6 +72,7 @@ export const useGetProfile = () => {
         const userData = doc.data()
         setData(userData)
       })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db])
   return data
 }

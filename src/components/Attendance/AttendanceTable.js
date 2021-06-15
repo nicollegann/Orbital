@@ -14,7 +14,7 @@ export default function AttendanceTable(props) {
       {rows.length > 0 ? (
         <AttendanceList rows={rows} />
       ) : (
-        <p>You have not marked any attendance today.</p>
+        <p>No attendance record found for {date}.</p>
       )}
       </Container>
     </>

@@ -19,7 +19,7 @@ export default function Dashboard() {
       <Container fluid="md">
       <Row>
         <Card bg="light" border="light" className="mt-4">
-          <Card.Title style={{ fontSize: "25px" }}>Welcome, {getUserData && getUserData.name} </Card.Title>
+          <Card.Title style={{ fontSize: "25px" }}>Welcome, {getUserData} </Card.Title>
         </Card>
       </Row>
       <Row className="mt-5">

@@ -18,7 +18,6 @@ export default function MarkAttendance() {
   const [name, setName] = useState("")
   const dateRef = useRef()
   const timeRef = useRef()
-  const roleRef = useRef()
   const attendanceRef = useRef()
 
   const handleSubmit = (event) => {
@@ -32,7 +31,6 @@ export default function MarkAttendance() {
       .set({
         date: dateRef.current.value,
         time: timeRef.current.value,
-        role: roleRef.current.value,
         name: name,
         attendance: attendanceRef.current.value,
         markedBy: currName
@@ -49,7 +47,6 @@ export default function MarkAttendance() {
       .set({
         date: dateRef.current.value,
         time: timeRef.current.value,
-        role: roleRef.current.value,
         name: name,
         attendance: attendanceRef.current.value,
         markedBy: currName
@@ -80,16 +77,8 @@ export default function MarkAttendance() {
               <Form.Label>Lesson Time</Form.Label>
               <Form.Control type="time" ref={timeRef} required />
             </Form.Group>
-            <Form.Group id="role" className="mb-3">
-              <Form.Label>Role</Form.Label>
-              <Form.Control as="select" ref={roleRef} defaultValue="Select..." required>
-                <option disabled={true}>Select...</option>
-                <option>Tutee</option>
-                <option>Tutor</option>
-              </Form.Control>
-            </Form.Group>
             <Form.Group id="tuteeName" className="mb-3">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Tutee's Name</Form.Label>
               <SelectSearch options={tuteeNames} search filterOptions={fuzzySearch} placeholder="Select..." onChange={setName} required/>
             </Form.Group>
             <Form.Group id="attendance" className="mb-3">
