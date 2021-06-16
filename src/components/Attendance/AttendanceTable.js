@@ -3,9 +3,9 @@ import { Table, Container } from "react-bootstrap"
 import { useGetAttendance } from "../../hooks/useGetData"
 
 export default function AttendanceTable(props) {
-  const { date } = props
+  const { date, name } = props
 
-  const [rows] = useGetAttendance(date)
+  const [rows] = useGetAttendance(date, name)
   
   return (
     <>
@@ -19,7 +19,7 @@ export default function AttendanceTable(props) {
       </Container>
     </>
   )
-}
+} 
 
 function AttendanceList(props) {
   const { rows } = props

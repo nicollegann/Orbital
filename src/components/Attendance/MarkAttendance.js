@@ -24,6 +24,7 @@ export default function MarkAttendance() {
     event.preventDefault()
     setLoading(true)
     setError("")
+    console.log(tuteeNames)
     
     //save data to firestore (to 2 different collections)
     db.collection("Attendance")
@@ -63,7 +64,7 @@ export default function MarkAttendance() {
     <>
       <NavigationBar />
       
-      <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
+      <Card className="justify-content-md-center" style={{width: "35rem", margin: "3% auto 1%"}}>
         <Card.Body>
           <h2 className="text-center mb-4">Mark Attendance</h2>
           {error && <Alert variant="danger">{error}</Alert>}
