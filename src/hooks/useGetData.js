@@ -26,7 +26,8 @@ export const useGetAttendance = (date, name) => {
   useEffect(() => {
     if (name !== "ALL" && date !== "") {
       db.collection("Attendance")
-      .where("date", "==", date)
+      .doc(date)
+      .collection(date)
       .where("name", "==", name)
       .get()
       .then((querySnapShot) => {
@@ -38,7 +39,8 @@ export const useGetAttendance = (date, name) => {
       })
     } else if (name === "ALL" && date !== "") {
       db.collection("Attendance")
-      .where("date", "==", date)
+      .doc(date)
+      .collection(date)
       .get()
       .then((querySnapShot) => {
         let arr = []
@@ -48,8 +50,9 @@ export const useGetAttendance = (date, name) => {
         setRecord(arr)
       })
     } else if (name !== "ALL" && date === "") {
-      db.collection("Attendance")
-      .where("name", "==", name)
+      db.collection("TuteeProfile")
+      .doc(name)
+      .collection("Attendance")
       .get()
       .then((querySnapShot) => {
         let arr = []
@@ -66,10 +69,13 @@ export const useGetAttendance = (date, name) => {
 
 //Get 'name' field of current user
 export const useGetCurrUserName = () => {
-  const { getEmail } = useAuth()
+  const { currentUser, getEmail } = useAuth()
   const [currName, setCurrName] = useState("")
   useEffect(() => {
-    db.collection("TutorProfile")
+    const role = currentUser.email
+    const collectionName = (role !== "toinfinityandbeyond.orbital@gmail.com") ? "TutorProfile" : "AdminProfile"
+    
+    db.collection(collectionName)
     .doc(getEmail())
     .get()
     .then((doc) => {

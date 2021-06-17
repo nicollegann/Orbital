@@ -1,5 +1,5 @@
 import React from "react"
-import { Table, Container } from "react-bootstrap"
+import { Table, Card } from "react-bootstrap"
 import { useGetAttendance } from "../../hooks/useGetData"
 
 export default function AttendanceTable(props) {
@@ -9,14 +9,20 @@ export default function AttendanceTable(props) {
   
   return (
     <>
-      <Container>
-      <h4>Marked Attendance</h4>
+    <Card>
+      <Card.Body>
+      <h3 className="mb-4">Attendance Record</h3>
       {rows.length > 0 ? (
         <AttendanceList rows={rows} />
       ) : (
-        <p>No attendance record found for {date}.</p>
+        ((date && (name !== "ALL")) && <p>No attendance record found for {name} on {date}</p>)
+        ||
+        (date && <p>No attendance record found on {date}</p>)
+        ||
+        <p>No attendance record found</p>
       )}
-      </Container>
+      </Card.Body>
+      </Card>
     </>
   )
 } 

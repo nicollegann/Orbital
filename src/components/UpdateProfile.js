@@ -25,7 +25,10 @@ export default function UpdateProfile() {
     setLoading(true)
     setError("")
     
-    db.collection("TutorProfile")
+    const collectionName = (currentUser.email !== "toinfinityandbeyond.orbital@gmail.com") ? "TutorProfile" : "AdminProfile"
+    const role = (currentUser.email !== "toinfinityandbeyond.orbital@gmail.com") ? "Tutor" : "Admin"
+
+    db.collection(collectionName)
       .doc(currentUser.email)
       .set({
         name: nameRef.current.value,
@@ -34,6 +37,7 @@ export default function UpdateProfile() {
         emergencyContact: emergencyRef.current.value,
         dateOfBirth: dobRef.current.value,
         school: schoolRef.current.value,
+        role: role
       })
       .then(() => setMessage("Successfully updated profile."))
       .catch(() => setError("Failed to update account."))
