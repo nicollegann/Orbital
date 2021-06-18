@@ -74,7 +74,8 @@ export const useGetRecord = (date, name, record) => {
       .then((querySnapShot) => {
         let arr = []
         querySnapShot.forEach((doc) => 
-          arr.push({ id: doc.id, name: doc.data().name, date: doc.data().date, time: doc.data().time, recordedBy: doc.data().recordedBy, comment: doc.data().comment })
+          arr.push({ id: doc.id, 
+                     value: doc.data() })
         )
       setData(arr)
       })
@@ -86,7 +87,8 @@ export const useGetRecord = (date, name, record) => {
       .then((querySnapShot) => {
         let arr = []
         querySnapShot.forEach((doc) => 
-          arr.push({ id: doc.id, name: doc.data().name, date: doc.data().date, time: doc.data().time, recordedBy: doc.data().recordedBy, comment: doc.data().comment })
+          arr.push({ id: doc.id,
+                     value: doc.data() })
         )
         setData(arr)
       })
@@ -98,7 +100,8 @@ export const useGetRecord = (date, name, record) => {
       .then((querySnapShot) => {
         let arr = []
         querySnapShot.forEach((doc) => 
-          arr.push({ id: doc.id, name: doc.data().name, date: doc.data().date, time: doc.data().time, recordedBy: doc.data().recordedBy, comment: doc.data().comment })
+          arr.push({ id: doc.id, 
+                     value: doc.data() })
         )
         setData(arr)
       })

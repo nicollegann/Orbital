@@ -1,17 +1,28 @@
-.bg {
+.bg-observation {
     position: relative;
-    background-image: url(../images/bg1.png);
+    background-image: url(../images/bg4.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top right;
     background-attachment: fixed;
 }
 
-.contents {
+.contents-observation {
     position: relative;
-    padding-top: 5%;
+    padding-top: 3%;
     padding-left: 0;
     padding-right: 0;
     min-height: 90vmin;
     width: 100vh;
+}
+
+.card-observation {
+    width: 80%;
+    margin-left: 20%;
+}
+
+.card-view-observation {
+    width: 60%;
+    margin-bottom: 2em;
+    margin-left: 40%;
 }

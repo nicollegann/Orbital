@@ -5,6 +5,7 @@ import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
 import { useHistory } from "react-router-dom"
+import "./Observation.css"
 
 export default function TuteeObservation() {
   const history = useHistory()
@@ -46,7 +47,7 @@ export default function TuteeObservation() {
       .set({  
         date: dateRef.current.value,
         name: nameRef.current.value,
-        tutor: currName,
+        recordedBy: currName,
         comment: commentRef.current.value
       })
       .then(() => {
@@ -59,9 +60,9 @@ export default function TuteeObservation() {
   return (
     <>
       <NavigationBar />
-      <Container fluid className="bg" style={{paddingLeft: "0", paddingRight: "0"}}>
-      <Container className="contents">
-        <Card style={{ width: "70%" }}>
+      <Container fluid className="bg-observation" style={{paddingLeft: "0", paddingRight: "0"}}>
+      <Container className="contents-observation">
+        <Card className="card-observation">
           <Card.Body>
             <h2 className="text-center mb-1">Tutee Observation</h2>
             <p className="text-center mb-4">Record tutees' progress after each lesson.</p>
@@ -77,13 +78,17 @@ export default function TuteeObservation() {
                 </Col>
               </Row>
 
-              <Form.Group controlId="tuteeName" className="mb-4">
-                <Form.Label>Tutee's Name</Form.Label>
-                <Form.Control as="select" ref={nameRef} required>
-                  <option disabled={true}>Select...</option>
-                  {(tuteeNames.slice(1)).map((n) => <option key={n.value} value={n.name}>{n.name}</option>)}
-                </Form.Control>
-              </Form.Group>
+              <Row className="mb-4">
+                <Col md={6}>
+                  <Form.Group controlId="tuteeName">
+                    <Form.Label>Tutee's Name</Form.Label>
+                    <Form.Control as="select" ref={nameRef} required>
+                      <option disabled={true}>Select...</option>
+                      {(tuteeNames.slice(1)).map((n) => <option key={n.value} value={n.name}>{n.name}</option>)}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
 
               <Form.Group controlId="comment" className="mb-5">
                 <Form.Label>Comments</Form.Label>

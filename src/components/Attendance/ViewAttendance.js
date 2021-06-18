@@ -4,7 +4,7 @@ import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import AttendanceTable from "./AttendanceTable"
 import { useGetTutee } from "../../hooks/useGetData"
-import "./ViewAttendance.css"
+import "./Attendance.css"
 
 export default function ViewAttendance() {
   const dateRef = useRef()
@@ -25,9 +25,9 @@ export default function ViewAttendance() {
   return (
     <>
       <NavigationBar />
-      <Container fluid className="bg2" style={{paddingLeft: "0", paddingRight: "0"}}>
-        <Container md-3 className="contents">
-          <Card style={{width: "45rem", marginBottom: "70px"}}>
+      <Container fluid className="bg-attendance" style={{paddingLeft: "0", paddingRight: "0"}}>
+        <Container md-3 className="contents-attendance">
+          <Card className="card-view-attendance">
             <Card.Body>
             <h2 className="text-center mb-4">View Attendance Records</h2>
             <Form>

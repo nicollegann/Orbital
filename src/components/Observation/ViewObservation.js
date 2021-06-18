@@ -4,6 +4,7 @@ import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import ObservationTable from "./ObservationTable"
 import { useGetTutee } from "../../hooks/useGetData"
+import "./Observation.css"
 
 export default function ViewObservation() {
   const dateRef = useRef()
@@ -24,9 +25,9 @@ export default function ViewObservation() {
   return (
     <>
       <NavigationBar />
-      <Container fluid className="bg2" style={{paddingLeft: "0", paddingRight: "0"}}>
-        <Container md-3 className="contents">
-          <Card style={{width: "50%", marginBottom: "70px"}}>
+      <Container fluid className="bg-observation" style={{paddingLeft: "0", paddingRight: "0"}}>
+        <Container className="contents-observation">
+          <Card className="card-view-observation">
             <Card.Body>
             <h2 className="text-center mb-4">View Records</h2>
             <Form>

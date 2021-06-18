@@ -34,26 +34,28 @@ function ObservationRecord(props) {
     <> 
     <Accordion>
       {rows.map((row, index) => (
-        <Card>
+        <Card key={index}>
           <Accordion.Toggle as={Card.Header} eventKey={index + 1}>
             <Container>
               <Row> 
                 <Col>
-                    {row.name}
+                    {row.value.name}
                 </Col>
                 <Col md={{ span: 2, offset: 6 }}>
-                    {row.date}
+                    {row.value.date}
                 </Col>
               </Row>
             </Container>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey={index + 1}>
               <Card.Body>
+                  <Row style={{marginBottom: "1.5em"}}>
+                      <Col md="auto"><strong>Comments:</strong></Col>
+                      <Col>{row.value.comment}</Col>
+                  </Row>
                   <Row>
-                      <Col md={1.5}><strong>Comments:</strong></Col>
-                      <Col>
-                          {row.comment}
-                      </Col>
+                    <Col md="auto"><strong>Tutor:</strong></Col>
+                    <Col>{row.value.recordedBy}</Col>
                   </Row>
               </Card.Body>
           </Accordion.Collapse>

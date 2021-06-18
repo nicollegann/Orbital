@@ -29,7 +29,7 @@ export default function AttendanceTable(props) {
 
 function AttendanceList(props) {
   const { rows } = props
-  
+  console.log(rows)
   return (
     <Table striped bordered>
       <thead>
@@ -46,11 +46,11 @@ function AttendanceList(props) {
         {rows.map((row, index) => (
           <tr key={index}>
             <td>{index + 1}</td>
-            <td>{row.date}</td>
-            <td>{row.time}</td>
-            <td>{row.name}</td>
-            <td>{row.attendance}</td>
-            <td>{row.markedBy}</td>
+            <td>{row.value.date}</td>
+            <td>{row.value.time}</td>
+            <td>{row.value.name}</td>
+            <td>{row.value.attendance}</td>
+            <td>{row.value.markedBy}</td>
           </tr>
         ))}
       </tbody>

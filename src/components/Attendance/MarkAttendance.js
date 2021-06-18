@@ -5,7 +5,7 @@ import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
 import { useHistory } from "react-router-dom"
-import "./MarkAttendance.css"
+import "./Attendance.css"
 
 
 export default function MarkAttendance() {
@@ -63,9 +63,9 @@ export default function MarkAttendance() {
   return (
     <>
     <NavigationBar />
-    <Container fluid className="bg" style={{paddingLeft: "0", paddingRight: "0"}}>
-      <Container className="contents">
-        <Card style={{width: "50rem"}}>
+    <Container fluid className="bg-attendance" style={{paddingLeft: "0", paddingRight: "0"}}>
+      <Container className="contents-attendance">
+        <Card className="card-attendance">
           <Card.Body>
             <h2 className="text-center mb-4">Mark Attendance</h2>
             {error && <Alert variant="danger">{error}</Alert>}
