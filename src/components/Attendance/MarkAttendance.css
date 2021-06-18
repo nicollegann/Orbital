@@ -1,0 +1,17 @@
+.bg {
+    position: relative;
+    background-image: url(../images/bg1.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-attachment: fixed;
+}
+
+.contents {
+    position: relative;
+    padding-top: 5%;
+    padding-left: 0;
+    padding-right: 0;
+    min-height: 90vmin;
+    width: 100vh;
+}

@@ -2,13 +2,12 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
-import NavigationBar from "./NavigationBar"
 
 export default function CreateTutorAccount() {   
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { createAccount, getEmail } = useAuth()
+  const { createAccount } = useAuth()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
@@ -19,11 +18,6 @@ export default function CreateTutorAccount() {
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords do not match.")
-    }
-
-    const currentEmail = getEmail();
-    if (currentEmail !== "toinfinityandbeyond.orbital@gmail.com") {
-      return setError("You do not have admin permission.")
     }
 
     try {
@@ -39,7 +33,6 @@ export default function CreateTutorAccount() {
 
     return (
       <>
-        <NavigationBar />
           <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
             <Card.Body>
               <h2 className="text-center mb-4">Create New Tutor Account</h2>
@@ -63,7 +56,7 @@ export default function CreateTutorAccount() {
             </Card.Body>
           </Card>
           <div className="w-100 text-center mt-2">
-            <Link to="/profile">Back to Profile</Link>
+            <Link to="/login">Back to Login</Link>
           </div>
         </>
     );

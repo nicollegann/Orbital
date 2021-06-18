@@ -1,0 +1,14 @@
+.bg3 {
+    position: relative;
+    background-image: url(../images/bg3.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-attachment: fixed;
+}
+
+.contents-dashboard {
+    width: 100vw;
+    height: 80vh;
+
+}

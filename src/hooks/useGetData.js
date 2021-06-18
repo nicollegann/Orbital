@@ -2,51 +2,86 @@ import { useEffect, useState} from "react";
 import { db } from "../firebase"
 import { useAuth } from "../contexts/AuthContext"
 
-//Get tutee profile
+//Get tutee names
 export const useGetTutee = () => {
   const [tutee, setTutee] = useState([]);
   useEffect(() => {
     db.collection("TuteeProfile")
       .get()
       .then((querySnapshot) => {
-        let arr = [];
+        let arr = [{ value: "ALLTUTEES", name: "ALL"}];
         querySnapshot.docs.map((doc) =>
           arr.push({ value: doc.id, name: doc.id })
         );
         setTutee(arr);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db]);
   return [tutee];
 };
 
-//Get attendance
-export const useGetAttendance = (date) => {
+//Get attendance (by date / name)
+export const useGetAttendance = (date, name) => {
   const [record, setRecord] = useState([])
   useEffect(() => {
-    db.collection("Attendance")
-    .where("date", "==", date)
-    .get()
-    .then((querySnapShot) => {
-      let arr = []
-      querySnapShot.forEach((doc) => 
-        arr.push({ id: doc.id, name: doc.data().name, attendance: doc.data().attendance, date: doc.data().date, time: doc.data().time, markedBy: doc.data().markedBy })
-      )
+    if (name !== "ALL" && date !== "") {
+      db.collection("Attendance")
+      .doc(date)
+      .collection(date)
+      .where("name", "==", name)
+      .get()
+      .then((querySnapShot) => {
+        let arr = []
+        querySnapShot.forEach((doc) => 
+          arr.push({ id: doc.id, name: doc.data().name, attendance: doc.data().attendance, date: doc.data().date, time: doc.data().time, markedBy: doc.data().markedBy })
+        )
       setRecord(arr)
-    })
+      })
+    } else if (name === "ALL" && date !== "") {
+      db.collection("Attendance")
+      .doc(date)
+      .collection(date)
+      .get()
+      .then((querySnapShot) => {
+        let arr = []
+        querySnapShot.forEach((doc) => 
+          arr.push({ id: doc.id, name: doc.data().name, attendance: doc.data().attendance, date: doc.data().date, time: doc.data().time, markedBy: doc.data().markedBy })
+        )
+        setRecord(arr)
+      })
+    } else if (name !== "ALL" && date === "") {
+      db.collection("TuteeProfile")
+      .doc(name)
+      .collection("Attendance")
+      .get()
+      .then((querySnapShot) => {
+        let arr = []
+        querySnapShot.forEach((doc) => 
+          arr.push({ id: doc.id, name: doc.data().name, attendance: doc.data().attendance, date: doc.data().date, time: doc.data().time, markedBy: doc.data().markedBy })
+        )
+        setRecord(arr)
+      })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db])
   return [record]
 }
 
 //Get 'name' field of current user
 export const useGetCurrUserName = () => {
-  const { getEmail } = useAuth()
+  const { currentUser, getEmail } = useAuth()
   const [currName, setCurrName] = useState("")
   useEffect(() => {
-    db.collection("TutorProfile")
+    const role = currentUser.email
+    const collectionName = (role !== "toinfinityandbeyond.orbital@gmail.com") ? "TutorProfile" : "AdminProfile"
+    
+    db.collection(collectionName)
     .doc(getEmail())
     .get()
     .then((doc) => {
-      setCurrName(doc.data().name)
+      if (doc.exists) {
+        setCurrName(doc.data().name)
+      }
     })
   })
   return currName
@@ -68,6 +103,7 @@ export const useGetProfile = () => {
         const userData = doc.data()
         setData(userData)
       })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db])
   return data
 }
