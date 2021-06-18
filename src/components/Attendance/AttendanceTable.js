@@ -1,11 +1,11 @@
 import React from "react"
 import { Table, Card } from "react-bootstrap"
-import { useGetAttendance } from "../../hooks/useGetData"
+import { useGetRecord } from "../../hooks/useGetData"
 
 export default function AttendanceTable(props) {
   const { date, name } = props
 
-  const [rows] = useGetAttendance(date, name)
+  const [rows] = useGetRecord(date, name, "Attendance")
   
   return (
     <>

@@ -11,7 +11,8 @@ import ChangePassword from "./ChangePassword"
 import UpdateTutorProfile from "./UpdateTutorProfile"
 import MarkAttendance from "./Attendance/MarkAttendance"
 import ViewAttendance from "./Attendance/ViewAttendance"
-import Observation from "./Observation"
+import TuteeObservation from "./Observation/TuteeObservation"
+import ViewObservation from "./Observation/ViewObservation"
 import Schedule from "./Schedule"
 import Feedback from "./Feedback"
 import CreateTuteeProfile from "./CreateTuteeProfile"
@@ -34,7 +35,8 @@ function App() {
               <PrivateRoute path="/search-tutee-profile" component={SearchTuteeProfile} />
               <PrivateRoute path="/mark-attendance" component={MarkAttendance} />
               <PrivateRoute path="/view-attendance" component={ViewAttendance} />
-              <PrivateRoute path="/tutee-observation" component={Observation} />
+              <PrivateRoute path="/tutee-observation" component={TuteeObservation} />
+              <PrivateRoute path="/view-observation" component={ViewObservation} />
               <PrivateRoute path="/schedule" component={Schedule} />
               <PrivateRoute path="/feedback" component={Feedback} />
               <Route path="/login" component={Login} />

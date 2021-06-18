@@ -6,6 +6,7 @@ import Buttons from "./Buttons"
 import Attendance from "../images/markAttendance.png"
 import AttendanceRecord from "../images/attendanceRecord.png"
 import Observation from "../images/tuteeObservation.png"
+import ObservationRecord from "../images/observationRecord.png"
 import Schedule from "../images/lessonSchedule.png"
 import Feedback from "../images/giveFeedback.png"
 import { useGetCurrUserName } from "../../hooks/useGetData"
@@ -25,7 +26,7 @@ export default function Dashboard() {
               <h3>Welcome, {getUserData}</h3>
             </Card>
           </Row>
-          <Row className="mt-5">
+          <Row md={4} className="mt-5">
             <Col> 
               <Buttons tooltip="Mark Attendance" img={Attendance} link="/mark-attendance"/>
             </Col>
@@ -36,12 +37,15 @@ export default function Dashboard() {
               <Buttons tooltip="Input Tutee Observation" img={Observation} link="/tutee-observation"/>  
             </Col>
             <Col>
-              <Buttons tooltip="Feedback" img={Feedback} link="/feedback"/>  
+              <Buttons tooltip="View Observation Record" img={ObservationRecord} link="/view-observation"/>  
             </Col>
           </Row>
-          <Row className="mt-5">
+          <Row md={4} className="mt-5">
             <Col> 
               <Buttons tooltip="Lesson Schedule" img={Schedule} link="/schedule"/>
+            </Col>
+            <Col>
+              <Buttons tooltip="Feedback" img={Feedback} link="/feedback"/>  
             </Col>
           </Row>
         </Container>

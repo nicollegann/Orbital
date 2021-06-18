@@ -38,9 +38,9 @@ export default function MarkAttendance() {
         markedBy: currName
       })
       .then(() => {
-        setMessage("Successfully marked attendance.")
+        setMessage("Successfully marked attendance for " + nameRef.current.value + ".")
       })
-      .catch(() => setError("Failed to mark attendance."))
+      .catch(() => setError("Failed to mark attendance for " + nameRef.current.value + "."))
 
     db.collection("TuteeProfile")
       .doc(nameRef.current.value)
@@ -54,9 +54,9 @@ export default function MarkAttendance() {
         markedBy: currName
       })
       .then(() => {
-        setMessage("Successfully marked attendance.")
+        setMessage("Successfully marked attendance for " + nameRef.current.value + ".")
       })
-      .catch(() => setError("Failed to mark attendance."))  
+      .catch(() => setError("Failed to mark attendance for " + nameRef.current.value + "."))  
     setLoading(false)
   }
 

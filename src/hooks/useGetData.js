@@ -20,53 +20,6 @@ export const useGetTutee = () => {
   return [tutee];
 };
 
-//Get attendance (by date / name)
-export const useGetAttendance = (date, name) => {
-  const [record, setRecord] = useState([])
-  useEffect(() => {
-    if (name !== "ALL" && date !== "") {
-      db.collection("Attendance")
-      .doc(date)
-      .collection(date)
-      .where("name", "==", name)
-      .get()
-      .then((querySnapShot) => {
-        let arr = []
-        querySnapShot.forEach((doc) => 
-          arr.push({ id: doc.id, name: doc.data().name, attendance: doc.data().attendance, date: doc.data().date, time: doc.data().time, markedBy: doc.data().markedBy })
-        )
-      setRecord(arr)
-      })
-    } else if (name === "ALL" && date !== "") {
-      db.collection("Attendance")
-      .doc(date)
-      .collection(date)
-      .get()
-      .then((querySnapShot) => {
-        let arr = []
-        querySnapShot.forEach((doc) => 
-          arr.push({ id: doc.id, name: doc.data().name, attendance: doc.data().attendance, date: doc.data().date, time: doc.data().time, markedBy: doc.data().markedBy })
-        )
-        setRecord(arr)
-      })
-    } else if (name !== "ALL" && date === "") {
-      db.collection("TuteeProfile")
-      .doc(name)
-      .collection("Attendance")
-      .get()
-      .then((querySnapShot) => {
-        let arr = []
-        querySnapShot.forEach((doc) => 
-          arr.push({ id: doc.id, name: doc.data().name, attendance: doc.data().attendance, date: doc.data().date, time: doc.data().time, markedBy: doc.data().markedBy })
-        )
-        setRecord(arr)
-      })
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [db])
-  return [record]
-}
-
 //Get 'name' field of current user
 export const useGetCurrUserName = () => {
   const { currentUser, getEmail } = useAuth()
@@ -107,3 +60,52 @@ export const useGetProfile = () => {
   }, [db])
   return data
 }
+
+//Get tutee attendance/observation record (by date / name)
+export const useGetRecord = (date, name, record) => {
+  const [data, setData] = useState([])
+  useEffect(() => {
+    if (name !== "ALL" && date !== "") {
+      db.collection(record)
+      .doc(date)
+      .collection(date)
+      .where("name", "==", name)
+      .get()
+      .then((querySnapShot) => {
+        let arr = []
+        querySnapShot.forEach((doc) => 
+          arr.push({ id: doc.id, name: doc.data().name, date: doc.data().date, time: doc.data().time, recordedBy: doc.data().recordedBy, comment: doc.data().comment })
+        )
+      setData(arr)
+      })
+    } else if (name === "ALL" && date !== "") {
+      db.collection(record)
+      .doc(date)
+      .collection(date)
+      .get()
+      .then((querySnapShot) => {
+        let arr = []
+        querySnapShot.forEach((doc) => 
+          arr.push({ id: doc.id, name: doc.data().name, date: doc.data().date, time: doc.data().time, recordedBy: doc.data().recordedBy, comment: doc.data().comment })
+        )
+        setData(arr)
+      })
+    } else if (name !== "ALL" && date === "") {
+      db.collection("TuteeProfile")
+      .doc(name)
+      .collection(record)
+      .get()
+      .then((querySnapShot) => {
+        let arr = []
+        querySnapShot.forEach((doc) => 
+          arr.push({ id: doc.id, name: doc.data().name, date: doc.data().date, time: doc.data().time, recordedBy: doc.data().recordedBy, comment: doc.data().comment })
+        )
+        setData(arr)
+      })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [db])
+  return [data]
+}
+
+
