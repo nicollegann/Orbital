@@ -62,52 +62,87 @@ export const useGetProfile = () => {
 }
 
 //Get tutee attendance/observation record (by date / name)
-export const useGetRecord = (date, name, record) => {
+export const useGetRecord = (date, tutee, tutor, record) => {
+  
   const [data, setData] = useState([])
+  
+  const retrieveData = (querySnapShot) => {
+    let arr = []
+    querySnapShot.forEach((doc) => 
+      arr.push({ id: doc.id, 
+                 value: doc.data() })
+    )
+    setData(arr)
+  }
+
   useEffect(() => {
-    if (name !== "ALL" && date !== "") {
-      db.collection(record)
-      .doc(date)
-      .collection(date)
-      .where("name", "==", name)
-      .get()
-      .then((querySnapShot) => {
-        let arr = []
-        querySnapShot.forEach((doc) => 
-          arr.push({ id: doc.id, 
-                     value: doc.data() })
-        )
-      setData(arr)
-      })
-    } else if (name === "ALL" && date !== "") {
-      db.collection(record)
-      .doc(date)
-      .collection(date)
-      .get()
-      .then((querySnapShot) => {
-        let arr = []
-        querySnapShot.forEach((doc) => 
-          arr.push({ id: doc.id,
-                     value: doc.data() })
-        )
-        setData(arr)
-      })
-    } else if (name !== "ALL" && date === "") {
-      db.collection("TuteeProfile")
-      .doc(name)
-      .collection(record)
-      .get()
-      .then((querySnapShot) => {
-        let arr = []
-        querySnapShot.forEach((doc) => 
-          arr.push({ id: doc.id, 
-                     value: doc.data() })
-        )
-        setData(arr)
-      })
+    if (tutor !== "Admin") {
+      //if tutor specifies tutee name and date
+      if (tutee !== "ALL" && date !== "") {
+        db.collection(record)
+        .doc(date)
+        .collection(date)
+        .where("name", "==", tutee)
+        .where("tutor", "==", tutor)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+        //if tutor specifies date only
+      } else if (tutee === "ALL" && date !== "") {
+        db.collection(record)
+        .doc(date)
+        .collection(date)
+        .where("tutor", "==", tutor)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+        //if tutor specifies name only
+      } else if (tutee !== "ALL" && date === "") {
+        db.collection("TuteeProfile")
+        .doc(tutee)
+        .collection(record)
+        .where("tutor", "==", tutor)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+      }
+    } else {
+      //if admin specifies tutee name and date
+      if (tutee !== "ALL" && date !== "") {
+        db.collection(record)
+        .doc(date)
+        .collection(date)
+        .where("name", "==", tutee)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+        //if admin specifies date only
+      } else if (tutee === "ALL" && date !== "") {
+        db.collection(record)
+        .doc(date)
+        .collection(date)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+        //if admin specifies name only
+      } else if (tutee !== "ALL" && date === "") {
+        db.collection("TuteeProfile")
+        .doc(tutee)
+        .collection(record)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+      }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db])
+    
   return [data]
 }
 

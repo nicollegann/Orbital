@@ -35,7 +35,7 @@ export default function MarkAttendance() {
         time: timeRef.current.value,
         name: nameRef.current.value,
         attendance: attendanceRef.current.value,
-        markedBy: currName
+        tutor: currName
       })
       .then(() => {
         setMessage("Successfully marked attendance for " + nameRef.current.value + ".")
@@ -51,7 +51,7 @@ export default function MarkAttendance() {
         time: timeRef.current.value,
         name: nameRef.current.value,
         attendance: attendanceRef.current.value,
-        markedBy: currName
+        tutor: currName
       })
       .then(() => {
         setMessage("Successfully marked attendance for " + nameRef.current.value + ".")

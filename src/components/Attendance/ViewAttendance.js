@@ -3,7 +3,7 @@ import { Button, Form, Card, Container, Row, Col } from "react-bootstrap"
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import AttendanceTable from "./AttendanceTable"
-import { useGetTutee } from "../../hooks/useGetData"
+import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
 import "./Attendance.css"
 
 export default function ViewAttendance() {
@@ -11,22 +11,26 @@ export default function ViewAttendance() {
   const nameRef = useRef()
 
   const [tuteeNames] = useGetTutee()
+  const currName = useGetCurrUserName()
 
   const [ date, setDate ] = useState()
   const [ name, setName ] = useState()
+  const [ tutor, setTutor ] = useState()
   
   useEffect(() => {
     const selectedDate = window.localStorage.getItem("selectedDate")
     setDate(selectedDate)
     const selectedName = window.localStorage.getItem("selectedName")
     setName(selectedName ?? "")
-  }, [])
+    const selectedTutor = window.localStorage.getItem("selectedTutor")
+    setTutor(selectedTutor ?? currName)
+  }, [currName])
 
   return (
     <>
       <NavigationBar />
       <Container fluid className="bg-attendance" style={{paddingLeft: "0", paddingRight: "0"}}>
-        <Container md-3 className="contents-attendance">
+        <Container className="contents-attendance">
           <Card className="card-view-attendance">
             <Card.Body>
             <h2 className="text-center mb-4">View Attendance Records</h2>
@@ -47,6 +51,7 @@ export default function ViewAttendance() {
               <Button onClick={() => {
                         window.localStorage.setItem("selectedDate", dateRef.current.value)
                         window.localStorage.setItem("selectedName", nameRef.current.value)
+                        window.localStorage.setItem("selectedTutor", currName)
                       }}
                       variant="secondary" 
                       type="submit"
@@ -56,7 +61,7 @@ export default function ViewAttendance() {
             </Form>
             </Card.Body>
           </Card>
-          {(date || name) && <AttendanceTable date={date} name={name}/>}
+          {(date || name) && <AttendanceTable date={date} tutee={name} tutor={tutor}/>}
         </Container>
         <Footer />
       </Container>

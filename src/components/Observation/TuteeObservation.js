@@ -32,7 +32,7 @@ export default function TuteeObservation() {
     .set({
         date: dateRef.current.value,
         name: nameRef.current.value,
-        recordedBy: currName,
+        tutor: currName,
         comment: commentRef.current.value
     })
     .then(() => {
@@ -47,7 +47,7 @@ export default function TuteeObservation() {
       .set({  
         date: dateRef.current.value,
         name: nameRef.current.value,
-        recordedBy: currName,
+        tutor: currName,
         comment: commentRef.current.value
       })
       .then(() => {

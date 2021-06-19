@@ -3,9 +3,9 @@ import { Card, Accordion, Container, Col, Row } from "react-bootstrap"
 import { useGetRecord } from "../../hooks/useGetData"
 
 export default function ObservationTable(props) {
-  const { date, name } = props
+  const { date, tutee, tutor } = props
 
-  const [rows] = useGetRecord(date, name, "Observation")
+  const [rows] = useGetRecord(date, tutee, tutor, "Observation")
   
   return (
     <>
@@ -15,7 +15,7 @@ export default function ObservationTable(props) {
       {rows.length > 0 ? (
         <ObservationRecord rows={rows} />
       ) : (
-        ((date && (name !== "ALL")) && <p>No observation record found for {name} on {date}</p>)
+        ((date && (tutee !== "ALL")) && <p>No observation record found for {tutee} on {date}</p>)
         ||
         (date && <p>No observation record found on {date}</p>)
         ||
@@ -55,7 +55,7 @@ function ObservationRecord(props) {
                   </Row>
                   <Row>
                     <Col md="auto"><strong>Tutor:</strong></Col>
-                    <Col>{row.value.recordedBy}</Col>
+                    <Col>{row.value.tutor}</Col>
                   </Row>
               </Card.Body>
           </Accordion.Collapse>

@@ -12,6 +12,7 @@ export default function NavigationBar() {
     setError("")
 
     try {
+      window.localStorage.clear()
       await logout()
       history.push("/login")
     } catch {

@@ -3,7 +3,7 @@ import { Button, Form, Card, Container, Row, Col } from "react-bootstrap"
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import ObservationTable from "./ObservationTable"
-import { useGetTutee } from "../../hooks/useGetData"
+import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
 import "./Observation.css"
 
 export default function ViewObservation() {
@@ -11,15 +11,19 @@ export default function ViewObservation() {
   const nameRef = useRef()
 
   const [tuteeNames] = useGetTutee()
+  const currName = useGetCurrUserName()
 
   const [ date, setDate ] = useState()
   const [ name, setName ] = useState()
+  const [ tutor, setTutor ] = useState()
   
   useEffect(() => {
     const selectedDate = window.localStorage.getItem("selectedDate")
     setDate(selectedDate)
     const selectedName = window.localStorage.getItem("selectedName")
     setName(selectedName ?? "")
+    const selectedTutor = window.localStorage.getItem("selectedTutor")
+    setTutor(selectedTutor)
   }, [])
 
   return (
@@ -47,6 +51,7 @@ export default function ViewObservation() {
               <Button onClick={() => {
                         window.localStorage.setItem("selectedDate", dateRef.current.value)
                         window.localStorage.setItem("selectedName", nameRef.current.value)
+                        window.localStorage.setItem("selectedTutor", currName)
                       }}
                       variant="secondary" 
                       type="submit"
@@ -56,7 +61,7 @@ export default function ViewObservation() {
             </Form>
             </Card.Body>
           </Card>
-          {(date || name) && <ObservationTable date={date} name={name}/>}
+          {(date || name) && <ObservationTable date={date} tutee={name} tutor={tutor}/>}
         </Container>
         <Footer />
       </Container>

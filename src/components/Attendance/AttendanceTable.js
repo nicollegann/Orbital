@@ -3,10 +3,10 @@ import { Table, Card } from "react-bootstrap"
 import { useGetRecord } from "../../hooks/useGetData"
 
 export default function AttendanceTable(props) {
-  const { date, name } = props
+  const { date, tutee, tutor } = props
 
-  const [rows] = useGetRecord(date, name, "Attendance")
-  
+  const [rows] = useGetRecord(date, tutee, tutor, "Attendance")
+
   return (
     <>
     <Card>
@@ -15,7 +15,7 @@ export default function AttendanceTable(props) {
       {rows.length > 0 ? (
         <AttendanceList rows={rows} />
       ) : (
-        ((date && (name !== "ALL")) && <p>No attendance record found for {name} on {date}</p>)
+        ((date && (tutee !== "ALL")) && <p>No attendance record found for {tutee} on {date}</p>)
         ||
         (date && <p>No attendance record found on {date}</p>)
         ||
@@ -29,7 +29,7 @@ export default function AttendanceTable(props) {
 
 function AttendanceList(props) {
   const { rows } = props
-  console.log(rows)
+
   return (
     <Table striped bordered>
       <thead>
@@ -50,7 +50,7 @@ function AttendanceList(props) {
             <td>{row.value.time}</td>
             <td>{row.value.name}</td>
             <td>{row.value.attendance}</td>
-            <td>{row.value.markedBy}</td>
+            <td>{row.value.tutor}</td>
           </tr>
         ))}
       </tbody>
