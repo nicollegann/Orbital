@@ -71,3 +71,20 @@ export const useGetProfile = () => {
   }, [db])
   return data
 }
+
+
+//Get current tutee profile
+export const useTuteeGetProfile = (name) => {
+  const [data, setData] = useState() 
+  
+  useEffect(() => {
+    db.collection("TuteeProfile")
+      .doc(name)
+      .get()
+      .then((doc) => {
+        const userData = doc.data()
+        setData(userData)
+      })
+  }, [db])
+  return data
+}
