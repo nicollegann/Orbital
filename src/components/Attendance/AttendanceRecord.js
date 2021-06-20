@@ -2,13 +2,13 @@ import React from "react"
 import { Table, Card } from "react-bootstrap"
 import { useGetRecord } from "../../hooks/useGetData"
 
-export default function AttendanceTable(props) {
+export default function AttendanceRecord(props) {
   const { date, tutee, tutor } = props
 
-  const [rows] = useGetRecord(date, tutee, tutor, "Attendance")
-
-  return (
-    <>
+  function AttendanceTable() {
+    const [rows] = useGetRecord(date, tutee, tutor, "Attendance")
+    
+    return (
     <Card>
       <Card.Body>
       <h3 className="mb-4">Attendance Record</h3>
@@ -22,9 +22,11 @@ export default function AttendanceTable(props) {
         <p>No attendance record found</p>
       )}
       </Card.Body>
-      </Card>
-    </>
-  )
+    </Card>
+    )
+  }
+
+  return <AttendanceTable/>
 } 
 
 function AttendanceList(props) {

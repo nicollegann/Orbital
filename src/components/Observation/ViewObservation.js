@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef } from "react"
 import { Button, Form, Card, Container, Row, Col } from "react-bootstrap"
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
-import ObservationTable from "./ObservationTable"
+import ObservationRecord from "./ObservationRecord"
 import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
 import "./Observation.css"
 
@@ -13,18 +13,13 @@ export default function ViewObservation() {
   const [tuteeNames] = useGetTutee()
   const currName = useGetCurrUserName()
 
-  const [ date, setDate ] = useState()
-  const [ name, setName ] = useState()
-  const [ tutor, setTutor ] = useState()
-  
-  useEffect(() => {
-    const selectedDate = window.localStorage.getItem("selectedDate")
-    setDate(selectedDate)
-    const selectedName = window.localStorage.getItem("selectedName")
-    setName(selectedName ?? "")
-    const selectedTutor = window.localStorage.getItem("selectedTutor")
-    setTutor(selectedTutor)
-  }, [])
+  const [ date, setDate ] = useState("")
+  const [ name, setName ] = useState("")
+
+  function handleSubmit() {
+    setDate(dateRef.current.value)
+    setName(nameRef.current.value)
+  }
 
   return (
     <>
@@ -48,20 +43,13 @@ export default function ViewObservation() {
                   </Form.Control>
                 </Form.Group>
               </Row>
-              <Button onClick={() => {
-                        window.localStorage.setItem("selectedDate", dateRef.current.value)
-                        window.localStorage.setItem("selectedName", nameRef.current.value)
-                        window.localStorage.setItem("selectedTutor", currName)
-                      }}
-                      variant="secondary" 
-                      type="submit"
-              >
+              <Button onClick={handleSubmit} variant="secondary" type="button">
               Search
               </Button> 
             </Form>
             </Card.Body>
           </Card>
-          {(date || name) && <ObservationTable date={date} tutee={name} tutor={tutor}/>}
+          {(date || name) && <ObservationRecord date={date} tutee={name} tutor={currName}/>}
         </Container>
         <Footer />
       </Container>
