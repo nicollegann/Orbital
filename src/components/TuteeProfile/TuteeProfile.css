@@ -1,0 +1,24 @@
+.contents-tutee-profile {
+    position: relative;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-left: 0;
+    padding-right: 0;
+    min-height: 90vmin;
+    width: 100vh;
+}
+
+.card-tutee-profile {
+    width: 80%;
+    margin-bottom: 2em;
+}
+
+.card-view-tutee-profile {
+    width: 90%;
+    margin-bottom: 5em;
+}
+
+.card-create-tutee-profile {
+    width: 50%;
+    margin: auto;
+}
