@@ -29,10 +29,7 @@ export default function Profile() {
           <br />
           <strong>School:</strong> {getUserData && getUserData.school}
           <br />
-          <Link to="/update-tutor-profile" className="btn btn-primary w-100 mt-3">Update Tutor Profile</Link>
-          <Link to="/create-tutor-account" className="btn btn-primary w-100 mt-3">Create Tutor Account</Link>
-          <Link to="/search-tutee-profile" className="btn btn-primary w-100 mt-3">Update Tutee Profile</Link>
-          <Link to="/create-tutee-profile" className="btn btn-primary w-100 mt-3">Create Tutee Profile</Link>
+          <Link to="/update-tutor-profile" className="btn btn-primary w-100 mt-3">Edit Profile</Link>
           <Link to="/change-password" className="btn btn-primary w-100 mt-3">Change Password</Link>
         </Card.Body>
       </Card>

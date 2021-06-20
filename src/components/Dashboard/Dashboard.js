@@ -9,6 +9,7 @@ import Observation from "../images/tuteeObservation.png"
 import ObservationRecord from "../images/observationRecord.png"
 import Schedule from "../images/lessonSchedule.png"
 import Feedback from "../images/giveFeedback.png"
+import TuteeProfile from "../images/tuteeProfile.png"
 import { useGetCurrUserName } from "../../hooks/useGetData"
 import "./Dashboard.css"
 
@@ -46,6 +47,9 @@ export default function Dashboard() {
             </Col>
             <Col>
               <Buttons tooltip="Feedback" img={Feedback} link="/feedback"/>  
+            </Col>
+            <Col>
+              <Buttons tooltip="Tutee Profiles" img={TuteeProfile} link="/tutee-profile"/>  
             </Col>
           </Row>
         </Container>

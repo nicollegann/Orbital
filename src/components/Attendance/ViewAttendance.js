@@ -43,9 +43,7 @@ export default function ViewAttendance() {
                   </Form.Control>
                 </Form.Group>
               </Row>
-              <Button variant="secondary" type="button" onClick={handleSubmit}>
-              Search
-              </Button> 
+              <Button variant="secondary" type="button" onClick={handleSubmit}>Search</Button> 
             </Form>
             </Card.Body>
           </Card>

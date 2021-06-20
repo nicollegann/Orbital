@@ -146,4 +146,20 @@ export const useGetRecord = (date, tutee, tutor, record) => {
   return [data]
 }
 
+//Get tutee profile
+export const useGetTuteeProfile = (name) => {
+  const [data, setData] = useState() 
+  
+  useEffect(() => {
+    db.collection("TuteeProfile")
+      .doc(name)
+      .get()
+      .then((doc) => {
+        const tuteeData = doc.data()
+        setData(tuteeData)
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [db])
+  return data
+}
 
