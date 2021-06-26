@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react"
 import { db } from "../../firebase"
 import { Card, Button, Form, Alert, Row, Col } from "react-bootstrap"
 import { useGetTuteeProfile } from "../../hooks/useGetData"
+import "../TutorManager.css"
+import "../TutorManager.css"
 
 export default function TuteeProfileRecord(props) {
   const { tutee } = props
@@ -44,11 +46,11 @@ export default function TuteeProfileRecord(props) {
     }
 
     return (
-      <>
+      <div className="styling">
         <Card className="card-view-tutee-profile">
           <Card.Body>
             <Row style={{marginBottom:"1em"}}>
-              <Col md={{span: 4, offset:4}}><h3 className="text-center mb-1">Tutee Profile</h3></Col>
+              <Col md={{span: 4, offset:4}}><h3 className="text-center mb-1 bottomBorder" style={{width: "90%"}}>Tutee Profile</h3></Col>
               <Col style={{paddingRight:"0", paddingLeft:"15%"}}>
                 <Button variant="secondary" disabled={loading} type="button" onClick={() => setUpdate((false))}>Edit Details</Button>
               </Col>
@@ -74,7 +76,7 @@ export default function TuteeProfileRecord(props) {
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Date Of Birth</Form.Label>
-                <Form.Control ref={dobRef} type="date" defaultValue={details && details.dateOfBirth} readOnly={update}/>
+                <Form.Control ref={dobRef} type="date" defaultValue={details && details.dateOfBirth} readOnly={true}/>
               </Form.Group>
               <Form.Group className="mb-4">
                 <Form.Label>School</Form.Label>
@@ -84,11 +86,9 @@ export default function TuteeProfileRecord(props) {
             </Form>
           </Card.Body>
         </Card>
-      </>
+      </div>
     )
   }
 
   return <TuteeProfile />
 }
-
-    

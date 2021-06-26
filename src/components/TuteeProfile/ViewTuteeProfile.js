@@ -6,6 +6,7 @@ import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import TuteeProfileRecord from "./TuteeProfileRecord"
 import "./TuteeProfile.css"
+import "../TutorManager.css"
 
 export default function ViewTuteeProfile() {
   const history = useHistory()
@@ -20,17 +21,17 @@ export default function ViewTuteeProfile() {
   }
 
   return (
-    <>
+    <div className="styling bg6">
       <NavigationBar />
       <Container fluid style={{paddingLeft: "0", paddingRight: "0"}}>
         <Container className="contents-tutee-profile">
           <Row>
             <Col md={5}>
-              <Card className="card-tutee-profile">
+              <Card >
                 <ListGroup variant="flush">
                   <ListGroup.Item>
-                  <h2 className="text-center mb-1">Search Tutee Profile</h2>
-                  <p className="text-center mb-4">Select a tutee to view/update profile.</p>
+                  <center><h2 className="text-center mb-1 bottomBorder" style={{width: "70%"}}>Search Tutee Profile</h2></center>
+                  <em><p className="text-center mb-4">Select a tutee to view/update profile.</p></em>
                   <Form className="mb-4">
                     <Form.Group className="mb-3">
                       <Form.Label>Name</Form.Label>
@@ -54,6 +55,6 @@ export default function ViewTuteeProfile() {
         </Container>
         <Footer />
       </Container>
-    </>
+    </div>
   );
 };

@@ -5,6 +5,8 @@ import Footer from "../Footer/Footer"
 import AttendanceRecord from "./AttendanceRecord"
 import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
 import "./Attendance.css"
+import "../TutorManager.css"
+
 
 export default function ViewAttendance() {
   const dateRef = useRef()
@@ -22,13 +24,13 @@ export default function ViewAttendance() {
   }
 
   return (
-    <>
+    <div className="styling bg9">
       <NavigationBar />
-      <Container fluid className="bg-attendance" style={{paddingLeft: "0", paddingRight: "0"}}>
+      <Container fluid style={{paddingLeft: "0", paddingRight: "0"}}>
         <Container className="contents-attendance">
           <Card className="card-view-attendance">
             <Card.Body>
-            <h2 className="text-center mb-4">View Attendance Records</h2>
+            <center><h2 className="text-center mb-4 bottomBorder" style={{width: "55%"}}>View Attendance Records</h2></center>
             <Form>
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="date">
@@ -51,6 +53,6 @@ export default function ViewAttendance() {
         </Container>
         <Footer />
       </Container>
-    </>
+    </div>
   ) 
 } 

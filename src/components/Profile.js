@@ -3,6 +3,7 @@ import { Card } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 import NavigationBar from "./NavigationBar"
+import "./TutorManager.css"
 import { useGetProfile } from "../hooks/useGetData"
 
 export default function Profile() {
@@ -11,12 +12,12 @@ export default function Profile() {
   // retrieve user data from firestore
   const getUserData = useGetProfile()
 
-  return (
-    <> 
+    return (
+    <div className="bg5">
       <NavigationBar />
-      <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
-        <Card.Body>
-          <h2 className="text-center mb-4">My Profile</h2>
+      <Card className="justify-content-md-center styling" style={{width: "35rem", height: "100%", margin: "10% auto 1%", border: "none"}}>
+        <Card.Body style={{height: "100%"}}>
+          <center><h2 className="text-center mb-4 bottomBorder">My Profile</h2></center>
           <strong>Name:</strong> {getUserData && getUserData.name}
           <br />
           <strong>Email:</strong> {currentUser.email}
@@ -29,14 +30,24 @@ export default function Profile() {
           <br />
           <strong>School:</strong> {getUserData && getUserData.school}
           <br />
-          <Link to="/update-tutor-profile" className="btn btn-primary w-100 mt-3">Edit Profile</Link>
+          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">Edit Profile</Link>
           <Link to="/change-password" className="btn btn-primary w-100 mt-3">Change Password</Link>
         </Card.Body>
+        
       </Card>
       <div className="w-100 text-center mt-4">
-          <Link to="/">Back to Dashboard</Link>
+        <Link to="/">Back to Dashboard</Link>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
       </div>
-    </>
+    </div>
   )
 }
-

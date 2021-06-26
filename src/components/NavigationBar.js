@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import { Alert, Navbar, Nav } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
+import "./NavigationBar.css"
+import "./TutorManager.css"
 
 export default function NavigationBar() {
   const [error, setError] = useState("")
@@ -21,8 +23,8 @@ export default function NavigationBar() {
   }
       
   return (
-    <>  
-      <Navbar bg="dark" variant="dark" id="nav" style={{ padding: "15px 20px"}}>
+      <div style={{ fontFamily: "Georgia"}}>  
+      <Navbar className="backgroundcolor" variant="dark" id="nav" style={{ padding: "15px 20px"}}>
         <Navbar.Brand>TutorManager</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -36,6 +38,6 @@ export default function NavigationBar() {
             </Nav>
           </Navbar.Collapse>
       </Navbar>
-    </>
+    </div>
   )
 }

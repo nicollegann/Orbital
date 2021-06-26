@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert, Container } from "react-bootstrap"
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
+import "../TutorManager.css"
+import { Link } from "react-router-dom"
 import { db } from "../../firebase"
 
 export default function CreateTuteeProfile() {   
@@ -38,13 +40,13 @@ export default function CreateTuteeProfile() {
   }
 
     return (
-      <>
+      <div className="styling bg5">
         <NavigationBar />
         <Container fluid style={{paddingLeft: "0", paddingRight: "0"}}>
           <Container className="contents-tutee-profile">
             <Card className="card-create-tutee-profile">
               <Card.Body>
-                <h2 className="text-center mb-4">Create New Tutee Profile</h2>
+                <center><h2 className="text-center mb-4 bottomBorder" style={{width: "60%"}}>Create New Tutee Profile</h2></center>
                 {error && <Alert variant="danger">{error}</Alert>}
                 {message && <Alert variant="success">{message}</Alert>}
                 <Form onSubmit={handleSubmit}>
@@ -76,9 +78,12 @@ export default function CreateTuteeProfile() {
                 </Form>
               </Card.Body>
             </Card>
+            <div className="w-100 text-center mt-2">
+              <Link to="/tutee-profile">Back to Tutee Profiles</Link>
+            </div>
           </Container>
           <Footer />
         </Container>
-      </>
+      </div>
     )
 }

@@ -6,6 +6,7 @@ import Footer from "../Footer/Footer"
 import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
 import { useHistory } from "react-router-dom"
 import "./Attendance.css"
+import "../TutorManager.css"
 
 
 export default function MarkAttendance() {
@@ -61,13 +62,13 @@ export default function MarkAttendance() {
   }
 
   return (
-    <>
+    <div className="styling">
     <NavigationBar />
     <Container fluid className="bg-attendance" style={{paddingLeft: "0", paddingRight: "0"}}>
       <Container className="contents-attendance">
         <Card className="card-attendance">
           <Card.Body>
-            <h2 className="text-center mb-4">Mark Attendance</h2>
+            <center><h2 className="bottomBorder text-center mb-4">Mark Attendance</h2></center>
             {error && <Alert variant="danger">{error}</Alert>}
             {message && <Alert variant="success">{message}</Alert>}
             <Form onSubmit={handleSubmit}>
@@ -109,6 +110,6 @@ export default function MarkAttendance() {
       </Container> 
       <Footer /> 
     </Container>
-    </>
+    </div>
   )
 }

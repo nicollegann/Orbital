@@ -1,3 +1,4 @@
+  
 import { useEffect, useState} from "react";
 import { db } from "../firebase"
 import { useAuth } from "../contexts/AuthContext"
@@ -61,9 +62,93 @@ export const useGetProfile = () => {
   return data
 }
 
+//Get tutee attendance/observation record (by date / name)
+export const useGetRecord = (date, tutee, tutor, record) => {
+  
+  const [data, setData] = useState([])
+  
+  const retrieveData = (querySnapShot) => {
+    let arr = []
+    querySnapShot.forEach((doc) => 
+      arr.push({ id: doc.id, 
+                 value: doc.data() })
+    )
+    setData(arr)
+  }
 
-//Get current tutee profile
-export const useTuteeGetProfile = (name) => {
+  useEffect(() => {
+    if (tutor !== "Admin") {
+      //if tutor specifies tutee name and date
+      if (tutee !== "ALL" && date !== "") {
+        db.collection(record)
+        .doc(date)
+        .collection(date)
+        .where("name", "==", tutee)
+        .where("tutor", "==", tutor)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+        //if tutor specifies date only
+      } else if (tutee === "ALL" && date !== "") {
+        db.collection(record)
+        .doc(date)
+        .collection(date)
+        .where("tutor", "==", tutor)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+        //if tutor specifies name only
+      } else if (tutee !== "ALL" && date === "") {
+        db.collection("TuteeProfile")
+        .doc(tutee)
+        .collection(record)
+        .where("tutor", "==", tutor)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+      }
+    } else {
+      //if admin specifies tutee name and date
+      if (tutee !== "ALL" && date !== "") {
+        db.collection(record)
+        .doc(date)
+        .collection(date)
+        .where("name", "==", tutee)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+        //if admin specifies date only
+      } else if (tutee === "ALL" && date !== "") {
+        db.collection(record)
+        .doc(date)
+        .collection(date)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+        //if admin specifies name only
+      } else if (tutee !== "ALL" && date === "") {
+        db.collection("TuteeProfile")
+        .doc(tutee)
+        .collection(record)
+        .get()
+        .then((querySnapShot) => {
+          retrieveData(querySnapShot)
+        })
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [db])
+    
+  return [data]
+}
+
+//Get tutee profile
+export const useGetTuteeProfile = (name) => {
   const [data, setData] = useState() 
   
   useEffect(() => {
@@ -71,9 +156,10 @@ export const useTuteeGetProfile = (name) => {
       .doc(name)
       .get()
       .then((doc) => {
-        const userData = doc.data()
-        setData(userData)
+        const tuteeData = doc.data()
+        setData(tuteeData)
       })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db])
   return data
 }

@@ -6,6 +6,8 @@ import Footer from "../Footer/Footer"
 import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
 import { useHistory } from "react-router-dom"
 import "./Observation.css"
+import "../TutorManager.css"
+
 
 export default function TuteeObservation() {
   const history = useHistory()
@@ -58,14 +60,14 @@ export default function TuteeObservation() {
   }
 
   return (
-    <>
+    <div className="styling">
       <NavigationBar />
       <Container fluid className="bg-observation" style={{paddingLeft: "0", paddingRight: "0"}}>
       <Container className="contents-observation">
         <Card className="card-observation">
           <Card.Body>
-            <h2 className="text-center mb-1">Tutee Observation</h2>
-            <p className="text-center mb-4">Record tutees' progress after each lesson.</p>
+            <center><h2 className="text-center mb-1 bottomBorder" style={{width: "30%"}}>Tutee Observation</h2></center>
+            <em><p className="text-center mb-4">Record tutees' progress after each lesson.</p></em>
             {error && <Alert variant="danger">{error}</Alert>}
             {message && <Alert variant="success">{message}</Alert>}
             <Form onSubmit={handleSubmit}>
@@ -104,6 +106,6 @@ export default function TuteeObservation() {
       </Container> 
       <Footer /> 
     </Container>          
-    </>
+    </div>
   )
 }

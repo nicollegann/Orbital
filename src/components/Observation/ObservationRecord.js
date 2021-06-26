@@ -1,6 +1,7 @@
 import React from "react"
 import { Card, Accordion, Container, Col, Row } from "react-bootstrap"
 import { useGetRecord } from "../../hooks/useGetData"
+import "../TutorManager.css"
 
 export default function ObservationRecord(props) {
   const { date, tutee, tutor } = props
@@ -12,7 +13,7 @@ export default function ObservationRecord(props) {
       <>
       <Card>
         <Card.Body>
-        <h3 className="mb-4">Observation Record</h3>
+        <center><h3 className="mb-4 bottomBorder" style={{width: "21%"}}>Observation Record</h3></center>
         {rows.length > 0 ? (
           <ObservationList rows={rows} />
         ) : (

@@ -12,6 +12,7 @@ import Feedback from "../images/giveFeedback.png"
 import TuteeProfile from "../images/tuteeProfile.png"
 import { useGetCurrUserName } from "../../hooks/useGetData"
 import "./Dashboard.css"
+import "../TutorManager.css"
 
 
 export default function Dashboard() {    
@@ -20,11 +21,11 @@ export default function Dashboard() {
   return (
     <>
       <NavigationBar />
-      <Container fluid className="bg3" style={{paddingLeft: "0", paddingRight: "0"}}>
+      <Container fluid className="bg3" style={{paddingLeft: "0", paddingRight: "0", fontFamily: "Georgia" }}>
         <Container className="contents-dashboard">
           <Row>
-            <Card bg="light" border="light" className="mt-4">
-              <h3>Welcome, {getUserData}</h3>
+            <Card className="mt-4 styling dashboardBorder" style={{}}>
+              <h3>Welcome, <em>{getUserData}</em></h3>
             </Card>
           </Row>
           <Row md={4} className="mt-5">
@@ -32,7 +33,7 @@ export default function Dashboard() {
               <Buttons tooltip="Mark Attendance" img={Attendance} link="/mark-attendance"/>
             </Col>
             <Col>
-              <Buttons tooltip="View Attendance Record" img={AttendanceRecord} link="/view-attendance"/>
+              <Buttons tooltip="View Attendance Record" rel="stylesheet" href="./TutorManager.css" img={AttendanceRecord} link="/view-attendance"/>
             </Col>
             <Col>
               <Buttons tooltip="Input Tutee Observation" img={Observation} link="/tutee-observation"/>  

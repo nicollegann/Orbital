@@ -1,0 +1,72 @@
+.styling {
+    /* background-color: rgba(210,233,245,255) !important; */
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    font-family: "Georgia";
+    /* border: none !important; */
+}
+
+
+.bottomBorder {
+    border-style: none;
+    border-bottom-style: solid;
+    /* border-bottom-color: rgb(108, 162, 206);
+    border-width: 12px; */
+    text-align: center !important;
+    width: 40%;
+}
+
+.bg5 {
+    position: relative;
+    background-image: url(./images/bg5.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-attachment: fixed;
+    height: 100%
+}
+
+.bg6 {
+    position: relative;
+    background-image: url(./images/bg6.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-attachment: fixed;
+    height: 100%
+}
+
+.bg7 {
+    position: relative;
+    background-image: url(./images/bg7.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-attachment: fixed;
+    height: 100%
+}
+
+.bg8 {
+    position: relative;
+    background-image: url(./images/bg8.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-attachment: fixed;
+    height: 100%
+}
+
+.bg9 {
+    position: relative;
+    background-image: url(./images/bg9.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-attachment: fixed;
+    height: 100%
+}
+
+.dashboardBorder {
+    border: none !important;
+    border-bottom-style: solid !important;
+}
+

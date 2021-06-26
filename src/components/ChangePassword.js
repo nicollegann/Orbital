@@ -3,6 +3,8 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 import NavigationBar from "./NavigationBar"
+import "./TutorManager.css"
+
 
 export default function ChangePassword() {   
   const emailRef = useRef()
@@ -38,11 +40,11 @@ export default function ChangePassword() {
   }
 
   return (
-    <> 
+    <div className="styling bg5"> 
       <NavigationBar />
       <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
         <Card.Body>
-          <h2 className="text-center mb-4">Change Password</h2>
+          <h2 className="text-center mb-4 bottomBorder">Change Password</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <Form onSubmit={handleSubmit}>
@@ -64,7 +66,17 @@ export default function ChangePassword() {
       </Card>
       <div className="w-100 text-center mt-2">
         <Link to="/profile">Back to Profile</Link>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
       </div>    
-    </>
+    </div>
   );
 }

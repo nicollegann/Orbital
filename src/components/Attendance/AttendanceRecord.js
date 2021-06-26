@@ -1,6 +1,7 @@
 import React from "react"
 import { Table, Card } from "react-bootstrap"
 import { useGetRecord } from "../../hooks/useGetData"
+import "../TutorManager.css"
 
 export default function AttendanceRecord(props) {
   const { date, tutee, tutor } = props
@@ -11,7 +12,7 @@ export default function AttendanceRecord(props) {
     return (
     <Card>
       <Card.Body>
-      <h3 className="mb-4">Attendance Record</h3>
+      <center><h3 className="mb-4 bottomBorder" style={{width: "19%"}}>Attendance Record</h3></center>
       {rows.length > 0 ? (
         <AttendanceList rows={rows} />
       ) : (

@@ -5,6 +5,7 @@ import { Card, Form, Button, Alert } from "react-bootstrap"
 import NavigationBar from "./NavigationBar"
 import { useGetProfile } from "../hooks/useGetData"
 import { Link } from "react-router-dom"
+import "./TutorManager.css"
 
 
 export default function UpdateTutorProfile() {
@@ -49,11 +50,11 @@ export default function UpdateTutorProfile() {
   
 
   return (
-    <>
+    <div className="bg5">
       <NavigationBar />
-      <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
+      <Card className="justify-content-md-center styling" style={{width: "35rem", margin: "10% auto 1%", borderStyle: "solid !important"}}>
         <Card.Body>
-          <h2 className="text-center mb-4">Update Tutor Profile</h2>
+          <center><h2 className="text-center mb-4 bottomBorder" style={{width: "60%"}}>Update Tutor Profile</h2></center>
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <Form onSubmit={saveData}>
@@ -75,7 +76,7 @@ export default function UpdateTutorProfile() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Date Of Birth</Form.Label>
-              <Form.Control ref={dobRef} type="date" defaultValue={getUserData && getUserData.dateOfBirth}/>
+              <Form.Control ref={dobRef} type="date" defaultValue={getUserData && getUserData.dateOfBirth} disabled={true}/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>School</Form.Label>
@@ -89,7 +90,7 @@ export default function UpdateTutorProfile() {
         <Link to="/profile">Back to Profile</Link>
       </div>
       <br></br>
-    </>
+    </div>
   );
 };
 

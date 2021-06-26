@@ -15,7 +15,7 @@ export default function Buttons(props) {
         {({ ref, ...triggerHandler }) => (
           <Button
             variant="secondary"
-            style={{borderRadius: "50%"}}
+            style={{borderRadius: "50%", backgroundColor: "#053742", border: "white"}}
             {...triggerHandler}
           >
           <Image ref={ref} src={props.img} alt={props.img + "-img"} roundedCircle onClick={ () => history.push(props.link)} />

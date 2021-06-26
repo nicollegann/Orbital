@@ -5,6 +5,7 @@ import Footer from "../Footer/Footer"
 import ObservationRecord from "./ObservationRecord"
 import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
 import "./Observation.css"
+import "../TutorManager.css"
 
 export default function ViewObservation() {
   const dateRef = useRef()
@@ -22,13 +23,13 @@ export default function ViewObservation() {
   }
 
   return (
-    <>
+    <div className="styling bg8">
       <NavigationBar />
-      <Container fluid className="bg-observation" style={{paddingLeft: "0", paddingRight: "0"}}>
+      <Container fluid style={{paddingLeft: "0", paddingRight: "0"}}>
         <Container className="contents-observation">
           <Card className="card-view-observation">
             <Card.Body>
-            <h2 className="text-center mb-4">View Records</h2>
+            <center><h2 className="text-center mb-4 bottomBorder" style={{width: "30%"}}>View Records</h2></center>
             <Form>
               <Row className="mb-4">
                 <Form.Group as={Col} controlId="date">
@@ -53,6 +54,6 @@ export default function ViewObservation() {
         </Container>
         <Footer />
       </Container>
-    </>
+    </div>
   ) 
 } 
