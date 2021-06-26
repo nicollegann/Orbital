@@ -38,7 +38,7 @@ export default function CreateTutorAccount() {
       <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "30%"}}>
           <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
             <Card.Body>
-              <h2 className="text-center mb-4">Create New Tutor Account</h2>
+              <center><h2 className="text-center mb-4 bottomBorder" style={{width: "75%"}}>Create New Tutor Account</h2></center>
               {error && <Alert variant="danger">{error}</Alert>}
               {message && <Alert variant="success">{message}</Alert>}
               <Form onSubmit={handleSubmit}>

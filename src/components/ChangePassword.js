@@ -44,7 +44,7 @@ export default function ChangePassword() {
       <NavigationBar />
       <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
         <Card.Body>
-          <h2 className="text-center mb-4 bottomBorder">Change Password</h2>
+          <center><h2 className="text-center mb-4 bottomBorder" style={{width:"50%"}}>Change Password</h2></center>
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <Form onSubmit={handleSubmit}>

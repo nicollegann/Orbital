@@ -52,9 +52,9 @@ export default function UpdateTutorProfile() {
   return (
     <div className="bg5">
       <NavigationBar />
-      <Card className="justify-content-md-center styling" style={{width: "35rem", margin: "10% auto 1%", borderStyle: "solid !important"}}>
+      <Card className="justify-content-md-center styling" style={{width: "35rem", margin: "8% auto 1%", borderStyle: "solid !important"}}>
         <Card.Body>
-          <center><h2 className="text-center mb-4 bottomBorder" style={{width: "60%"}}>Update Tutor Profile</h2></center>
+          <center><h2 className="text-center mb-4 bottomBorder" style={{width: "43%"}}>Update Profile</h2></center>
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <Form onSubmit={saveData}>
