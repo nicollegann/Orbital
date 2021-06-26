@@ -60,27 +60,27 @@ export default function TuteeProfileRecord(props) {
             <Form onSubmit={saveData}>
               <Form.Group className="mb-3">
                 <Form.Label>Name</Form.Label>
-                <Form.Control ref={nameRef} type="text" defaultValue={details && details.name} readOnly={update} />
+                <Form.Control ref={nameRef} type="text" defaultValue={details && details.name} readOnly={update} required/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Email</Form.Label>
-                <Form.Control ref={emailRef} type="email" defaultValue={details && details.email} readOnly={update}/>
+                <Form.Control ref={emailRef} type="email" defaultValue={details && details.email} readOnly={update} required/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Contact No.</Form.Label>
-                <Form.Control ref={contactRef} type="tel" defaultValue={details && details.contact} readOnly={update}/>
+                <Form.Control ref={contactRef} type="tel" defaultValue={details && details.contact} readOnly={update} required/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Emergency Contact No.</Form.Label>
-                <Form.Control ref={emergencyRef} type="tel" defaultValue={details && details.emergencyContact} readOnly={update}/>
+                <Form.Control ref={emergencyRef} type="tel" defaultValue={details && details.emergencyContact} readOnly={update} required/>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Date Of Birth</Form.Label>
-                <Form.Control ref={dobRef} type="date" defaultValue={details && details.dateOfBirth} readOnly={update}/>
+                <Form.Control ref={dobRef} type="date" defaultValue={details && details.dateOfBirth} readOnly={update} required/>
               </Form.Group>
               <Form.Group className="mb-4">
                 <Form.Label>School</Form.Label>
-                <Form.Control ref={schoolRef} type="text" defaultValue={details && details.school} readOnly={update}/>
+                <Form.Control ref={schoolRef} type="text" defaultValue={details && details.school} readOnly={update} required/>
               </Form.Group>
               <Button variant="secondary" disabled={update} type="submit">Confirm</Button>
             </Form>

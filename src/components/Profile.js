@@ -13,7 +13,7 @@ export default function Profile() {
   const getUserData = useGetProfile()
 
     return (
-    <div className="bg5">
+    <div className="bg5" style={{paddingBottom: "20%"}}>
       <NavigationBar />
       <Card className="justify-content-md-center styling" style={{width: "35rem", height: "100%", margin: "10% auto 1%", border: "none"}}>
         <Card.Body style={{height: "100%"}}>

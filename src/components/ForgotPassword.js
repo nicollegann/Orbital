@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react'
-import { Form, Button, Card, Alert } from 'react-bootstrap'
+import { Form, Button, Card, Alert, Container } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link } from "react-router-dom"
+import "./TutorManager.css"
+
 
 export default function ForgotPassword() {   
   const emailRef = useRef();
@@ -27,8 +29,9 @@ export default function ForgotPassword() {
   }
 
   return (
-    <>
-      <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
+    <div className="bg9">
+    <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "30%"}}>
+      <Card className="justify-content-md-center styling" style={{width: "35rem", margin: "10% auto 1%"}}>
         <Card.Body>
           <h2 className="text-center mb-4">Reset Password</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -45,6 +48,7 @@ export default function ForgotPassword() {
           </div>
         </Card.Body>
       </Card>
-    </>
+      </Container>
+    </div>
   );
 }

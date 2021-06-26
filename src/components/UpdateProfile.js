@@ -60,7 +60,7 @@ export default function UpdateTutorProfile() {
           <Form onSubmit={saveData}>
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
-              <Form.Control ref={nameRef} type="text" defaultValue={getUserData && getUserData.name} />
+              <Form.Control ref={nameRef} type="text" defaultValue={getUserData && getUserData.name} required/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
@@ -68,19 +68,19 @@ export default function UpdateTutorProfile() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Contact No.</Form.Label>
-              <Form.Control ref={contactRef} type="tel" defaultValue={getUserData && getUserData.contact} />
+              <Form.Control ref={contactRef} type="tel" defaultValue={getUserData && getUserData.contact} required/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Emergency Contact No.</Form.Label>
-              <Form.Control ref={emergencyRef} type="tel" defaultValue={getUserData && getUserData.emergencyContact}/>
+              <Form.Control ref={emergencyRef} type="tel" defaultValue={getUserData && getUserData.emergencyContact} required/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Date Of Birth</Form.Label>
-              <Form.Control ref={dobRef} type="date" defaultValue={getUserData && getUserData.dateOfBirth}/>
+              <Form.Control ref={dobRef} type="date" defaultValue={getUserData && getUserData.dateOfBirth} required/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>School</Form.Label>
-              <Form.Control ref={schoolRef} type="text" defaultValue={getUserData && getUserData.school}/>
+              <Form.Control ref={schoolRef} type="text" defaultValue={getUserData && getUserData.school} required/>
             </Form.Group>
             <Button disabled={loading} className="w-100" type="submit">Update</Button>
           </Form>

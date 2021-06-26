@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Form, Button, Card, Alert, Container } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
+import "./TutorManager.css"
 import { Link } from "react-router-dom"
+
 
 export default function CreateTutorAccount() {   
   const emailRef = useRef()
@@ -32,7 +34,8 @@ export default function CreateTutorAccount() {
   }
 
     return (
-      <>
+      <div className="bg5 styling">
+      <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "30%"}}>
           <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
             <Card.Body>
               <h2 className="text-center mb-4">Create New Tutor Account</h2>
@@ -58,6 +61,7 @@ export default function CreateTutorAccount() {
           <div className="w-100 text-center mt-2">
             <Link to="/login">Back to Login</Link>
           </div>
-        </>
+          </Container>
+        </div>
     );
 }
