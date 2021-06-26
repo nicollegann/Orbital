@@ -37,16 +37,6 @@ export default function Profile() {
       </Card>
       <div className="w-100 text-center mt-4">
         <Link to="/">Back to Dashboard</Link>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
       </div>
     </div>
   )

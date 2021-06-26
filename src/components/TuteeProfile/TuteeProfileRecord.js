@@ -60,7 +60,7 @@ export default function TuteeProfileRecord(props) {
             <Form onSubmit={saveData}>
               <Form.Group className="mb-3">
                 <Form.Label>Name</Form.Label>
-                <Form.Control ref={nameRef} type="text" defaultValue={details && details.name} readOnly={true} />
+                <Form.Control ref={nameRef} type="text" defaultValue={details && details.name} readOnly={update} />
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Email</Form.Label>
@@ -76,7 +76,7 @@ export default function TuteeProfileRecord(props) {
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Date Of Birth</Form.Label>
-                <Form.Control ref={dobRef} type="date" defaultValue={details && details.dateOfBirth} readOnly={true}/>
+                <Form.Control ref={dobRef} type="date" defaultValue={details && details.dateOfBirth} readOnly={update}/>
               </Form.Group>
               <Form.Group className="mb-4">
                 <Form.Label>School</Form.Label>

@@ -76,7 +76,7 @@ export default function UpdateTutorProfile() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Date Of Birth</Form.Label>
-              <Form.Control ref={dobRef} type="date" defaultValue={getUserData && getUserData.dateOfBirth} disabled={true}/>
+              <Form.Control ref={dobRef} type="date" defaultValue={getUserData && getUserData.dateOfBirth}/>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>School</Form.Label>
