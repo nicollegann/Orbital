@@ -36,7 +36,8 @@ export default function ViewTuteeProfile() {
                     <Form.Group className="mb-3">
                       <Form.Label>Name</Form.Label>
                       <Form.Control as="select" ref={nameRef}>
-                        {tuteeNames.map((n) => <option key={n.value} value={n.name}>{n.name}</option>)}
+                        <option disabled={true}>Select...</option>
+                        {(tuteeNames.slice(1)).map((n) => <option key={n.value} value={n.name}>{n.name}</option>)}
                       </Form.Control>
                     </Form.Group>
                     <Button variant="secondary" type="button" onClick={handleSubmit}>Search</Button>
