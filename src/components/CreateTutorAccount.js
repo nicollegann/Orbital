@@ -9,7 +9,7 @@ export default function CreateTutorAccount() {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { createAccount } = useAuth()
+  const { signup } = useAuth()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
@@ -23,12 +23,13 @@ export default function CreateTutorAccount() {
     }
 
     try {
-      setError("");
-      setLoading(true);
-      await createAccount(emailRef.current.value, passwordRef.current.value);
+      setError("")
+      setMessage("")
+      setLoading(true)
+      await signup(emailRef.current.value, passwordRef.current.value)
       setMessage("Successfully created new account.")
-    } catch {
-      setError("Failed to create an account.")
+    } catch (e) {
+      setError(e.message || "Failed to create an account.")
     }
     setLoading(false)
   }

@@ -20,6 +20,8 @@ export default function AttendanceRecord(props) {
         ||
         (date && <p>No attendance record found on {date}</p>)
         ||
+        (tutee === "ALL" && <p>Please select date/name </p>)
+        ||
         <p>No attendance record found</p>
       )}
       </Card.Body>

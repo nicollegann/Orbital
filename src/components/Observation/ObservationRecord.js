@@ -21,6 +21,8 @@ export default function ObservationRecord(props) {
           ||
           (date && <p>No observation record found on {date}</p>)
           ||
+          (tutee === "ALL" && <p>Please select date/name </p>)
+          ||
           <p>No observation record found</p>
         )}
         </Card.Body>
