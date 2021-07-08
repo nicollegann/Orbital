@@ -21,6 +21,24 @@ export const useGetTutee = () => {
   return [tutee];
 };
 
+//Get tutor names
+export const useGetTutor = () => {
+  const [tutor, setTutor] = useState([]);
+  useEffect(() => {
+    db.collection("TutorProfile")
+      .get()
+      .then((querySnapshot) => {
+        let arr = [{ value: "ALLTUTORS", name: "ALL"}];
+        querySnapshot.docs.map((doc) =>
+          arr.push({ value: doc.id.name, name: doc.id.name })
+        );
+        setTutor(arr);
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [db]);
+  return [tutor];
+};
+
 //Get 'name' field of current user
 export const useGetCurrUserName = () => {
   const { currentUser, getEmail } = useAuth()
