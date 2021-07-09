@@ -17,7 +17,7 @@ import "../TutorManager.css"
 
 export default function Dashboard() {    
   const getUserData = useGetCurrUserName()
-  
+
   return (
     <>
       <NavigationBar />
@@ -43,8 +43,8 @@ export default function Dashboard() {
             </Col>
           </Row>
           <Row md={4} className="mt-5">
-            <Col> 
-              <Buttons tooltip="Lesson Schedule" img={Schedule} link="/schedule"/>
+            <Col>
+              <Buttons tooltip="Lesson Schedule" img={Schedule} link="/view-upcoming-lesson" />
             </Col>
             <Col>
               <Buttons tooltip="Feedback" img={Feedback} link="/feedback"/>  

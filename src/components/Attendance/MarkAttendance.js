@@ -88,7 +88,7 @@ export default function MarkAttendance() {
                 <Form.Label>Tutee's Name</Form.Label>
                 <Form.Control as="select" ref={nameRef} required>
                   <option disabled={true}>Select...</option>
-                  {(tuteeNames.slice(1)).map((n) => <option key={n.value} value={n.name}>{n.name}</option>)}
+                  {(tuteeNames.slice(1)).map((n) => <option key={n.key} value={n.value}>{n.value}</option>)}
                 </Form.Control>
               </Form.Group>
 

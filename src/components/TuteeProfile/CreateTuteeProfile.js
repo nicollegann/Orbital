@@ -5,6 +5,7 @@ import Footer from "../Footer/Footer"
 import "../TutorManager.css"
 import { Link } from "react-router-dom"
 import { db } from "../../firebase"
+import firebase from "firebase/app"
 
 export default function CreateTuteeProfile() {   
   const [error, setError] = useState("")
@@ -16,13 +17,14 @@ export default function CreateTuteeProfile() {
   const emergencyRef = useRef()
   const dobRef = useRef()
   const schoolRef = useRef()
+  const tutorRef = useRef()
 
-  // to save user data to firestore
   const handleSubmit = (event) => {
     event.preventDefault()
     setLoading(true)
     setError("")
     
+    // save tutee details to firestore
     db.collection("TuteeProfile")
       .doc(nameRef.current.value)
       .set({
@@ -32,9 +34,17 @@ export default function CreateTuteeProfile() {
         emergencyContact: emergencyRef.current.value,
         dateOfBirth: dobRef.current.value,
         school: schoolRef.current.value,
+        assignedTutor: tutorRef.current.value,
       })
-      .then(() => setMessage("Successfully created new tutee profile."))
+      .then(() => setMessage(`Successfully created new profile for ${nameRef.current.value}.`))
       .catch(() => setError("Failed to create tutee profile."))
+
+    // update name list with new tutee's name  
+    db.collection("TuteeProfile")
+      .doc("NameList")
+      .update({
+        names: firebase.firestore.FieldValue.arrayUnion(nameRef.current.value)
+      })  
 
     setLoading(false)
   }
@@ -73,6 +83,10 @@ export default function CreateTuteeProfile() {
                   <Form.Group id="school" className="mb-3">
                     <Form.Label>School</Form.Label>
                     <Form.Control type="text" ref={schoolRef} required />
+                  </Form.Group>
+                  <Form.Group id="tutor" className="mb-3">
+                    <Form.Label>Assigned Tutor</Form.Label>
+                    <Form.Control type="text" ref={tutorRef} />
                   </Form.Group>
                   <Button disabled={loading} className="w-100" type="submit">Confirm</Button>
                 </Form>

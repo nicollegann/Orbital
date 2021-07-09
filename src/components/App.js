@@ -15,7 +15,11 @@ import MarkAttendance from "./Attendance/MarkAttendance"
 import ViewAttendance from "./Attendance/ViewAttendance"
 import TuteeObservation from "./Observation/TuteeObservation"
 import ViewObservation from "./Observation/ViewObservation"
-import Schedule from "./Schedule"
+import ViewUpcomingLesson from "./Schedule/ViewUpcomingLesson"
+import ScheduleLesson from "./Schedule/ScheduleLesson"
+import TuteeAvailability from "./Schedule/TuteeAvailability"
+import AdminSetSlot from "./Schedule/AdminSetSlot"
+import CancelLesson from "./Schedule/CancelLesson"
 import Feedback from "./Feedback"
 
 function App() {
@@ -34,11 +38,15 @@ function App() {
               <PrivateRoute path="/view-attendance" component={ViewAttendance} />
               <PrivateRoute path="/tutee-observation" component={TuteeObservation} />
               <PrivateRoute path="/view-observation" component={ViewObservation} />
-              <PrivateRoute path="/schedule" component={Schedule} />
+              <PrivateRoute path="/view-upcoming-lesson" component={ViewUpcomingLesson} />
+              <PrivateRoute path="/schedule-lesson" component={ScheduleLesson} />
+              <PrivateRoute path="/set-slot" component={AdminSetSlot}/>
+              <PrivateRoute path="/cancel-lesson" component={CancelLesson}/>
               <PrivateRoute path="/feedback" component={Feedback} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/create-account" component={CreateTutorAccount} />
+              <Route path="/tutee-schedule-lesson" component={TuteeAvailability} />
             </Switch>
           </AuthProvider>
         </Router>
