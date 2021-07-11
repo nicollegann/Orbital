@@ -21,6 +21,8 @@ import TuteeAvailability from "./Schedule/TuteeAvailability"
 import AdminSetSlot from "./Schedule/AdminSetSlot"
 import CancelLesson from "./Schedule/CancelLesson"
 import Feedback from "./Feedback"
+import ViewFeedback from "./ViewFeedback"
+
 
 function App() {
   return (
@@ -43,6 +45,7 @@ function App() {
               <PrivateRoute path="/set-slot" component={AdminSetSlot}/>
               <PrivateRoute path="/cancel-lesson" component={CancelLesson}/>
               <PrivateRoute path="/feedback" component={Feedback} />
+              <PrivateRoute path="/view-feedback" component={ViewFeedback} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/create-account" component={CreateTutorAccount} />

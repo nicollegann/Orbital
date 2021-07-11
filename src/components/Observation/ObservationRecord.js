@@ -4,10 +4,10 @@ import { useGetRecord } from "../../hooks/useGetData"
 import "../TutorManager.css"
 
 export default function ObservationRecord(props) {
-  const { date, tutee, tutor } = props
+  const { date, tutee } = props
 
   function ObservationTable() {
-    const [rows] = useGetRecord(date, tutee, tutor, "Observation")
+    const [rows] = useGetRecord(date, tutee, "Observation")
 
     return (
       <>

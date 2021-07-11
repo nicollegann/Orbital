@@ -4,10 +4,10 @@ import { useGetRecord } from "../../hooks/useGetData"
 import "../TutorManager.css"
 
 export default function AttendanceRecord(props) {
-  const { date, tutee, tutor } = props
+  const { date, tutee } = props
 
   function AttendanceTable() {
-    const [rows] = useGetRecord(date, tutee, tutor, "Attendance")
+    const [rows] = useGetRecord(date, tutee, "Attendance")
     
     return (
     <Card>
