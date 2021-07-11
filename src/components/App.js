@@ -17,6 +17,8 @@ import TuteeObservation from "./Observation/TuteeObservation"
 import ViewObservation from "./Observation/ViewObservation"
 import Schedule from "./Schedule"
 import Feedback from "./Feedback"
+import ViewFeedback from "./ViewFeedback"
+
 
 function App() {
   return (
@@ -36,6 +38,7 @@ function App() {
               <PrivateRoute path="/view-observation" component={ViewObservation} />
               <PrivateRoute path="/schedule" component={Schedule} />
               <PrivateRoute path="/feedback" component={Feedback} />
+              <PrivateRoute path="/view-feedback" component={ViewFeedback} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/create-account" component={CreateTutorAccount} />

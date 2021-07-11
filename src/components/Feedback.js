@@ -15,7 +15,7 @@ export default function Feedback() {
   
   const currName = useGetCurrUserName()
   const dateRef = useRef()
-  const commentRef = useRef()
+  const feedbackRef = useRef()
   const [anonymous, setAnonymous] = useState(false)
   const randomKey = uuid()
 
@@ -29,12 +29,12 @@ export default function Feedback() {
     if (anonymous) {
       db.collection("Feedback")
       .doc(dateRef.current.value)
-      .collection("Anonymous")
+      .collection(dateRef.current.value)
       .doc(randomKey)
       .set({
           date: dateRef.current.value,
           tutor: "Anonymous",
-          comment: commentRef.current.value
+          feedback: feedbackRef.current.value
       })
       .then(() => {
           setMessage("Successfully submitted your feedback.") 
@@ -45,12 +45,12 @@ export default function Feedback() {
     else {
       db.collection("Feedback")
       .doc(dateRef.current.value)
-      .collection(currName)
+      .collection(dateRef.current.value)
       .doc(randomKey)
       .set({
           date: dateRef.current.value,
           tutor: currName,
-          comment: commentRef.current.value
+          feedback: feedbackRef.current.value
       })
       .then(() => {
           setMessage("Successfully submitted your feedback.") 
@@ -71,7 +71,7 @@ export default function Feedback() {
             <em><p className="text-center mb-4">Submit your feedback here.</p></em>
             {error && <Alert variant="danger">{error}</Alert>}
             {message && <Alert variant="success">{message}</Alert>}
-            <Form onSubmit={handleSubmit}>
+            <Form action="email.php" method="post" enctype="multipart/form-data" onSubmit={handleSubmit}>
               <Row className="mb-4">
                 <Col md={4}>
                 <Form.Group controlId="date">
@@ -81,9 +81,9 @@ export default function Feedback() {
                 </Col>
               </Row>
 
-              <Form.Group controlId="comment" className="mb-5">
+              <Form.Group controlId="feedback" className="mb-5">
                 <Form.Label>Feedback</Form.Label>
-                <Form.Control as="textarea" rows={3} ref={commentRef} placeholder="Input feedback here..." required />
+                <Form.Control as="textarea" rows={3} ref={feedbackRef} placeholder="Input feedback here..." required />
               </Form.Group>
 
               <Button disabled={loading} variant="secondary" type="submit">Submit</Button>

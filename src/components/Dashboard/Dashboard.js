@@ -13,11 +13,29 @@ import TuteeProfile from "../images/tuteeProfile.png"
 import { useGetCurrUserName } from "../../hooks/useGetData"
 import "./Dashboard.css"
 import "../TutorManager.css"
+import { useAuth } from "../../contexts/AuthContext"
 
 
 export default function Dashboard() {    
-  const getUserData = useGetCurrUserName()
-  
+  const getUserData = useGetCurrUserName()  
+  const { getEmail } = useAuth()
+
+  function FeedbackRouting() {
+    if (getEmail === "toinfinityandbeyond.orbital@gmail.com") {
+      return (
+        <>
+          <Buttons tooltip="View Feedback" img={Feedback} link="/view-feedback"/>
+        </> 
+      )
+    } else {
+      return (
+        <>
+          <Buttons tooltip="Submit Feedback" img={Feedback} link="/feedback"/>
+        </>
+      )
+    }
+  }
+
   return (
     <>
       <NavigationBar />
@@ -47,7 +65,10 @@ export default function Dashboard() {
               <Buttons tooltip="Lesson Schedule" img={Schedule} link="/schedule"/>
             </Col>
             <Col>
-              <Buttons tooltip="Feedback" img={Feedback} link="/feedback"/>  
+              <FeedbackRouting/> 
+            </Col>
+            <Col>
+              <Buttons tooltip="Tutor Profiles" img={TuteeProfile} link="/tutor-profile"/>
             </Col>
             <Col>
               <Buttons tooltip="Tutee Profiles" img={TuteeProfile} link="/tutee-profile"/>  
