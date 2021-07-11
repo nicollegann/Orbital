@@ -17,6 +17,7 @@ export default function TuteeProfileRecord(props) {
     const emergencyRef = useRef()
     const dobRef = useRef()
     const schoolRef = useRef()
+    const tutorRef = useRef()
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
@@ -37,6 +38,7 @@ export default function TuteeProfileRecord(props) {
         emergencyContact: emergencyRef.current.value,
         dateOfBirth: dobRef.current.value,
         school: schoolRef.current.value,
+        assignedTutor: tutorRef.current.value,
       })
       .then(() => setMessage("Successfully updated profile."))
       .catch(() => setError("Failed to update account."))
@@ -81,6 +83,10 @@ export default function TuteeProfileRecord(props) {
               <Form.Group className="mb-4">
                 <Form.Label>School</Form.Label>
                 <Form.Control ref={schoolRef} type="text" defaultValue={details && details.school} readOnly={update} required/>
+              </Form.Group>
+              <Form.Group className="mb-4">
+                <Form.Label>Assigned Tutor</Form.Label>
+                <Form.Control ref={tutorRef} type="text" defaultValue={details && details.assignedTutor} readOnly={update} required/>
               </Form.Group>
               <Button variant="secondary" disabled={update} type="submit">Confirm</Button>
             </Form>

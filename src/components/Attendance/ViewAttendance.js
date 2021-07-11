@@ -41,7 +41,8 @@ export default function ViewAttendance() {
                 <Form.Group as={Col} controlId="name">
                   <Form.Label>Name</Form.Label>
                   <Form.Control as="select" ref={nameRef}>
-                    {tuteeNames.map((n) => <option key={n.value} value={n.name}>{n.name}</option>)}
+                    <option disabled={true}>Select...</option>
+                    {tuteeNames.map((n) => <option key={n.key} value={n.value}>{n.value}</option>)}
                   </Form.Control>
                 </Form.Group>
               </Row>

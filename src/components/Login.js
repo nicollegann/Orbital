@@ -53,6 +53,9 @@ export default function Login() {
         <div className="w-100 text-center mt-2">
           Need an account? <Link to="/create-account">Sign Up</Link>
         </div>
+        <div className="w-100 text-center mt-2">
+          Schedule your next lesson <Link to="/tutee-schedule-lesson">here</Link> (for tutees)
+        </div>
       </Container>
     </div>
   );
