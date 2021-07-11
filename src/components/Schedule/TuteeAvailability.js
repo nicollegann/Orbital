@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert, Container } from "react-bootstrap"
+import { Form, Button, Card, Alert, Container, Table } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { db } from "../../firebase"
 import { useGetTuteeNames, useGetLessonOptions, useGetTuteeCode } from "../../hooks/useGetData"
-import { nextWeekDash, nextWeekSlash, thisWeekDash } from "./DateRange"
+import { nextWeekDash } from "./Date"
+import moment from "moment"
 
 export default function TuteeAvailability() {
-  const thisWeekOptions = useGetLessonOptions(thisWeekDash)
-  const nextWeekOptions = useGetLessonOptions(nextWeekDash)
-
+  let slots = useGetLessonOptions(nextWeekDash)
+  
   function Helper() {
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
@@ -19,14 +19,13 @@ export default function TuteeAvailability() {
     const codeRef = useRef()
     const correctCode = useGetTuteeCode()
 
-    let slots = thisWeekOptions.concat(nextWeekOptions)
     const [checkedState, setCheckedState] = useState(
       new Array(slots.length).fill(false)
     )
     const [selectedSlots, setSelectedSlots] = useState()
 
     // handle checkboxes & update state of selectedSlots
-    const handleOnChange = (position) => {
+    const handleCheckbox = (position) => {
       const updatedCheckedState = checkedState.map((bool, index) =>
         index === position ? !bool : bool
       );
@@ -85,7 +84,7 @@ export default function TuteeAvailability() {
           <Card className="justify-content-md-center" style={{width: "50rem", margin: "3% auto 1%"}}>
             <Card.Body>
               <center><h2 className="text-center bottomBorder" style={{width: "75%"}}>Schedule Lesson</h2></center>
-              <em><p className="text-center mb-4">Select your available time slots for <em>{nextWeekSlash}</em>.</p></em>
+              <em><p className="text-center mb-4">Select your available time slots for <em>{nextWeekDash}</em>.</p></em>
               {error && <Alert variant="danger">{error}</Alert>}
               {message && <Alert variant="success">{message}</Alert>}
               <Form onSubmit={handleSubmit}>
@@ -95,17 +94,30 @@ export default function TuteeAvailability() {
                 </Form.Group>
                 <Form.Group id="choose-slots" className="mb-4">
                   <Form.Label><strong>Select Your Available Time Slots</strong></Form.Label>
-                  {slots.map((details, index) => (
-                    <div key={index} className="mb-3">
-                      <Form.Check
-                          type="checkbox"
-                          id={`slot-${details}`}
-                          label={details.date + ", " + details.time}
-                          checked={checkedState[index]}
-                          onChange={() => handleOnChange(index)}
-                      />
-                    </div>
-                  ))}
+                  <Table striped bordered>
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {slots.map((details, index) => (
+                      <tr key={index}>
+                        <td>{moment(details.date).format("D MMMM YYYY")}</td>
+                        <td>{details.startTime + " - " + details.endTime}</td>
+                        <td>
+                          <Form.Check 
+                            type="checkbox"
+                            id={index}
+                            checked={checkedState[index]}
+                            onChange={() => handleCheckbox(index)}
+                          />
+                        </td>
+                      </tr>
+                      ))}
+                    </tbody>
+                  </Table>
                 </Form.Group>
                 <Form.Group id="verification-code" className="mb-3">
                   <Form.Label><strong>Verification Code</strong></Form.Label>
@@ -122,5 +134,5 @@ export default function TuteeAvailability() {
       </div>
     )
   }
-  return (<>{thisWeekOptions && nextWeekOptions && <Helper/>}</>)
+  return (<>{slots && <Helper/>}</>)
 }

@@ -2,6 +2,7 @@
 import { useEffect, useState} from "react";
 import { db } from "../firebase"
 import { useAuth } from "../contexts/AuthContext"
+import { today } from "../components/Schedule/Date"
 
 //Get tutee names (for dropdown box)
 export const useGetTutee = () => {
@@ -208,11 +209,12 @@ export const useGetLessonOptions = (week) => {
     db.collection("Schedule")
       .doc("LessonOptions")
       .collection(week)
+      .where("date", ">=", today)
       .get()
       .then((querySnapShot) => {
         let arr = []
         querySnapShot.forEach((doc) => 
-          arr.push({date: doc.data().date, time: doc.data().time})
+          arr.push({date: doc.data().date, startTime: doc.data().startTime, endTime: doc.data().endTime})
         )
         setData(arr)
       })
@@ -242,14 +244,15 @@ export const useGetSelectedSlots = (tutee, dateRange) => {
 }
 
 //Get lesson slot scheduled by tutor
-export const useGetLessonDetails = (user, date) => {
+export const useGetLessonDetails = (date) => {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    if (user === "Admin") {
+    //if (user === "Admin") {
       db.collection("Schedule")
         .doc("ScheduledLesson")
         .collection(date)
+        .where("date", ">=", today)
         .get()
         .then((querySnapShot) => {
           let arr = []
@@ -258,22 +261,23 @@ export const useGetLessonDetails = (user, date) => {
           )
           setData(arr)
         })
-    } else {
-      db.collection("Schedule") 
-        .doc("ScheduledLesson")
-        .collection(date)
-        .where("tutor", "==", user)
-        .get() 
-        .then((querySnapShot) => {
-          let arr = []
-          querySnapShot.forEach((doc) => 
-            arr.push(doc.data())
-          )
-          setData(arr)
-        })
-    }
+    // } else {
+    //   db.collection("Schedule") 
+    //     .doc("ScheduledLesson")
+    //     .collection(date)
+    //     .where("tutor", "==", user)
+    //     .get() 
+    //     .then((querySnapShot) => {
+    //       let arr = []
+    //       querySnapShot.forEach((doc) => 
+    //         arr.push(doc.data())
+    //       )
+    //       setData(arr)
+    //     })
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, [db])
+
   return data
 }
 

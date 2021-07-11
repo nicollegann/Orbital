@@ -4,7 +4,7 @@ import { Form, Button, Card, Container } from "react-bootstrap"
 import { useGetTutee } from "../../hooks/useGetData"
 import { Link } from "react-router-dom"
 import TutorSelectSlot from './TutorSelectSlot'
-import { nextWeekDash } from "./DateRange"
+import { nextWeekDash } from "./Date"
 
 export default function TutorSchedule() {
   const [loading, setLoading] = useState(false)
@@ -34,7 +34,7 @@ export default function TutorSchedule() {
             <center><h2 className="text-center bottomBorder" style={{width: "75%", marginBottom: "5%"}}>Schedule Lesson</h2></center>
             <Form onSubmit={handleSearch}>
               <Form.Group id="tutee-name" className="mb-3">
-                  <Form.Label>Tutee's Name</Form.Label>
+                  <Form.Label><strong>Tutee's Name</strong></Form.Label>
                   <Form.Control as="select" defaultValue="Select..." ref={tuteeRef}>
                     <option disabled={true}>Select...</option>
                     {tuteeNames.slice(1).map((n) => <option key={n.key} value={n.value}>{n.value}</option>)}

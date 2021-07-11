@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { db } from "../../firebase"
 import { Link } from "react-router-dom"
-import { nextWeekDash, thisWeekDash } from "./DateRange"
+import { nextWeekDash, thisWeekDash, today } from "./Date"
 import { Container, Card, Table, Form, Button } from "react-bootstrap"
 import NavigationBar from "../NavigationBar"
+import moment from "moment"
 
 export default function CancelLesson() { 
  
@@ -12,7 +13,7 @@ export default function CancelLesson() {
     
   const [checkedState, setCheckedState] = useState(
     new Array(lessons.length).fill(false))
-  const [selectedSlots, setSelectedSlots] = useState()
+  const [selectedSlots, setSelectedSlots] = useState([])
 
   const handleCheckbox = (position) => {
     const updatedCheckedState = checkedState.map((bool, index) =>
@@ -32,6 +33,7 @@ export default function CancelLesson() {
   const handleSubmit = (event) => {
     event.preventDefault()
     
+    if (selectedSlots.length > 0) {
     //delete lesson from firestore
     selectedSlots.map((details) => {
       db.collection("Schedule")
@@ -39,7 +41,8 @@ export default function CancelLesson() {
         .collection(thisWeekDash)
         .where("tutee", "==", details.tutee)
         .where("date", "==", details.date)
-        .where("time", "==", details.time)
+        .where("startTime", "==", details.startTime)
+        .where("endTime", "==", details.endTime)
         .where("tutor", "==", details.tutor)
         .get()
         .then((querySnapShot) => {
@@ -51,7 +54,8 @@ export default function CancelLesson() {
         .collection(nextWeekDash)
         .where("tutee", "==", details.tutee)
         .where("date", "==", details.date)
-        .where("time", "==", details.time)
+        .where("startTime", "==", details.startTime)
+        .where("endTime", "==", details.endTime)
         .where("tutor", "==", details.tutor)
         .get()
         .then((querySnapShot) => {
@@ -68,6 +72,7 @@ export default function CancelLesson() {
     setLessons(newLessons)
     setCheckedState(new Array(newLessons.length).fill(false))
     window.localStorage.setItem("lessons", JSON.stringify(JSON.stringify(newLessons)))
+    }
   }
 
 
@@ -90,9 +95,10 @@ export default function CancelLesson() {
               </thead>
               <tbody>
                 {lessons && lessons.map((details, index) => (
+                (details.date >= today) &&
                 <tr key={index}>
-                  <td>{details.date}</td>
-                  <td>{details.time}</td>
+                  <td>{moment(details.date).format("D MMMM YYYY")}</td>
+                  <td>{details.startTime + " - " + details.endTime}</td>
                   <td>{details.tutee}</td>
                   <td>{details.tutor}</td>
                   <td>
