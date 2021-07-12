@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { db } from "../../firebase"
 import { Link } from "react-router-dom"
-import { nextWeekDash, thisWeekDash, today } from "./Date"
+import { nextWeek, thisWeek, today } from "./Date"
 import { Container, Card, Table, Form, Button } from "react-bootstrap"
 import NavigationBar from "../NavigationBar"
 import moment from "moment"
@@ -38,7 +38,7 @@ export default function CancelLesson() {
     selectedSlots.map((details) => {
       db.collection("Schedule")
         .doc("ScheduledLesson")
-        .collection(thisWeekDash)
+        .collection(thisWeek)
         .where("tutee", "==", details.tutee)
         .where("date", "==", details.date)
         .where("startTime", "==", details.startTime)
@@ -51,7 +51,7 @@ export default function CancelLesson() {
       return (
       db.collection("Schedule")
         .doc("ScheduledLesson")
-        .collection(nextWeekDash)
+        .collection(nextWeek)
         .where("tutee", "==", details.tutee)
         .where("date", "==", details.date)
         .where("startTime", "==", details.startTime)
@@ -97,7 +97,7 @@ export default function CancelLesson() {
                 {lessons && lessons.map((details, index) => (
                 (details.date >= today) &&
                 <tr key={index}>
-                  <td>{moment(details.date).format("D MMMM YYYY")}</td>
+                  <td>{moment(details.date).format("dddd, D MMMM YYYY")}</td>
                   <td>{details.startTime + " - " + details.endTime}</td>
                   <td>{details.tutee}</td>
                   <td>{details.tutor}</td>

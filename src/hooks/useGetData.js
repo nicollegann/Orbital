@@ -244,7 +244,7 @@ export const useGetLessonOptions = (week) => {
       .then((querySnapShot) => {
         let arr = []
         querySnapShot.forEach((doc) => 
-          arr.push({date: doc.data().date, startTime: doc.data().startTime, endTime: doc.data().endTime})
+          arr.push(doc.data())
         )
         setData(arr)
       })
@@ -278,35 +278,20 @@ export const useGetLessonDetails = (date) => {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    //if (user === "Admin") {
-      db.collection("Schedule")
-        .doc("ScheduledLesson")
-        .collection(date)
-        .where("date", ">=", today)
-        .get()
-        .then((querySnapShot) => {
-          let arr = []
-          querySnapShot.forEach((doc) => 
-            arr.push(doc.data())
-          )
-          setData(arr)
-        })
-    // } else {
-    //   db.collection("Schedule") 
-    //     .doc("ScheduledLesson")
-    //     .collection(date)
-    //     .where("tutor", "==", user)
-    //     .get() 
-    //     .then((querySnapShot) => {
-    //       let arr = []
-    //       querySnapShot.forEach((doc) => 
-    //         arr.push(doc.data())
-    //       )
-    //       setData(arr)
-    //     })
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps 
-    }, [db])
+    db.collection("Schedule")
+      .doc("ScheduledLesson")
+      .collection(date)
+      .where("date", ">=", today)
+      .get()
+      .then((querySnapShot) => {
+        let arr = []
+        querySnapShot.forEach((doc) => 
+          arr.push(doc.data())
+        )
+        setData(arr)
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps 
+  }, [db])
 
   return data
 }

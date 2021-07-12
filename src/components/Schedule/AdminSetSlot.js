@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { db } from "../../firebase"
 import { useGetTuteeCode, useGetLessonOptions } from "../../hooks/useGetData"
 import NavigationBar from "../NavigationBar"
-import { nextWeekDash, orderByTime } from "./Date"
+import { nextWeek, orderByTime } from "./Date"
 import moment from "moment"
 
 export default function AdminSetSlot() { 
@@ -12,7 +12,7 @@ export default function AdminSetSlot() {
   const codeRef = useRef()
   
   const currentCode = useGetTuteeCode()
-  const nextWeekSlots = useGetLessonOptions(nextWeekDash)
+  const nextWeekSlots = useGetLessonOptions(nextWeek)
   
   function handleSetCode(event) {
     event.preventDefault()
@@ -70,7 +70,7 @@ function AvailableSlots(props) {
     new Array(lessons.length).fill(false))
   const [selectedSlots, setSelectedSlots] = useState([])
 
-
+ 
   const handleCheckbox = (position) => {
     const updatedCheckedState = checkedState.map((bool, index) =>
       index === position ? !bool : bool
@@ -94,7 +94,7 @@ function AvailableSlots(props) {
     selectedSlots.map((option) => 
       db.collection("Schedule")
         .doc("LessonOptions")
-        .collection(nextWeekDash)
+        .collection(nextWeek)
         .where("date", "==", option.date)
         .where("startTime", "==", option.startTime)
         .where("endTime", "==", option.endTime)
@@ -126,7 +126,7 @@ function AvailableSlots(props) {
       //add lesson option to firestore
       db.collection("Schedule")
         .doc("LessonOptions")
-        .collection(nextWeekDash)
+        .collection(nextWeek)
         .add({
           date: dateRef.current.value,
           startTime: startTimeRef.current.value,
@@ -148,8 +148,8 @@ function AvailableSlots(props) {
   return (
     <>
     <Card.Body>
-      <center><h2 className="text-center bottomBorder" style={{width: "75%", marginBottom: "1%"}}>Edit Lesson Slots</h2></center>
-      <em><p className="text-center mb-4">Lesson slots for <em>{nextWeekDash}</em>.</p></em>
+      <center><h2 className="text-center bottomBorder" style={{width: "75%", marginBottom: "1%"}}>Lesson Slots For Selection</h2></center>
+      <em><p className="text-center mb-4">List of available time slots for tutees to select for <em>{nextWeek}</em>.</p></em>
       <Form onSubmit={handleDelete}>
         <Table striped bordered>
           <thead>
@@ -162,7 +162,7 @@ function AvailableSlots(props) {
           <tbody>
             {lessons && lessons.map((option, index) => (
               <tr key={index}>
-                <td>{moment(option.date).format("D MMMM YYYY")}</td>
+                <td>{moment(option.date).format("dddd, D MMMM YYYY")}</td>
                 <td>{option.startTime + " - " + option.endTime}</td>
                 <td>
                   <Form.Check 
