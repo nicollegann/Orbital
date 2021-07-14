@@ -164,54 +164,65 @@ export const useGetRecord = (date, tutee, record) => {
         retrieveData(querySnapShot)
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db])
     
   return [data]
 }
 
-//Get tutor feedback (by date / name)
-export const useGetFeedback = (date) => {
-  
+//Get tutor feedback (by month)
+export const useGetFeedback = (month) => {
   const [data, setData] = useState([])
-  
-  // const retrieveData = (querySnapShot) => {
-  //   let arr = []
-  //   querySnapShot.forEach((doc) => 
-  //     arr.push({ id: doc.id, 
-  //                value: doc.data() })
-  //   )
-  //   .catch((e) => {
-  //     console.log(e);
-  //   })
-  //   setData(arr)
-  // }
-
-  
-  // const currentUser = useGetCurrUserName();
 
   useEffect(() => {
-    // if (currentUser !== "Admin") {
-      //if tutor specifies tutee name and date
-      if (date !== "") {
+      if (month !== "") {
         db.collection("Feedback")
-        .doc(date)
-        .collection(date)
-        .get()
-        .then((querySnapShot) => {
-          console.log(querySnapShot)
-          let arr = []
-          querySnapShot.forEach((doc) => 
-            arr.push({ id: doc.id, 
-                        value: doc.data() })
-          )
-          setData(arr)
-        })
-      } else {}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+          .doc(month)
+          .collection(month)
+          .get()
+          .then((querySnapShot) => {
+            let arr = []
+            querySnapShot.forEach((doc) => 
+              arr.push({ id: doc.id, 
+                          value: doc.data() })
+            )
+            setData(arr)
+          })
+      } else {
+        db.collection("Feedback")
+          .doc(month)
+          .collection(month)
+          .get()
+          .then((querySnapShot) => {
+            let arr = []
+            querySnapShot.forEach((doc) => 
+              arr.push({ id: doc.id, 
+                          value: doc.data() })
+            )
+            setData(arr)
+          })
+      }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db])
     
   return [data]
+}
+
+//Get counter for feedback
+export const useGetCounter = () => {
+  const [data, setData] = useState()
+
+  useEffect(() => {
+    db.collection("Feedback")
+    .doc("Counter")
+    .get()
+    .then((doc) => {
+      const count = doc.data().count
+      setData(count)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [db])
+  return data
 }
 
 //Get tutee profile

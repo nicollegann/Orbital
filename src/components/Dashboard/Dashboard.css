@@ -5,9 +5,31 @@
     background-repeat: no-repeat;
     background-position: bottom;
     background-attachment: fixed;
+    height: 100%;
+    min-height: 100vh
 }
 
 .contents-dashboard {
     width: 100vw;
     height: 80vh;
+}
+
+.close ::before{
+    content: 'X';
+    visibility: visible;
+    color: #8d8421;
+    font-weight: bold;
+}
+
+.sr-only::before{
+    visibility: hidden;
+}
+
+.close{
+    visibility: hidden;
+    position: absolute;
+    right: 32px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
 }
