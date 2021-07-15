@@ -68,7 +68,7 @@ export default function Dashboard() {
               <FeedbackRouting/> 
             </Col>
             <Col>
-              <Buttons tooltip="Tutor Profiles" img={TuteeProfile} link="/tutor-profile"/>
+              <Buttons tooltip="Tutor Profiles" img={TuteeProfile} link="/view-tutor-profile"/>
             </Col>
             <Col>
               <Buttons tooltip="Tutee Profiles" img={TuteeProfile} link="/tutee-profile"/>  

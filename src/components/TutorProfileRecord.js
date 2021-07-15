@@ -1,14 +1,18 @@
 import React, { useState, useRef } from "react"
-import { db } from "../../firebase"
+import { db } from "./../firebase"
 import { Card, Button, Form, Alert, Row, Col } from "react-bootstrap"
-import { useGetTuteeProfile } from "../../hooks/useGetData"
-import "../TutorManager.css"
+import { useGetTutorProfile } from "./../hooks/useGetData"
+import "./TutorManager.css"
 
-export default function TuteeProfileRecord(props) {
-  const { tutee } = props
+export default function TutorProfileRecord(props) {
+  const { tutor } = props
 
-  function TuteeProfile() {
-    const details = useGetTuteeProfile(tutee)
+  
+
+  function TutorProfile() {
+    const email = tutor    
+    const details = useGetTutorProfile(email)
+
 
     const nameRef = useRef()
     const emailRef = useRef()
@@ -16,21 +20,22 @@ export default function TuteeProfileRecord(props) {
     const emergencyRef = useRef()
     const dobRef = useRef()
     const schoolRef = useRef()
-    const tutorRef = useRef()
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
     const [update, setUpdate] = useState(true)
-    
+    // const tutorNames = useGetTutor()
+
     
     // to save user data to firestore
     const saveData = (event) => {
     event.preventDefault()
     setLoading(true)
     setError("")
+    console.log(email)
     
-    db.collection("TuteeProfile")
-      .doc(nameRef.current.value)
+    db.collection("TutorProfile")
+      .doc(email)
       .set({
         name: nameRef.current.value,
         email: emailRef.current.value,
@@ -38,21 +43,22 @@ export default function TuteeProfileRecord(props) {
         emergencyContact: emergencyRef.current.value,
         dateOfBirth: dobRef.current.value,
         school: schoolRef.current.value,
-        assignedTutor: tutorRef.current.value,
       })
       .then(() => setMessage("Successfully updated profile."))
       .catch(() => setError("Failed to update account."))
+    
 
     setUpdate(true)  
     setLoading(false)
     }
 
+
     return (
       <div className="styling">
-        <Card className="card-view-tutee-profile">
+        <Card>
           <Card.Body>
             <Row style={{marginBottom:"1em"}}>
-              <Col md={{span: 4, offset:4}}><h3 className="text-center mb-1 bottomBorder" style={{width: "90%"}}>Tutee Profile</h3></Col>
+              <Col md={{span: 4, offset:4}}><h3 className="text-center mb-1 bottomBorder" style={{width: "90%"}}>Tutor Profile</h3></Col>
               <Col style={{paddingRight:"0", paddingLeft:"15%"}}>
                 <Button variant="secondary" disabled={loading} type="button" onClick={() => setUpdate((false))}>Edit Details</Button>
               </Col>
@@ -84,10 +90,6 @@ export default function TuteeProfileRecord(props) {
                 <Form.Label>School</Form.Label>
                 <Form.Control ref={schoolRef} type="text" defaultValue={details && details.school} readOnly={update} required/>
               </Form.Group>
-              <Form.Group className="mb-4">
-                <Form.Label>Assigned Tutor</Form.Label>
-                <Form.Control ref={tutorRef} type="text" defaultValue={details && details.assignedTutor} readOnly={update} required/>
-              </Form.Group>
               <Button variant="secondary" disabled={update} type="submit">Confirm</Button>
             </Form>
           </Card.Body>
@@ -96,5 +98,5 @@ export default function TuteeProfileRecord(props) {
     )
   }
 
-  return <TuteeProfile />
+  return <TutorProfile />
 }

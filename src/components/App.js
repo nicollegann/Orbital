@@ -1,7 +1,7 @@
 import React from "react"
 import CreateTutorAccount from "./CreateTutorAccount"
 import { AuthProvider } from "../contexts/AuthContext"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { HashRouter as Router, Switch, Route } from "react-router-dom"
 import Dashboard from "./Dashboard/Dashboard"
 import Profile from "./Profile"
 import Login from "./Login"
@@ -22,7 +22,8 @@ import AdminSetSlot from "./Schedule/AdminSetSlot"
 import CancelLesson from "./Schedule/CancelLesson"
 import Feedback from "./Feedback"
 import ViewFeedback from "./ViewFeedback"
-
+import ViewTutorProfile from "./ViewTutorProfile"
+import TutorVerificationCode from "./TutorVerificationCode"
 
 function App() {
   return (
@@ -46,6 +47,8 @@ function App() {
               <PrivateRoute path="/cancel-lesson" component={CancelLesson}/>
               <PrivateRoute path="/feedback" component={Feedback} />
               <PrivateRoute path="/view-feedback" component={ViewFeedback} />
+              <PrivateRoute path="/view-tutor-profile" component={ViewTutorProfile} />
+              <PrivateRoute path="/tutor-verification-code" component={TutorVerificationCode} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/create-account" component={CreateTutorAccount} />

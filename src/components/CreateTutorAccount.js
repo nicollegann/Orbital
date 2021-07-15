@@ -3,16 +3,19 @@ import { Form, Button, Card, Alert, Container } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import "./TutorManager.css"
 import { Link } from "react-router-dom"
+import { useGetTutorCode } from "../hooks/useGetData"
 
 
 export default function CreateTutorAccount() {   
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
+  const codeRef = useRef()
   const { signup } = useAuth()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
+  const correctCode = useGetTutorCode()
 
     
   async function handleSubmit(event) {
@@ -20,6 +23,13 @@ export default function CreateTutorAccount() {
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords do not match.")
+    }
+
+    //Check if verification code is correct
+    // console.log(correctCode)
+    if (codeRef.current.value !== correctCode) {
+      setMessage("")
+      return setError("Invalid verification code. Please contact admin for assistance.")
     }
 
     try {
@@ -54,6 +64,10 @@ export default function CreateTutorAccount() {
                 <Form.Group id="password-confirm" className="mb-4">
                   <Form.Label>Password Confirmation</Form.Label>
                   <Form.Control type="password" ref={passwordConfirmRef} required />
+                </Form.Group>
+                <Form.Group id="verification-code" className="mb-3">
+                  <Form.Label><strong>Verification Code</strong></Form.Label>
+                  <Form.Control type="text" ref={codeRef} required />
                 </Form.Group>
                 <Button disabled={loading} className="w-100" type="submit">Confirm</Button>
               </Form>

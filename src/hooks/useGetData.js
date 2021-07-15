@@ -39,25 +39,24 @@ export const useGetTuteeNames = () => {
   return [tutee];
 };
 
-//Get tutor names
-export const useGetTutorEmail = () => {
-  const [tutor, setTutor] = useState([]);
-  useEffect(() => {
-    db.collection("TutorProfile")
-      .get()
-      .then((querySnapshot) => {
-        let arr = [];
-        querySnapshot.forEach((doc) => 
-          arr.push( doc.data().name )
-        );
-        setTutor(arr);
-      });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [db]);
-  return [tutor];
-};
-
-
+// //Get tutor emails
+// export const useGetTutorEmail = () => {
+//   const [tutor, setTutor] = useState([]);
+//   useEffect(() => {
+//     db.collection("TutorProfile")
+//       .get()
+//       .then((querySnapshot) => {
+//         let arr = [];
+//         querySnapshot.forEach((doc) => 
+//           arr.push( doc.data().email )
+//         );
+//         setTutor(arr);
+//       });
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [db]);
+//   console.log(tutor);
+//   return [tutor];
+// };
 
 //Get 'name' field of current user
 export const useGetCurrUserName = () => {
@@ -120,6 +119,28 @@ export const useGetTutor = () => {
   return tutor
 }
 
+//Sets key as tutor's name and value as tutor's email
+export const useGetTutorNamesAndEmail = () => {
+  const [tutor, setTutor] = useState()
+
+  useEffect(() => {
+    db.collection("TutorProfile")
+      .get()
+      .then((querySnapShot) => {
+        let arr = []
+        querySnapShot.forEach((doc) => 
+          arr.push({id: doc.data().name,
+                  value: doc.data().email})
+          )
+        setTutor(arr)  
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [db])
+  return tutor
+}
+
+
+
 //Get tutee attendance/observation record (by date / name)
 export const useGetRecord = (date, tutee, record) => {
   
@@ -174,21 +195,6 @@ export const useGetRecord = (date, tutee, record) => {
 export const useGetFeedback = (date) => {
   
   const [data, setData] = useState([])
-  
-  // const retrieveData = (querySnapShot) => {
-  //   let arr = []
-  //   querySnapShot.forEach((doc) => 
-  //     arr.push({ id: doc.id, 
-  //                value: doc.data() })
-  //   )
-  //   .catch((e) => {
-  //     console.log(e);
-  //   })
-  //   setData(arr)
-  // }
-
-  
-  // const currentUser = useGetCurrUserName();
 
   useEffect(() => {
     // if (currentUser !== "Admin") {
@@ -230,6 +236,25 @@ export const useGetTuteeProfile = (name) => {
   }, [db])
   return data
 }
+
+
+//Get tutor profile
+export const useGetTutorProfile = (email) => {
+  const [data, setData] = useState() 
+  
+  useEffect(() => {
+    db.collection("TutorProfile")
+      .doc(email)
+      .get()
+      .then((doc) => {
+        const tutorData = doc.data()
+        setData(tutorData)
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [db])
+  return data
+}
+
 
 //Get lesson slots options set by admin
 export const useGetLessonOptions = (week) => {
@@ -316,6 +341,20 @@ export const useGetTuteeCode = () => {
   const [code, setCode] = useState("")
 
   db.collection("Schedule")
+    .doc("VerificationCode")
+    .get()
+    .then((doc) => { 
+      setCode(doc.data().code)
+    })
+  
+  return code
+}
+
+//Get verification code for tutor to create account
+export const useGetTutorCode = () => {
+  const [code, setCode] = useState("")
+
+  db.collection("TutorProfile")
     .doc("VerificationCode")
     .get()
     .then((doc) => { 
