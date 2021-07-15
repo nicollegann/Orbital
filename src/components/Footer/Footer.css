@@ -4,9 +4,10 @@ body {
 }
 
 .footer {
-    position: relative;
+    position: absolute;
     bottom: 0;
-    background-color: rgb(192, 192, 192);
+    width: 100%;
+    background-color: rgb(207, 207, 207);
     padding-top: 20px;
     padding-bottom: 5px;
     opacity: 0.5

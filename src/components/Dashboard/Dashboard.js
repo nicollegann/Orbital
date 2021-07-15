@@ -1,5 +1,5 @@
-import React from "react"
-import { Container, Row, Col, Card } from "react-bootstrap"
+import React, { useState, useEffect } from "react"
+import { Container, Row, Col, Card, Alert } from "react-bootstrap"
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import Buttons from "./Buttons"
@@ -10,7 +10,7 @@ import ObservationRecord from "../images/observationRecord.png"
 import Schedule from "../images/lessonSchedule.png"
 import Feedback from "../images/giveFeedback.png"
 import TuteeProfile from "../images/tuteeProfile.png"
-import { useGetCurrUserName } from "../../hooks/useGetData"
+import { useGetCurrUserName, useGetCounter } from "../../hooks/useGetData"
 import "./Dashboard.css"
 import "../TutorManager.css"
 import { useAuth } from "../../contexts/AuthContext"
@@ -19,9 +19,19 @@ import { useAuth } from "../../contexts/AuthContext"
 export default function Dashboard() {    
   const getUserData = useGetCurrUserName()  
   const { getEmail } = useAuth()
+  const isAdmin = getEmail() === "toinfinityandbeyond.orbital@gmail.com"
+
+  const count = useGetCounter()
+  const [feedbackNotif, setFeedbackNotif] = useState("")
+  
+  useEffect(() => {
+    if (isAdmin && count && count !== 0) {
+      setFeedbackNotif("There is new feedback!")
+    }
+  }, [count, isAdmin])
 
   function FeedbackRouting() {
-    if (getEmail === "toinfinityandbeyond.orbital@gmail.com") {
+    if (isAdmin) {
       return (
         <>
           <Buttons tooltip="View Feedback" img={Feedback} link="/view-feedback"/>
@@ -41,11 +51,12 @@ export default function Dashboard() {
       <NavigationBar />
       <Container fluid className="bg3" style={{paddingLeft: "0", paddingRight: "0", fontFamily: "Georgia" }}>
         <Container className="contents-dashboard">
-          <Row>
+          <Row className="mb-2">
             <Card className="mt-4 styling dashboardBorder" style={{}}>
               <h3>Welcome, <em>{getUserData}</em></h3>
             </Card>
           </Row>
+          {feedbackNotif && <Alert variant="warning" onClose={() => setFeedbackNotif("")} dismissible>{feedbackNotif}</Alert>}
           <Row md={4} className="mt-5">
             <Col> 
               <Buttons tooltip="Mark Attendance" img={Attendance} link="/mark-attendance"/>
