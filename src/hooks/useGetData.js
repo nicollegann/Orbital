@@ -128,8 +128,7 @@ export const useGetRecord = (date, tutee, record) => {
   const retrieveData = (querySnapShot) => {
     let arr = []
     querySnapShot.forEach((doc) => 
-      arr.push({ id: doc.id, 
-                 value: doc.data() })
+      arr.push(doc.data())
     )
     setData(arr)
   }

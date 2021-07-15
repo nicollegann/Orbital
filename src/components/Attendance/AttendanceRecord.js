@@ -1,5 +1,6 @@
 import React from "react"
-import { Table, Card } from "react-bootstrap"
+import { CSVLink } from "react-csv"
+import { Table, Card, Button } from "react-bootstrap"
 import { useGetRecord } from "../../hooks/useGetData"
 import "../TutorManager.css"
 
@@ -35,30 +36,43 @@ export default function AttendanceRecord(props) {
 function AttendanceList(props) {
   const { rows } = props
 
+  const headers = [
+    { label: "No.", key: "no." },
+    { label: "Date", key: "date" },
+    { label: "Time", key: "time" },
+    { label: "Name", key: "name" },
+    { label: "Attendance", key: "attendance" },
+    { label: "Marked By", key: "tutor" }
+  ]
+
   return (
+    <>
     <Table striped bordered>
       <thead>
         <tr>
-          <th>No.</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Name</th>
-          <th>Attendance</th>
-          <th>Marked by</th>
+          {headers.map(header => <th>{header.label}</th>)}
         </tr>
       </thead>
       <tbody>
         {rows.map((row, index) => (
           <tr key={index}>
             <td>{index + 1}</td>
-            <td>{row.value.date}</td>
-            <td>{row.value.time}</td>
-            <td>{row.value.name}</td>
-            <td>{row.value.attendance}</td>
-            <td>{row.value.tutor}</td>
+            <td>{row.date}</td>
+            <td>{row.time}</td>
+            <td>{row.name}</td>
+            <td>{row.attendance}</td>
+            <td>{row.tutor}</td>
           </tr>
         ))}
       </tbody>
     </Table>
+    <CSVLink 
+      headers ={headers.slice(1)}
+      filename="TutorManager_Attendance_Records.csv"
+      data={rows}
+    >
+    <Button>Export to CSV</Button>
+    </CSVLink>    
+    </>
   )
 }

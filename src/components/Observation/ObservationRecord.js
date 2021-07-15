@@ -45,10 +45,10 @@ function ObservationList(props) {
             <Container>
               <Row> 
                 <Col>
-                    {row.value.name}
+                    {row.name}
                 </Col>
                 <Col md={{ span: 2, offset: 6 }}>
-                    {row.value.date}
+                    {row.date}
                 </Col>
               </Row>
             </Container>
@@ -57,11 +57,11 @@ function ObservationList(props) {
               <Card.Body>
                   <Row style={{marginBottom: "1.5em"}}>
                       <Col md="auto"><strong>Comments:</strong></Col>
-                      <Col>{row.value.comment}</Col>
+                      <Col>{row.comment}</Col>
                   </Row>
                   <Row>
                     <Col md="auto"><strong>Tutor:</strong></Col>
-                    <Col>{row.value.tutor}</Col>
+                    <Col>{row.tutor}</Col>
                   </Row>
               </Card.Body>
           </Accordion.Collapse>

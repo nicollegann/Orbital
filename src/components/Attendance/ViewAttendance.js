@@ -52,7 +52,7 @@ export default function ViewAttendance() {
           </Card>
           {(date || name) && <AttendanceRecord date={date} tutee={name} tutor={currName}/>}
         </Container>
-        <Footer />
+        
       </Container>
     </div>
   ) 
