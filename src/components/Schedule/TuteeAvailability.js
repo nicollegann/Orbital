@@ -3,11 +3,11 @@ import { Form, Button, Card, Alert, Container, Table } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { db } from "../../firebase"
 import { useGetTuteeNames, useGetLessonOptions, useGetTuteeCode } from "../../hooks/useGetData"
-import { nextWeekDash } from "./Date"
+import { nextWeek } from "./Date"
 import moment from "moment"
 
 export default function TuteeAvailability() {
-  let slots = useGetLessonOptions(nextWeekDash)
+  let slots = useGetLessonOptions(nextWeek)
   
   function Helper() {
     const [error, setError] = useState("")
@@ -63,7 +63,7 @@ export default function TuteeAvailability() {
 
         db.collection("Schedule")
           .doc("TuteeAvailability")
-          .collection(nextWeekDash)
+          .collection(nextWeek)
           .doc(tuteeRef.current.value)
           .set({
             tutee: tuteeRef.current.value,
@@ -80,11 +80,11 @@ export default function TuteeAvailability() {
 
     return (
       <div className="bg5 styling">
-        <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "10%"}}>
+        <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "15%"}}>
           <Card className="justify-content-md-center" style={{width: "50rem", margin: "3% auto 1%"}}>
             <Card.Body>
               <center><h2 className="text-center bottomBorder" style={{width: "75%"}}>Schedule Lesson</h2></center>
-              <em><p className="text-center mb-4">Select your available time slots for <em>{nextWeekDash}</em>.</p></em>
+              <em><p className="text-center mb-4">Select your available time slots for <em>{nextWeek}</em>.</p></em>
               {error && <Alert variant="danger">{error}</Alert>}
               {message && <Alert variant="success">{message}</Alert>}
               <Form onSubmit={handleSubmit}>
@@ -94,7 +94,7 @@ export default function TuteeAvailability() {
                 </Form.Group>
                 <Form.Group id="choose-slots" className="mb-4">
                   <Form.Label><strong>Select Your Available Time Slots</strong></Form.Label>
-                  <Table striped bordered>
+                  {(slots.length !== 0) ? <Table striped bordered>
                     <thead>
                       <tr>
                         <th>Date</th>
@@ -104,7 +104,7 @@ export default function TuteeAvailability() {
                     <tbody>
                       {slots.map((details, index) => (
                       <tr key={index}>
-                        <td>{moment(details.date).format("D MMMM YYYY")}</td>
+                        <td>{moment(details.date).format("dddd, D MMMM YYYY")}</td>
                         <td>{details.startTime + " - " + details.endTime}</td>
                         <td>
                           <Form.Check 
@@ -118,10 +118,11 @@ export default function TuteeAvailability() {
                       ))}
                     </tbody>
                   </Table>
+                  : <Alert variant="info">Admin has not released lesson slots for {nextWeek}</Alert>}
                 </Form.Group>
                 <Form.Group id="verification-code" className="mb-3">
                   <Form.Label><strong>Verification Code</strong></Form.Label>
-                  <Form.Control type="text" ref={codeRef} required />
+                  <Form.Control type="password" ref={codeRef} required />
                 </Form.Group>
                 <Button disabled={loading} className="w-100" type="submit">Submit</Button>
               </Form>

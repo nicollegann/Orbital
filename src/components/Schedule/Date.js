@@ -1,8 +1,14 @@
+import moment from "moment"
+
 var formatStartDt = ""
 var formatEndDt = ""
 
+function addZeroToSingleDigit(d) {
+  return d < 10 ? ("0" + d) : d
+}
+
 //date range from mon-sun for the next week   
-var generateDateRange = (format, week) => {    
+var generateDateRange = (week) => {    
     
   const date = new Date().getTime()
     
@@ -15,15 +21,11 @@ var generateDateRange = (format, week) => {
   }
 
   const endDt = new Date(startDt.getTime() + 1000 * 60 * 60 * 24 * 7 - 1)
+  
+  formatStartDt = startDt.getFullYear() + "-" + addZeroToSingleDigit(startDt.getMonth() + 1) + "-" + addZeroToSingleDigit(startDt.getDate())
+  formatEndDt = endDt.getFullYear() + "-" + addZeroToSingleDigit(endDt.getMonth() + 1) + "-" + addZeroToSingleDigit(endDt.getDate())
       
-  formatStartDt = startDt.getDate() + format + (startDt.getMonth() + 1) + format + startDt.getFullYear()
-  formatEndDt = endDt.getDate() + format + (endDt.getMonth() + 1) + format + endDt.getFullYear()
-      
-  if (format === "-") {
-    return formatStartDt + " to " + formatEndDt
-  } else {
-    return formatStartDt + " - " + formatEndDt
-  }
+  return moment(formatStartDt).format("D MMMM YYYY") + " to " + moment(formatEndDt).format("D MMMM YYYY")
 }
 
 const todayDate = () => {
@@ -59,22 +61,21 @@ export function orderByTime(arr) {
           newArr.push(arr[i+1])
         }
       } else {
-      if (arr[i].date === arr[i+1].date) {
-        temp.push(arr[i])
-      } else {
-        temp.push(arr[i])
-        temp.sort((a, b) => a.startTime >= b.startTime ? 1 : -1)
-        newArr = newArr.concat(temp)
-        temp = []
+        if (arr[i].date === arr[i+1].date) {
+          temp.push(arr[i])
+        } else {
+          temp.push(arr[i])
+          temp.sort((a, b) => a.startTime >= b.startTime ? 1 : -1)
+          newArr = newArr.concat(temp)
+          temp = []
+        }
       }
-    }
     }
     return newArr 
   }   
 }
 
 
-export const nextWeekDash = generateDateRange("-", "next")
-export const nextWeekSlash = generateDateRange("/", "next")
-export const thisWeekDash = generateDateRange("-", "this")
+export const nextWeek = generateDateRange("next")
+export const thisWeek = generateDateRange("this")
 export const today = todayDate()

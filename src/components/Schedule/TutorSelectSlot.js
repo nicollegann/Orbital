@@ -1,10 +1,13 @@
 import React, { useState, useRef } from 'react'
 import { db } from "../../firebase"
+import { useAuth } from "../../contexts/AuthContext"
 import { Form, Button, Alert, Row, Col, Tabs, Tab } from "react-bootstrap"
 import { useGetSelectedSlots, useGetCurrUserName, useGetTutor } from "../../hooks/useGetData"
+import moment from "moment"
 
 export default function TutorSelectSlot(props) {
   const { tutee, dateRange } = props
+  const { getEmail } = useAuth()
   const user = useGetCurrUserName()
   const tutors = useGetTutor()
 
@@ -80,7 +83,7 @@ export default function TutorSelectSlot(props) {
                 <Form.Label>Below are the lesson timings selected by tutee</Form.Label>
                 <Form.Control as="select" htmlSize={3}>
                   {slots && slots.map((slot, index) => 
-                    <option key={index} value={slot} onClick={() => setLesson(slot)}>{slot.date + ", " + slot.startTime + " - " + slot.endTime}</option>)}
+                    <option key={index} value={slot} onClick={() => setLesson(slot)}>{moment(slot.date).format("D MMMM YYYY") + ", " + slot.startTime + " - " + slot.endTime}</option>)}
                 </Form.Control>
               </Form.Group>
               : <Alert variant="info">Tutee has not submitted availability.</Alert>}
@@ -105,7 +108,7 @@ export default function TutorSelectSlot(props) {
             </Form.Group><br/>
           </Tab>
         </Tabs> 
-        {(user === "Admin") && <Form.Group className="mb-4">
+        {(getEmail() === "toinfinityandbeyond.orbital@gmail.com") && <Form.Group className="mb-4">
           <Form.Label><strong>Tutor</strong></Form.Label>
           <Form.Control as="select" ref={tutorRef} required>
             <option disabled={true}>Select...</option>
@@ -118,5 +121,5 @@ export default function TutorSelectSlot(props) {
     )
   }
  
-  return <>{user && tutors && <SelectSlotForm />}</>
+  return <>{tutors && user && <SelectSlotForm />}</>
 }

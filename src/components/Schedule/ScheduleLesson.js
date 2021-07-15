@@ -4,7 +4,7 @@ import { Form, Button, Card, Container } from "react-bootstrap"
 import { useGetTutee } from "../../hooks/useGetData"
 import { Link } from "react-router-dom"
 import TutorSelectSlot from './TutorSelectSlot'
-import { nextWeekDash } from "./Date"
+import { nextWeek } from "./Date"
 
 export default function TutorSchedule() {
   const [loading, setLoading] = useState(false)
@@ -44,7 +44,7 @@ export default function TutorSchedule() {
             </Form>
           </Card.Body>
           <Card.Body>
-          {tutee && <TutorSelectSlot tutee={tutee} dateRange={nextWeekDash}/>}
+          {tutee && <TutorSelectSlot tutee={tutee} dateRange={nextWeek}/>}
           </Card.Body>
         </Card>
         <div className="w-100 text-center mt-2">
