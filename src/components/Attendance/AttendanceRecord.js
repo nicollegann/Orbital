@@ -3,18 +3,12 @@ import { db } from "../../firebase"
 import { useGetRecord } from "../../hooks/useGetData"
 import { CSVLink } from "react-csv"
 import { today } from "../Schedule/Date"
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Alert from '@material-ui/lab/Alert';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { Grid, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core"
+import Alert from '@material-ui/lab/Alert'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteIcon from '@material-ui/icons/Delete'
+import GetAppIcon from '@material-ui/icons/GetApp'
 import "../TutorManager.css"
 
 const useStyles = makeStyles({
@@ -150,7 +144,7 @@ function AttendanceList(props) {
       data={rows}
       style={{textDecoration: "none"}}
     >
-      <Button variant="contained" color="secondary" size="small" className={classes.csv}>Export to CSV</Button>
+      <Button variant="contained" color="secondary" size="small" className={classes.csv} startIcon={<GetAppIcon/>}>Export to CSV</Button>
     </CSVLink>
     </TableContainer>}
     </>
