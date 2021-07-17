@@ -112,7 +112,7 @@ export default function Feedback() {
             <p>Submit your feedback for improvements to the programme here.</p>
             {error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}
             {message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}
-            <Container className={classes.container}>
+            <Container>
               <form>
                 <TextField 
                   className={classes.textfield}

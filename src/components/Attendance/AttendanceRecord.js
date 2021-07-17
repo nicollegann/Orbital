@@ -1,31 +1,70 @@
-import React from "react"
-import { Table, Card } from "react-bootstrap"
+import React, { useState } from "react"
+import { db } from "../../firebase"
 import { useGetRecord } from "../../hooks/useGetData"
+import { CSVLink } from "react-csv"
+import { today } from "../Schedule/Date"
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { Grid, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core"
+import Alert from '@material-ui/lab/Alert'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteIcon from '@material-ui/icons/Delete'
+import GetAppIcon from '@material-ui/icons/GetApp'
 import "../TutorManager.css"
+
+const useStyles = makeStyles({
+  grid: {
+    marginTop: 30,
+  },
+  table: {
+    minWidth: 700,
+  },
+  csv: {
+    marginTop: 20,
+  }
+});
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
 
 export default function AttendanceRecord(props) {
   const { date, tutee } = props
+  const classes = useStyles();
 
   function AttendanceTable() {
-    const [rows] = useGetRecord(date, tutee, "Attendance")
+    const [record] = useGetRecord(date, tutee, "Attendance")
     
     return (
-    <Card>
-      <Card.Body>
-      <center><h3 className="mb-4 bottomBorder" style={{width: "19%"}}>Attendance Record</h3></center>
-      {rows.length > 0 ? (
-        <AttendanceList rows={rows} />
+    <Grid className={classes.grid}>
+      {record.length > 0 ? (
+        <AttendanceList record={record} />
       ) : (
-        ((date && (tutee !== "ALL")) && <p>No attendance record found for {tutee} on {date}</p>)
+        ((date && (tutee !== "ALL")) && <Alert severity="info" className={classes.alert}>No attendance record found for {tutee} on {date}</Alert>)
         ||
-        (date && <p>No attendance record found on {date}</p>)
+        (date && <Alert severity="info" className={classes.alert}>No attendance record found on {date}</Alert>)
         ||
-        (tutee === "ALL" && <p>Please select date/name </p>)
+        (tutee === "ALL" && <Alert severity="error" className={classes.alert}>Please select date/name </Alert>)
         ||
-        <p>No attendance record found</p>
+        (tutee !== "ALL" && <Alert severity="info" className={classes.alert}>No attendance record found for {tutee}</Alert>)
+        ||
+        <Alert severity="error" className={classes.alert}>No attendance record found</Alert>
       )}
-      </Card.Body>
-    </Card>
+    </Grid>
     )
   }
 
@@ -33,32 +72,81 @@ export default function AttendanceRecord(props) {
 } 
 
 function AttendanceList(props) {
-  const { rows } = props
+  const classes = useStyles();
+  const [rows, setRows] = useState(props.record)
+
+  const headers = [
+    { label: "No.", key: "no." },
+    { label: "Date", key: "date" },
+    { label: "Time", key: "time" },
+    { label: "Name", key: "name" },
+    { label: "Attendance", key: "attendance" },
+    { label: "Marked By", key: "tutor" },
+    { label: "Delete", key: "delete" }
+  ]
+
+  function handleDelete(index, row) {
+    //delete attendance from firebase
+    db.collection("Attendance")
+      .doc(row.date)
+      .collection(row.date)
+      .where("name", "==", row.name)
+      .get()
+      .then((querySnapShot) => {
+        querySnapShot.forEach(doc => doc.ref.delete())
+    })
+    db.collection("TuteeProfile")
+      .doc(row.name)
+      .collection("Attendance")
+      .where("date", "==", row.date)
+      .get()
+      .then((querySnapShot) => {
+        querySnapShot.forEach(doc => doc.ref.delete())
+    })
+    
+    //delete lesson from displayed table
+    let newRows = []
+    rows.map(row => (rows.indexOf(row) !== index) && newRows.push(row))
+    setRows(newRows)
+  }
 
   return (
-    <Table striped bordered>
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Name</th>
-          <th>Attendance</th>
-          <th>Marked by</th>
-        </tr>
-      </thead>
-      <tbody>
+    <>
+    {rows && rows.length > 0 &&
+    <TableContainer>
+    <Table className={classes.table}>
+      <TableHead>
+      <StyledTableRow>
+          {headers.map(header => <StyledTableCell key={header.key} align="left">{header.label}</StyledTableCell>)}
+      </StyledTableRow>
+      </TableHead>
+      <TableBody>
         {rows.map((row, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{row.value.date}</td>
-            <td>{row.value.time}</td>
-            <td>{row.value.name}</td>
-            <td>{row.value.attendance}</td>
-            <td>{row.value.tutor}</td>
-          </tr>
+          <StyledTableRow key={index}>
+            <StyledTableCell align="left">{index + 1}</StyledTableCell>
+            <StyledTableCell align="left">{row.date}</StyledTableCell>
+            <StyledTableCell align="left">{row.time}</StyledTableCell>
+            <StyledTableCell align="left">{row.name}</StyledTableCell>
+            <StyledTableCell align="left">{row.attendance}</StyledTableCell>
+            <StyledTableCell align="left">{row.tutor}</StyledTableCell>
+            <StyledTableCell align="left">
+              <IconButton disabled={row.date !== today} onClick={() => handleDelete(index, row)} aria-label="delete">
+                <DeleteIcon />
+              </IconButton>
+            </StyledTableCell>
+          </StyledTableRow>
         ))}
-      </tbody>
+      </TableBody>
     </Table>
+    <CSVLink 
+      headers ={headers.slice(1, 6)}
+      filename="TutorManager_Attendance_Records.csv"
+      data={rows}
+      style={{textDecoration: "none"}}
+    >
+      <Button variant="contained" color="secondary" size="small" className={classes.csv} startIcon={<GetAppIcon/>}>Export to CSV</Button>
+    </CSVLink>
+    </TableContainer>}
+    </>
   )
 }

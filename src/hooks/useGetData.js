@@ -14,9 +14,8 @@ export const useGetTutee = () => {
       .then((doc) => {
         const arr = doc.data().names
         let newArr = arr.map((name, index) => {
-          return { key: index+1, value: name }
+          return { key: index, value: name }
         })
-        newArr.unshift({ key: 0, value: "ALL" })
         setTutee(newArr)
       })
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -149,8 +148,7 @@ export const useGetRecord = (date, tutee, record) => {
   const retrieveData = (querySnapShot) => {
     let arr = []
     querySnapShot.forEach((doc) => 
-      arr.push({ id: doc.id, 
-                 value: doc.data() })
+      arr.push(doc.data())
     )
     setData(arr)
   }

@@ -1,25 +1,65 @@
 import React, { useRef, useState } from "react"
-import { Card, Form, Button, Alert, Container, Row, Col } from "react-bootstrap"
 import { db } from "../../firebase"
-import NavigationBar from "../NavigationBar"
-import Footer from "../Footer/Footer"
 import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
 import { useHistory } from "react-router-dom"
-import "./Attendance.css"
+import { today } from "../Schedule/Date"
+import { Button, TextField, Card, CardContent, Grid, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import Alert from '@material-ui/lab/Alert'
+import NavigationBar from "../NavigationBar"
+import Footer from "../Footer/Footer"
 import "../TutorManager.css"
 
 
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    height: "100%",
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(14),
+  },
+  card: {
+    width: "50%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: theme.spacing(8),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  cardcontent: {
+    marginRight: 50,
+    marginLeft: 50,
+  },
+  textfield: {
+    minWidth: 200,
+    marginBottom: theme.spacing(4)
+  },
+  formControl: {
+    width: "100%",
+    textAlign: "left",
+    marginBottom: theme.spacing(4)
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  alert: {
+    marginBottom: theme.spacing(3)
+  },
+}))
+
+
 export default function MarkAttendance() {
+  const classes = useStyles()
+
   const history = useHistory()
   let [tuteeNames] = useGetTutee()
   const currName = useGetCurrUserName()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
-  const nameRef = useRef()
+  const [tuteeName, setTuteeName]= useState("")
+  const [attendance, setAttendance] = useState("")
   const dateRef = useRef()
   const timeRef = useRef()
-  const attendanceRef = useRef()
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -30,86 +70,123 @@ export default function MarkAttendance() {
     db.collection("Attendance")
       .doc(dateRef.current.value)
       .collection(dateRef.current.value)
-      .doc(nameRef.current.value)
+      .doc(tuteeName)
       .set({
         date: dateRef.current.value,
         time: timeRef.current.value,
-        name: nameRef.current.value,
-        attendance: attendanceRef.current.value,
+        name: tuteeName,
+        attendance: attendance,
         tutor: currName
       })
       .then(() => {
-        setMessage("Successfully marked attendance for " + nameRef.current.value + ".")
+        setMessage("Successfully marked attendance for " + tuteeName + ".")
       })
-      .catch(() => setError("Failed to mark attendance for " + nameRef.current.value + "."))
+      .catch(() => setError("Failed to mark attendance for " + tuteeName + "."))
 
     db.collection("TuteeProfile")
-      .doc(nameRef.current.value)
+      .doc(tuteeName)
       .collection("Attendance")
       .doc(dateRef.current.value)
       .set({
         date: dateRef.current.value,
         time: timeRef.current.value,
-        name: nameRef.current.value,
-        attendance: attendanceRef.current.value,
+        name: tuteeName,
+        attendance: attendance,
         tutor: currName
-      })
+     })
+    
       .then(() => {
-        setMessage("Successfully marked attendance for " + nameRef.current.value + ".")
+        setMessage("Successfully marked attendance for " + tuteeName + ".")
       })
-      .catch(() => setError("Failed to mark attendance for " + nameRef.current.value + "."))  
-    setLoading(false)
+      .catch(() => setError("Failed to mark attendance for " + tuteeName + "."))  
+      
+      setLoading(false)
   }
 
   return (
-    <div className="styling">
-    <NavigationBar />
-    <Container fluid className="bg-attendance" style={{paddingLeft: "0", paddingRight: "0"}}>
-      <Container className="contents-attendance">
-        <Card className="card-attendance">
-          <Card.Body>
-            <center><h2 className="bottomBorder text-center mb-4">Mark Attendance</h2></center>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {message && <Alert variant="success">{message}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Row className="mb-4">
-              <Form.Group as={Col} controlId="date">
-                <Form.Label>Date</Form.Label>
-                <Form.Control type="date" ref={dateRef} required/>
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="time">
-                <Form.Label>Lesson Time</Form.Label>
-                <Form.Control type="time" ref={timeRef} required />
-              </Form.Group>
-              </Row>
-
-              <Form.Group controlId="tuteeName" className="mb-4">
-                <Form.Label>Tutee's Name</Form.Label>
-                <Form.Control as="select" ref={nameRef} required>
-                  <option disabled={true}>Select...</option>
-                  {(tuteeNames.slice(1)).map((n) => <option key={n.key} value={n.value}>{n.value}</option>)}
-                </Form.Control>
-              </Form.Group>
-
-              <Form.Group controlId="attendance" className="mb-5">
-                <Form.Label>Present/Absent</Form.Label>
-                <Form.Control as="select" ref={attendanceRef} defaultValue="Select..." required>
-                  <option disabled={true}>Select...</option>
-                  <option>Present</option>
-                  <option>Absent</option>
-                </Form.Control>
-              </Form.Group>
-
-              <Button disabled={loading} variant="secondary" type="submit">Confirm</Button>
-            </Form>
+    <Grid container className="styling bg1">
+      <Grid item xs={12}>
+        <NavigationBar />
+      </Grid>
+      <Grid item xs={12} className={classes.grid} >
+        <Card className={classes.card}>
+          <CardContent className={classes.cardcontent}>
+            <center><h2 className="bottomBorder text-center">Mark Attendance</h2></center>
+          </CardContent>
+          <CardContent className={classes.cardcontent}>
+            {error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}
+            {message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={4}>
+              <Grid item>
+                <TextField
+                  className={classes.textfield}
+                  label="Date"
+                  type="date"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  defaultValue={today}
+                  inputRef={dateRef}
+                  style={{ marginRight: 50 }}
+                  fullWidth
+                  required
+                /> 
+              </Grid>
+              <Grid item>
+                <TextField
+                  className={classes.textfield}
+                  label="Lesson Time"
+                  type="time"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  inputRef={timeRef}
+                  fullWidth
+                  required
+                />
+              </Grid>
+              </Grid>
+              <FormControl className={classes.formControl}>
+                <InputLabel shrink id="tutee-name-label">Tutee</InputLabel>
+                <Select
+                  labelId="tutee-name-label"
+                  id="tutee-name"
+                  value={tuteeName}
+                  onChange={(e) => setTuteeName(e.target.value)}
+                  displayEmpty
+                  className={classes.selectEmpty}
+                  required
+                >
+                  <MenuItem value="">Select...</MenuItem>
+                  {tuteeNames.map((n) => <MenuItem key={n.key} value={n.value}>{n.value}</MenuItem>)}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel shrink id="attendance-label">Attendance</InputLabel>
+                <Select
+                  labelId="attendance-label"
+                  id="attendance"
+                  value={attendance}
+                  onChange={(e) => setAttendance(e.target.value)}
+                  displayEmpty
+                  className={classes.selectEmpty}
+                  required
+                >
+                  <MenuItem value="">Select...</MenuItem>
+                  <MenuItem value="Present">Present</MenuItem>
+                  <MenuItem value="Absent">Absent</MenuItem>
+                </Select> 
+              </FormControl>
+              <br/>
+              <Button disabled={loading} variant="contained" color="secondary" type="submit">Confirm</Button>
+            </form>
             <br/>
-            <Button disabled={loading} variant="secondary" type="button" onClick={ () => history.push("/view-attendance") }>View Attendance Records</Button>
-          </Card.Body>
+            <Button disabled={loading} variant="contained" color="secondary" type="button" onClick={ () => history.push("/view-attendance") }>View Attendance Records</Button>
+          </CardContent>
         </Card>
-      </Container> 
-      <Footer /> 
-    </Container>
-    </div>
+        <Footer/>
+      </Grid> 
+    </Grid>
   )
 }

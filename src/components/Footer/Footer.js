@@ -6,7 +6,7 @@ export default function Footer(props) {
     <div className="footer" style={{width: "100%"}}>
       <p>Orbital 2021</p>
       <p>To Infinity and Beyond</p>
-      <p>{props.credit}</p>
+      {props.credit && <p>{props.credit}</p>}
     </div>
     )
 }
