@@ -22,6 +22,19 @@ import AdminSetSlot from "./Schedule/AdminSetSlot"
 import CancelLesson from "./Schedule/CancelLesson"
 import Feedback from "./Feedback/Feedback"
 import ViewFeedback from "./Feedback/ViewFeedback"
+// import { ThemeProvider } from '@material-ui/styles'
+// import { createTheme } from '@material-ui/core/styles'
+
+// const theme = createTheme({
+//   palette: {
+//     primary: {
+//       main: '#9a8474',
+//     },
+//     secondary: {
+//       main: '#b9ccb3',
+//     },
+//   },
+// });
 
 
 function App() {
@@ -30,6 +43,7 @@ function App() {
         <Router>
           <AuthProvider>
             <Switch>
+              {/* <ThemeProvider theme={theme}> */}
               <PrivateRoute exact path="/" component = {Dashboard} />
               <PrivateRoute exact path="/profile" component={Profile} />
               <PrivateRoute path="/change-password" component={ChangePassword} />
@@ -50,6 +64,7 @@ function App() {
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/create-account" component={CreateTutorAccount} />
               <Route path="/tutee-schedule-lesson" component={TuteeAvailability} />
+              {/* </ThemeProvider> */}
             </Switch>
           </AuthProvider>
         </Router>
