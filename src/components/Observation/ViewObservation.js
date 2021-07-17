@@ -1,15 +1,52 @@
 import React, { useState, useRef } from "react"
-import { Button, Form, Card, Container, Row, Col } from "react-bootstrap"
-import NavigationBar from "../NavigationBar"
-import Footer from "../Footer/Footer"
 import ObservationRecord from "./ObservationRecord"
 import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
+import NavigationBar from "../NavigationBar"
+import Footer from "../Footer/Footer"
+import { makeStyles } from '@material-ui/core/styles'
+import { Button, TextField, Card, CardContent, Grid, MenuItem } from '@material-ui/core'
+import SearchIcon from '@material-ui/icons/Search'
 import "./Observation.css"
 import "../TutorManager.css"
 
+
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    height: "100%",
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(14),
+  },
+  card: {
+    width: "70%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: theme.spacing(8),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  cardcontent: {
+    marginRight: 30,
+    marginLeft: 30,
+  },
+  textfield: {
+    marginBottom: theme.spacing(3),
+    minWidth: 200,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  button: {
+    position: "relative",
+    top: "12px",
+  }
+}))
+
+
 export default function ViewObservation() {
+  const classes = useStyles()
+  
   const dateRef = useRef()
-  const nameRef = useRef()
+  const tuteeRef = useRef()
 
   const [tuteeNames] = useGetTutee()
   const currName = useGetCurrUserName()
@@ -19,42 +56,67 @@ export default function ViewObservation() {
 
   function handleSubmit() {
     setDate(dateRef.current.value)
-    setName(nameRef.current.value)
+    setName(tuteeRef.current.value)
   }
 
   return (
-    <div className="styling bg8">
-      <NavigationBar />
-      <Container fluid style={{paddingLeft: "0", paddingRight: "0"}}>
-        <Container className="contents-observation">
-          <Card className="card-view-observation">
-            <Card.Body>
-            <center><h2 className="text-center mb-4 bottomBorder" style={{width: "30%"}}>View Records</h2></center>
-            <Form>
-              <Row className="mb-4">
-                <Form.Group as={Col} controlId="date">
-                  <Form.Label>Date</Form.Label>
-                  <Form.Control type="date" defaultValue={date} ref={dateRef}/>
-                </Form.Group>
-
-                <Form.Group as={Col} controlId="name">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control as="select" ref={nameRef}>
-                    <option disabled={true}>Select...</option>
-                    {tuteeNames.map((n) => <option key={n.key} value={n.value}>{n.value}</option>)}
-                  </Form.Control>
-                </Form.Group>
-              </Row>
-              <Button onClick={handleSubmit} variant="secondary" type="button">
-              Search
-              </Button> 
-            </Form>
-            </Card.Body>
-          </Card>
-          {(date || name) && <ObservationRecord date={date} tutee={name} tutor={currName}/>}
-        </Container>
-        <Footer />
-      </Container>
-    </div>
+    <Grid className="styling bg4">
+      <Grid item xs={12}>
+        <NavigationBar/>
+      </Grid>
+      <Grid item xs={12} className={classes.grid} >
+        <Card className={classes.card}>
+          <CardContent>
+            <center><h2 className="text-center mb-4 bottomBorder" style={{width: "40%"}}>View Observation Records</h2></center>
+          </CardContent>  
+          <CardContent className={classes.cardcontent}>  
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={4}>
+                <Grid item>
+                  <TextField 
+                    className={classes.textfield}
+                    label="Date" 
+                    type="date" 
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputRef={dateRef}
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField 
+                    className={classes.textfield}
+                    label="Tutee" 
+                    select 
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    defaultValue="ALL"
+                    inputRef={tuteeRef}
+                  >
+                    <MenuItem key="ALL" value="ALL">All Tutees</MenuItem>
+                    {tuteeNames.map((n) => <MenuItem key={n.key} value={n.value}>{n.value}</MenuItem>)}
+                  </TextField>    
+              </Grid>
+              <Grid item>
+                <Button 
+                  variant="contained" 
+                  color="secondary"
+                  size="medium" 
+                  type="submit"  
+                  className={classes.button}
+                  startIcon={<SearchIcon/>}
+                >
+                Search
+                </Button> 
+              </Grid>
+              </Grid>
+            </form>
+            {(date || name) && <ObservationRecord date={date} tutee={name} tutor={currName}/>}
+          </CardContent>
+        </Card>
+      </Grid>
+      <Footer/>
+    </Grid>
   ) 
 } 
