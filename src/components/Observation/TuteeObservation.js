@@ -1,15 +1,56 @@
 import React, { useRef, useState } from "react"
-import { Card, Form, Button, Alert, Container, Row, Col } from "react-bootstrap"
 import { db } from "../../firebase"
+import { useHistory } from "react-router-dom"
+import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
+import { today } from "../Schedule/Date"
+import { Button, TextField, Card, CardContent, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import Alert from '@material-ui/lab/Alert'
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
-import { useGetTutee, useGetCurrUserName } from "../../hooks/useGetData"
-import { useHistory } from "react-router-dom"
-import "./Observation.css"
 import "../TutorManager.css"
 
 
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    height: "100%",
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(14),
+  },
+  card: {
+    width: "70%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: theme.spacing(8),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  cardcontent: {
+    marginRight: 50,
+    marginLeft: 50,
+  },
+  textfield: {
+    minWidth: 200,
+    marginBottom: theme.spacing(4)
+  },
+  formControl: {
+    width: "100%",
+    minWidth: 200,
+    textAlign: "left",
+    marginBottom: theme.spacing(4)
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  alert: {
+    marginBottom: theme.spacing(3)
+  },
+}))
+
+
 export default function TuteeObservation() {
+  const classes = useStyles()
+  
   const history = useHistory()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
@@ -17,7 +58,7 @@ export default function TuteeObservation() {
   
   let [tuteeNames] = useGetTutee()
   const currName = useGetCurrUserName()
-  const nameRef = useRef()
+  const [tuteeName, setTuteeName]= useState("")
   const dateRef = useRef()
   const commentRef = useRef()
   
@@ -30,82 +71,105 @@ export default function TuteeObservation() {
     db.collection("Observation")
     .doc(dateRef.current.value)
     .collection(dateRef.current.value)
-    .doc(nameRef.current.value)
+    .doc(tuteeName)
     .set({
         date: dateRef.current.value,
-        name: nameRef.current.value,
+        name: tuteeName,
         tutor: currName,
         comment: commentRef.current.value
     })
     .then(() => {
-        setMessage("Successfully saved observation record for " + nameRef.current.value + ".") 
+        setMessage("Successfully saved observation record for " + tuteeName + ".") 
       })
       .catch(() => setError("Failed to save observation record."))  
     
     db.collection("TuteeProfile")
-      .doc(nameRef.current.value)
+      .doc(tuteeName)
       .collection("Observation")
       .doc(dateRef.current.value)
       .set({  
         date: dateRef.current.value,
-        name: nameRef.current.value,
+        name: tuteeName,
         tutor: currName,
         comment: commentRef.current.value
       })
       .then(() => {
-        setMessage("Successfully saved observation record for " + nameRef.current.value + ".") 
+        setMessage("Successfully saved observation record for " + tuteeName + ".") 
       })
       .catch(() => setError("Failed to save observation record."))  
     setLoading(false)
   }
 
   return (
-    <div className="styling">
-      <NavigationBar />
-      <Container fluid className="bg-observation" style={{paddingLeft: "0", paddingRight: "0"}}>
-      <Container className="contents-observation">
-        <Card className="card-observation">
-          <Card.Body>
-            <center><h2 className="text-center mb-1 bottomBorder" style={{width: "30%"}}>Tutee Observation</h2></center>
-            <em><p className="text-center mb-4">Record tutees' progress after each lesson.</p></em>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {message && <Alert variant="success">{message}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Row className="mb-4">
-                <Col md={4}>
-                <Form.Group controlId="date">
-                    <Form.Label>Date</Form.Label>
-                    <Form.Control type="date" ref={dateRef} required/>
-                </Form.Group>
-                </Col>
-              </Row>
-
-              <Row className="mb-4">
-                <Col md={6}>
-                  <Form.Group controlId="tuteeName">
-                    <Form.Label>Tutee's Name</Form.Label>
-                    <Form.Control as="select" ref={nameRef} required>
-                      <option disabled={true}>Select...</option>
-                      {(tuteeNames.slice(1)).map((n) => <option key={n.key} value={n.value}>{n.value}</option>)}
-                    </Form.Control>
-                  </Form.Group>
-                </Col>
-              </Row>
-
-              <Form.Group controlId="comment" className="mb-5">
-                <Form.Label>Comments</Form.Label>
-                <Form.Control as="textarea" rows={3} ref={commentRef} placeholder="Input observation here..." required />
-              </Form.Group>
-
-              <Button disabled={loading} variant="secondary" type="submit">Confirm</Button>
-            </Form>
+    <Grid container className="styling bg4">
+      <Grid item xs={12}>
+        <NavigationBar />
+      </Grid>
+      <Grid item xs={12} className={classes.grid} >
+        <Card className={classes.card}>
+          <CardContent className={classes.cardcontent}>  
+            <center><h2 className="text-center bottomBorder" style={{width: "40%"}}>Tutee Observation</h2></center>
+            <p>Record tutees' progress after each lesson.</p>            
+          </CardContent>
+          <CardContent className={classes.cardcontent}>  
+            {error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}
+            {message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={4}>
+                <Grid item>
+                  <TextField
+                    className={classes.textfield}
+                    label="Date"
+                    type="date"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    defaultValue={today}
+                    inputRef={dateRef}
+                    required
+                  />
+                </Grid>
+                <Grid item>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel shrink id="tutee-name-label">Tutee</InputLabel>
+                    <Select
+                      labelId="tutee-name-label"
+                      id="tutee-name"
+                      value={tuteeName}
+                      onChange={(e) => setTuteeName(e.target.value)}
+                      displayEmpty
+                      className={classes.selectEmpty}
+                      required
+                    >
+                      <MenuItem value="">Select...</MenuItem>
+                      {tuteeNames.map((n) => <MenuItem key={n.key} value={n.value}>{n.value}</MenuItem>)}
+                    </Select>
+                  </FormControl>
+                </Grid> 
+              </Grid>                 
+              <TextField
+                className={classes.textfield}
+                label="Comments"
+                placeholder="Input observation here..."
+                type="text"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                inputRef={commentRef}
+                variant="filled"
+                multiline
+                rows={8}
+                fullWidth
+                required
+              />
+              <Button disabled={loading} variant="contained" color="secondary" type="submit">Confirm</Button>
+            </form>
             <br/>
-            <Button disabled={loading} variant="secondary" type="button" onClick={ () => history.push("/view-observation") }>View Observation Records</Button>
-          </Card.Body>
+            <Button disabled={loading} variant="contained" color="secondary" type="button" onClick={ () => history.push("/view-observation") }>View Observation Records</Button>
+          </CardContent>
         </Card>
-      </Container> 
-      <Footer /> 
-    </Container>          
-    </div>
+        <Footer/>
+      </Grid> 
+    </Grid>        
   )
 }
