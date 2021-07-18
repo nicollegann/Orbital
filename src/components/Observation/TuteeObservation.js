@@ -101,7 +101,7 @@ export default function TuteeObservation() {
   }
 
   return (
-    <Grid container className="styling bg4">
+    <Grid className="styling bg4">
       <Grid item xs={12}>
         <NavigationBar />
       </Grid>

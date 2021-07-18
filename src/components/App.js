@@ -20,6 +20,7 @@ import ScheduleLesson from "./Schedule/ScheduleLesson"
 import TuteeAvailability from "./Schedule/TuteeAvailability"
 import AdminSetSlot from "./Schedule/AdminSetSlot"
 import CancelLesson from "./Schedule/CancelLesson"
+import TuteeVerificationCode from "./Schedule/TuteeVerificationCode"
 import Feedback from "./Feedback/Feedback"
 import ViewFeedback from "./Feedback/ViewFeedback"
 import ViewTutorProfile from "./ViewTutorProfile"
@@ -45,6 +46,7 @@ function App() {
               <PrivateRoute path="/schedule-lesson" component={ScheduleLesson} />
               <PrivateRoute path="/set-slot" component={AdminSetSlot}/>
               <PrivateRoute path="/cancel-lesson" component={CancelLesson}/>
+              <PrivateRoute path="/tutee-verification-code" component={TuteeVerificationCode}/>
               <PrivateRoute path="/feedback" component={Feedback} />
               <PrivateRoute path="/view-feedback" component={ViewFeedback} />
               <PrivateRoute path="/view-tutor-profile" component={ViewTutorProfile} />
