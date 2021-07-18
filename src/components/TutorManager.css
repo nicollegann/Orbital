@@ -96,3 +96,11 @@
     border-bottom-style: solid !important;
 }
 
+.card-color{
+    background-color: rgba(185, 204, 179, 1) !important;
+}
+
+
+.icons{
+    text-align: center;
+}

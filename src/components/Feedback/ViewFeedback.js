@@ -73,7 +73,7 @@ export default function ViewFeedback() {
         {(getEmail() === "toinfinityandbeyond.orbital@gmail.com")
           ? <Card className={classes.card}>
               <CardContent>
-                <center><h2 className="text-center bottomBorder" style={{width: "40%"}}>Feedback Records</h2></center>
+                <center><h2 className="text-center bottomBorder" style={{width: "32%"}}>Feedback Records</h2></center>
                 <p>View feedback submitted by tutors.</p>
               </CardContent>
               <CardContent style={{width: "50%"}}>  
@@ -91,7 +91,7 @@ export default function ViewFeedback() {
                   />
                   <Button 
                     variant="contained" 
-                    color="primary"
+                    color="secondary"
                     size="medium" 
                     type="submit"  
                     onClick={handleSubmit}
