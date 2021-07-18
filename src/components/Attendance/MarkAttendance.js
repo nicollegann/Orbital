@@ -104,7 +104,7 @@ export default function MarkAttendance() {
   }
 
   return (
-    <Grid container className="styling bg1">
+    <Grid className="styling bg1">
       <Grid item xs={12}>
         <NavigationBar />
       </Grid>

@@ -2,125 +2,157 @@ import React, { useState } from 'react'
 import { db } from "../../firebase"
 import { Link } from "react-router-dom"
 import { nextWeek, thisWeek, today } from "./Date"
-import { Container, Card, Table, Form, Button } from "react-bootstrap"
-import NavigationBar from "../NavigationBar"
 import moment from "moment"
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { Grid, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core"
+import IconButton from '@material-ui/core/IconButton'
+// import DeleteIcon from '@material-ui/icons/Delete'
+import ClearIcon from '@material-ui/icons/Clear'
+import NavigationBar from "../NavigationBar"
+import Footer from "../Footer/Footer"
+import "../TutorManager.css"
+
+
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    height: "100%",
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(18),
+  },
+  table: {
+    minWidth: 700,
+  },
+  card: {
+    width: "70%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  cardcontent: {
+    marginRight: 30,
+    marginLeft: 30,
+  },
+}))
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell)
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow)
+
+const StyledLink = withStyles((theme) => ({
+  root: {
+    color: theme.palette.secondary.dark,
+  },
+}))(Typography)
+
 
 export default function CancelLesson() { 
- 
+  const classes = useStyles()
+
   var retrieveData = JSON.parse(JSON.parse(window.localStorage.getItem("lessons")))
   const [lessons, setLessons] = useState(retrieveData)
+
+  function handleDelete(index, details) {
+    //delete lesson from firebase
+    db.collection("Schedule")
+      .doc("ScheduledLesson")
+      .collection(thisWeek)
+      .where("tutee", "==", details.tutee)
+      .where("date", "==", details.date)
+      .where("startTime", "==", details.startTime)
+      .where("endTime", "==", details.endTime)
+      .where("tutor", "==", details.tutor)
+      .get()
+      .then((querySnapShot) => {
+        querySnapShot.forEach(doc => doc.ref.delete())
+      })
+    db.collection("Schedule")
+      .doc("ScheduledLesson")
+      .collection(nextWeek)
+      .where("tutee", "==", details.tutee)
+      .where("date", "==", details.date)
+      .where("startTime", "==", details.startTime)
+      .where("endTime", "==", details.endTime)
+      .where("tutor", "==", details.tutor)
+      .get()
+      .then((querySnapShot) => {
+        querySnapShot.forEach(doc => doc.ref.delete())
+      })       
     
-  const [checkedState, setCheckedState] = useState(
-    new Array(lessons.length).fill(false))
-  const [selectedSlots, setSelectedSlots] = useState([])
-
-  const handleCheckbox = (position) => {
-    const updatedCheckedState = checkedState.map((bool, index) =>
-      index === position ? !bool : bool
-    );
-
-    setCheckedState(updatedCheckedState);
-
-    const arr = []
-    updatedCheckedState.map((bool, index) => 
-      bool && arr.push(lessons[index])
-    )
-    setSelectedSlots(arr)
-  }
-
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    
-    if (selectedSlots.length > 0) {
-    //delete lesson from firestore
-    selectedSlots.map((details) => {
-      db.collection("Schedule")
-        .doc("ScheduledLesson")
-        .collection(thisWeek)
-        .where("tutee", "==", details.tutee)
-        .where("date", "==", details.date)
-        .where("startTime", "==", details.startTime)
-        .where("endTime", "==", details.endTime)
-        .where("tutor", "==", details.tutor)
-        .get()
-        .then((querySnapShot) => {
-          querySnapShot.forEach(doc => doc.ref.delete())
-        })
-      return (
-      db.collection("Schedule")
-        .doc("ScheduledLesson")
-        .collection(nextWeek)
-        .where("tutee", "==", details.tutee)
-        .where("date", "==", details.date)
-        .where("startTime", "==", details.startTime)
-        .where("endTime", "==", details.endTime)
-        .where("tutor", "==", details.tutor)
-        .get()
-        .then((querySnapShot) => {
-          querySnapShot.forEach(doc => doc.ref.delete())
-        })   
-      )}     
-    )
 
     //delete lesson from displayed table
-    var newLessons = []
-    checkedState.map((bool, index) => 
-      !bool && newLessons.push(lessons[index])
-    )
+    let newLessons = []
+    lessons.map(lesson => (lessons.indexOf(lesson) !== index) && newLessons.push(lesson))
     setLessons(newLessons)
-    setCheckedState(new Array(newLessons.length).fill(false))
     window.localStorage.setItem("lessons", JSON.stringify(JSON.stringify(newLessons)))
-    }
   }
+  
 
 
   return (
-    <div className="bg5 styling">
+    <Grid className="styling bg4">
+    <Grid item xs={12}>
       <NavigationBar/>
-      <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "0", paddingBottom: "30%"}}>
-        <Card className="justify-content-md-center" style={{width: "70rem", margin: "5% auto 1%"}}>
-          <Card.Body>
-            <center><h2 className="text-center bottomBorder" style={{width: "30%", marginBottom: "2%"}}>Cancel Lesson</h2></center>
-            <Form onSubmit={handleSubmit}>
-            <Table striped bordered>
-              <thead>
-                <tr>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Tutee</th>
-                <th>Tutor</th>
-                </tr>
-              </thead>
-              <tbody>
+    </Grid>
+      <Grid item xs={12} className={classes.grid} >
+        <Card className={classes.card}>
+          <CardContent>
+            <center><h2 className="bottomBorder" style={{width: "25%"}}>Cancel Lesson</h2></center>
+          </CardContent>  
+          <CardContent className={classes.cardcontent}>
+            <TableContainer>
+              <Table className={classes.table}>
+                <TableHead>
+                  <StyledTableRow>
+                    <StyledTableCell align="left">Date</StyledTableCell>
+                    <StyledTableCell align="left">Time</StyledTableCell>
+                    <StyledTableCell align="left">Tutee</StyledTableCell>
+                    <StyledTableCell align="left">Tutor</StyledTableCell>
+                    <StyledTableCell align="center">Cancel</StyledTableCell>
+                  </StyledTableRow>
+                </TableHead>
+                <TableBody>
                 {lessons && lessons.map((details, index) => (
                 (details.date >= today) &&
-                <tr key={index}>
-                  <td>{moment(details.date).format("dddd, D MMMM YYYY")}</td>
-                  <td>{details.startTime + " - " + details.endTime}</td>
-                  <td>{details.tutee}</td>
-                  <td>{details.tutor}</td>
-                  <td>
-                    <Form.Check 
-                      type="checkbox"
-                      id={index}
-                      checked={checkedState[index]}
-                      onChange={() => handleCheckbox(index)}
-                    />
-                  </td>
-                </tr>
+                <StyledTableRow key={index}>
+                  <StyledTableCell align="left" style={{width: "25%"}}>{moment(details.date).format("dddd, D MMMM YYYY")}</StyledTableCell>
+                  <StyledTableCell align="left" style={{width: "25%"}}>{details.startTime + " - " + details.endTime}</StyledTableCell>
+                  <StyledTableCell align="left">{details.tutee}</StyledTableCell>
+                  <StyledTableCell align="left">{details.tutor}</StyledTableCell>
+                  <StyledTableCell align="center" style={{width: "10%"}}>
+                    <IconButton size="small" onClick={() => handleDelete(index, details)}>
+                      <ClearIcon/>
+                    </IconButton>
+                  </StyledTableCell>
+                </StyledTableRow>
                 ))}
-              </tbody>
-            </Table>
-            <Button type="submit">Delete</Button>
-            </Form>
-          </Card.Body>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </CardContent>
         </Card>
-        <div className="w-100 text-center mt-2">
-            <Link to="/view-upcoming-lesson">Back to View Upcoming Lessons</Link>
-        </div>    
-      </Container>  
-    </div>
+        <Grid container justifyContent="center">
+          <Link to="/view-upcoming-lesson" style={{textDecoration: "none"}}>
+            <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to View Upcoming Lessons</StyledLink>
+          </Link>
+        </Grid>   
+      </Grid>
+      <Footer/>
+    </Grid>
   )
 }

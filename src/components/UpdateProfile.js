@@ -1,15 +1,64 @@
 import React, { useState, useRef } from "react"
 import { db } from "../firebase"
 import { useAuth } from "../contexts/AuthContext"
-import { Card, Form, Button, Alert } from "react-bootstrap"
-import NavigationBar from "./NavigationBar"
-import { useGetProfile } from "../hooks/useGetData"
 import { Link } from "react-router-dom"
+import { useGetProfile } from "../hooks/useGetData"
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { Button, Grid, Card, CardContent, TextField, Typography } from "@material-ui/core"
+import Alert from '@material-ui/lab/Alert'
+import NavigationBar from "./NavigationBar"
+import Footer from "./Footer/Footer"
 import "./TutorManager.css"
 
 
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    height: "100%",
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(18),
+  },
+  card: {
+    width: "50%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  cardcontent: {
+    width: "80%",
+    marginRight: "auto",
+    marginLeft: "auto",
+  },
+  typography: {
+    marginBottom: theme.spacing(4),
+    textAlign: "left",
+    fontSize: 15
+  },
+  textfield: {
+    marginBottom: theme.spacing(3),
+    minWidth: 300
+  },
+  button: {
+    marginTop: theme.spacing(2)
+  },
+  alert: {
+    marginBottom: theme.spacing(2)
+  }
+}))
+
+const StyledLink = withStyles((theme) => ({
+  root: {
+    color: theme.palette.secondary.dark,
+  },
+}))(Typography)
+
 export default function UpdateTutorProfile() {
+  const classes = useStyles()
+  
   const { currentUser } = useAuth()
+  const getUserData = useGetProfile()
+
   const nameRef = useRef()
   const emailRef = useRef()
   const contactRef = useRef()
@@ -46,51 +95,114 @@ export default function UpdateTutorProfile() {
     setLoading(false)
   }
 
-  const getUserData = useGetProfile()
-  
-
   return (
-    <div className="bg5">
-      <NavigationBar />
-      <Card className="justify-content-md-center styling" style={{width: "35rem", margin: "8% auto 1%", borderStyle: "solid !important"}}>
-        <Card.Body>
-          <center><h2 className="text-center mb-4 bottomBorder" style={{width: "43%"}}>Update Profile</h2></center>
-          {error && <Alert variant="danger">{error}</Alert>}
-          {message && <Alert variant="success">{message}</Alert>}
-          <Form onSubmit={saveData}>
-            <Form.Group className="mb-3">
-              <Form.Label>Name</Form.Label>
-              <Form.Control ref={nameRef} type="text" defaultValue={getUserData && getUserData.name} required/>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Email</Form.Label>
-              <Form.Control ref={emailRef} type="email" defaultValue={currentUser.email} disabled={true}/>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Contact No.</Form.Label>
-              <Form.Control ref={contactRef} type="tel" defaultValue={getUserData && getUserData.contact} required/>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Emergency Contact No.</Form.Label>
-              <Form.Control ref={emergencyRef} type="tel" defaultValue={getUserData && getUserData.emergencyContact} required/>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Date Of Birth</Form.Label>
-              <Form.Control ref={dobRef} type="date" defaultValue={getUserData && getUserData.dateOfBirth} required/>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>School</Form.Label>
-              <Form.Control ref={schoolRef} type="text" defaultValue={getUserData && getUserData.school} required/>
-            </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">Update</Button>
-          </Form>
-        </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
-        <Link to="/profile">Back to Profile</Link>
-      </div>
-      <br></br>
-    </div>
-  );
-};
+    <Grid className="styling bg4">
+      <Grid item xs={12}>
+        <NavigationBar/>
+      </Grid>
+      <Grid item xs={12} className={classes.grid} >
+        <Card className={classes.card}>
+          <CardContent>
+            <center><h2 className="bottomBorder" style={{width: "35%"}}>Update Profile</h2></center>
+          </CardContent>
+          <CardContent className={classes.cardcontent}>
+          {error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}
+          {message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}
+          {getUserData && <form onSubmit={saveData}>
+            <TextField 
+              className={classes.textfield}
+              label="Name" 
+              type="text" 
+              InputLabelProps={{
+                shrink: true,
+              }}
+              defaultValue={getUserData.name}
+              inputRef={nameRef}
+              fullWidth
+              required
+            />
+            <TextField 
+              className={classes.textfield}
+              label="Email" 
+              type="text" 
+              InputLabelProps={{
+                shrink: true,
+              }}
+              defaultValue={getUserData.email}
+              inputRef={emailRef}
+              fullWidth
+              disabled
+              required
+            />
+            <TextField 
+              className={classes.textfield}
+              label="Contact No." 
+              type="text" 
+              InputLabelProps={{
+                shrink: true,
+              }}
+              defaultValue={getUserData.contact}
+              inputRef={contactRef}
+              fullWidth
+              required
+            />
+            <TextField 
+              className={classes.textfield}
+              label="Emergency Contact No." 
+              type="text" 
+              InputLabelProps={{
+                shrink: true,
+              }}
+              defaultValue={getUserData.emergencyContact}
+              inputRef={emergencyRef}
+              fullWidth
+              required
+            />
+            <TextField 
+              className={classes.textfield}
+              label="Date of Birth" 
+              type="text" 
+              InputLabelProps={{
+                shrink: true,
+              }}
+              defaultValue={getUserData.dateOfBirth}
+              inputRef={dobRef}
+              fullWidth
+              required
+            />
+            <TextField 
+              className={classes.textfield}
+              label="School" 
+              type="text" 
+              InputLabelProps={{
+                shrink: true,
+              }}
+              defaultValue={getUserData.school}
+              inputRef={schoolRef}
+              fullWidth
+              required
+            />
+            <Button 
+              variant="contained" 
+              color="secondary"
+              size="medium" 
+              type="submit"  
+              className={classes.button}
+              disabled={loading}
+            >
+              Update
+            </Button>
+          </form>}
+          </CardContent>
+        </Card>
+        <Grid container justifyContent="center">
+          <Link to="/profile" style={{textDecoration: "none"}}>
+            <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to Profile</StyledLink>
+          </Link>
+        </Grid>   
+      </Grid>
+      <Footer/>
+    </Grid>
+  )
+}
 
