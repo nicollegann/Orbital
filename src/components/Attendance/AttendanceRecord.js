@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { db } from "../../firebase"
 import { useGetRecord } from "../../hooks/useGetData"
-import { CSVLink } from "react-csv"
 import { today } from "../Schedule/Date"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { Grid, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core"
@@ -138,14 +137,6 @@ function AttendanceList(props) {
         ))}
       </TableBody>
     </Table>
-    <CSVLink 
-      headers ={headers.slice(1, 6)}
-      filename="TutorManager_Attendance_Records.csv"
-      data={rows}
-      style={{textDecoration: "none"}}
-    >
-      <Button variant="contained" color="secondary" size="small" className={classes.csv} startIcon={<GetAppIcon/>}>Export to CSV</Button>
-    </CSVLink>
     </TableContainer>}
     </>
   )

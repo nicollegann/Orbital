@@ -1,10 +1,33 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert, Container } from "react-bootstrap"
+import { Form, Card, Alert, Container } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import "./TutorManager.css"
-import { Link } from "react-router-dom"
 import { useGetTutorCode } from "../hooks/useGetData"
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles'
 
+
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    position: "relative",
+    top: "12px",
+  },
+  card: {
+    width: "70%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: theme.spacing(8),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  cardcontent: {
+    marginRight: "auto",
+    marginLeft: "auto",
+    width: "100%",
+    
+  },
+}))
 
 export default function CreateTutorAccount() {   
   const emailRef = useRef()
@@ -16,6 +39,7 @@ export default function CreateTutorAccount() {
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const correctCode = useGetTutorCode()
+  const classes = useStyles()
 
     
   async function handleSubmit(event) {
@@ -48,7 +72,7 @@ export default function CreateTutorAccount() {
       <div className="bg5 styling">
       <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "30%"}}>
           <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
-            <Card.Body>
+            <Card.Body className={classes.cardcontent}>
               <center><h2 className="text-center mb-4 bottomBorder" style={{width: "75%"}}>Create New Tutor Account</h2></center>
               {error && <Alert variant="danger">{error}</Alert>}
               {message && <Alert variant="success">{message}</Alert>}
@@ -69,12 +93,19 @@ export default function CreateTutorAccount() {
                   <Form.Label><strong>Verification Code</strong></Form.Label>
                   <Form.Control type="text" ref={codeRef} required />
                 </Form.Group>
-                <Button disabled={loading} className="w-100" type="submit">Confirm</Button>
+                <Button 
+                disabled={loading}
+                  variant="contained" 
+                  color="secondary"
+                  size="medium" 
+                  type="submit"  
+                  className={classes.button, "w-100"}
+                >Confirm</Button>
               </Form>
             </Card.Body>
           </Card>
           <div className="w-100 text-center mt-2">
-            <Link to="/login">Back to Login</Link>
+            <Button href="#login">Back to Login</Button>
           </div>
           </Container>
         </div>

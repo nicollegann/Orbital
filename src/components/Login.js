@@ -1,8 +1,19 @@
 import React, { useRef, useState } from 'react'
-import { Form, Button, Card, Alert, Container } from 'react-bootstrap'
+import { Form, Card, Alert, Container } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import "./TutorManager.css"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles'
+
+
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    position: "relative",
+    top: "12px",
+  }
+}))
 
 export default function Login() {   
   const emailRef = useRef()
@@ -11,6 +22,7 @@ export default function Login() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+  const classes = useStyles()
 
     
   async function handleSubmit(event) {
@@ -43,19 +55,25 @@ export default function Login() {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" ref={passwordRef} required />
               </Form.Group>
-              <Button disabled={loading} className="w-100" type="submit">Login</Button>
+              <Button variant="contained" 
+                color="secondary"
+                size="medium" 
+                type="submit" 
+                className={classes.button, "w-100"}
+              >Login</Button>
             </Form>
             <div className="w-100 text-center mt-3">
-              <Link to="/forgot-password">Forgot Password?</Link>
+              <Button href="#forgot-password" color="darkgreen">Forgot Password?</Button>
+            </div>
+            <div className="w-100 text-center mt-2">
+              Need an account? <Button color="darkgreen" href="#create-account">Sign Up</Button>
+            </div>
+            <div className="w-100 text-center mt-2">
+              Schedule your next lesson <Button color="darkgreen" href="#tutee-schedule-lesson">here</Button> (for tutees)
             </div>
           </Card.Body>
         </Card>
-        <div className="w-100 text-center mt-2">
-          Need an account? <Link to="/create-account">Sign Up</Link>
-        </div>
-        <div className="w-100 text-center mt-2">
-          Schedule your next lesson <Link to="/tutee-schedule-lesson">here</Link> (for tutees)
-        </div>
+        
       </Container>
     </div>
   );

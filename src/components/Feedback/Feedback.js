@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react"
 import { db } from "../../firebase"
 import { useGetCurrUserName, useGetCounter } from "../../hooks/useGetData"
 import { today } from "../Schedule/Date"
-//import {uuid} from 'uuidv4'
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import { makeStyles } from '@material-ui/core/styles'
@@ -151,7 +150,7 @@ export default function Feedback() {
                   label="Tick box to stay anonymous"
                 />
                 <br/>
-                <Button disabled={loading} variant="contained" color="primary" type="submit" endIcon={<SendIcon/>} onClick={handleSubmit}>Submit</Button>
+                <Button disabled={loading} variant="contained" color="secondary" type="submit" endIcon={<SendIcon/>} onClick={handleSubmit}>Submit</Button>
               </form>
             </Container>
           </CardContent>

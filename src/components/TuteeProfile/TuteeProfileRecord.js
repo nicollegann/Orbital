@@ -1,14 +1,50 @@
 import React, { useState, useRef } from "react"
 import { db } from "../../firebase"
-import { Card, Button, Form, Alert, Row, Col } from "react-bootstrap"
+import { Card, Form, Alert, Row, Col } from "react-bootstrap"
 import { useGetTuteeProfile } from "../../hooks/useGetData"
 import "../TutorManager.css"
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    height: "100%",
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(14),
+  },
+  card: {
+    width: "70%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: theme.spacing(8),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  cardcontent: {
+    marginRight: "auto",
+    marginLeft: "auto",
+    width: "80%",
+    
+  },
+  textfield: {
+    marginBottom: theme.spacing(3),
+    minWidth: 200,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  button: {
+    position: "relative",
+    top: "12px",
+  }
+}))
 
 export default function TuteeProfileRecord(props) {
   const { tutee } = props
 
   function TuteeProfile() {
     const details = useGetTuteeProfile(tutee)
+    const classes = useStyles()
 
     const nameRef = useRef()
     const emailRef = useRef()
@@ -49,12 +85,20 @@ export default function TuteeProfileRecord(props) {
 
     return (
       <div className="styling">
-        <Card className="card-view-tutee-profile">
-          <Card.Body>
-            <Row style={{marginBottom:"1em"}}>
-              <Col md={{span: 4, offset:4}}><h3 className="text-center mb-1 bottomBorder" style={{width: "90%"}}>Tutee Profile</h3></Col>
+        <Card className={classes.card} >
+          <Card.Body className={classes.cardcontent}>
+            <Row style={{width: "100%", marginRight: "auto", marginLeft: "auto"}}>
+              <Col md={{span: 4, offset:4}}><h3 className="text-center mb-1 bottomBorder" style={{width: "100%"}}>Tutee Profile</h3></Col>
               <Col style={{paddingRight:"0", paddingLeft:"15%"}}>
-                <Button variant="secondary" disabled={loading} type="button" onClick={() => setUpdate((false))}>Edit Details</Button>
+                <Button 
+                  variant="contained" 
+                  color="secondary"
+                  size="medium" 
+                  type="button"  
+                  className={classes.button}
+                  disabled={loading} 
+                  onClick={() => setUpdate((false))}
+                >Edit Details</Button>
               </Col>
             </Row>
             {error && <Alert variant="danger">{error}</Alert>}
@@ -88,7 +132,13 @@ export default function TuteeProfileRecord(props) {
                 <Form.Label>Assigned Tutor</Form.Label>
                 <Form.Control ref={tutorRef} type="text" defaultValue={details && details.assignedTutor} readOnly={update} required/>
               </Form.Group>
-              <Button variant="secondary" disabled={update} type="submit">Confirm</Button>
+              <Button 
+                variant="contained" 
+                color="secondary"
+                size="medium" 
+                type="submit"  
+                className={classes.button} disabled={update}
+                >Confirm</Button>
             </Form>
           </Card.Body>
         </Card>
