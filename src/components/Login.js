@@ -4,7 +4,7 @@ import "./TutorManager.css"
 import { useHistory } from "react-router-dom"
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles'
-import { Card, Container, CardContent, FormControl, TextField, InputLabel } from '@material-ui/core'
+import { Card, Container, CardContent, FormControl, TextField } from '@material-ui/core'
 import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
@@ -79,6 +79,7 @@ export default function Login() {
                   inputRef={emailRef} 
                   InputLabelProps={{shrink: true,}}
                   fullWidth
+                  size="small"
                   className={classes.input}
                   variant="filled"
                   required
@@ -92,6 +93,7 @@ export default function Login() {
                   fullWidth
                   style={{paddingBottom: "10%"}}
                   variant="filled"
+                  size="small"
                   required
                 />
               <Button variant="contained" 
