@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { Container, Row, Col, Card, Alert } from "react-bootstrap"
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
@@ -15,6 +16,7 @@ import "./Dashboard.css"
 import "../TutorManager.css"
 import { useAuth } from "../../contexts/AuthContext"
 import { makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 import green from '@material-ui/core/colors/green'
 
 const useStyles = makeStyles((theme) => ({
@@ -30,11 +32,11 @@ export default function Dashboard() {
   const classes = useStyles()
 
   const count = useGetCounter()
-  const [feedbackNotif, setFeedbackNotif] = useState("")
+  const [feedbackNotif, setFeedbackNotif] = useState(false)
   
   useEffect(() => {
     if (isAdmin && count && count !== 0) {
-      setFeedbackNotif("There is new feedback!")
+      setFeedbackNotif(true)
     }
   }, [count, isAdmin])
 
@@ -68,7 +70,13 @@ export default function Dashboard() {
             </Card>
             </center>
           </Row>
-          {feedbackNotif && <Alert variant="warning" onClose={() => setFeedbackNotif("")} dismissible>{feedbackNotif}</Alert>}
+          {feedbackNotif && 
+            <Alert variant="info" onClose={() => setFeedbackNotif(false)} dismissible>
+              <Typography align="left" color="textSecondary" variant="button">
+                There is new feedback! Click {<Link to="/view-feedback" style={{color: '#818e7d'}}>here</Link>} to view.
+              </Typography>
+            </Alert>
+          }
           <Row md={4} className="mt-5 icons">
             <Col style={{backgroundColor: "secondary"}}>
               <Buttons style={{backgroundColor: "secondary"}} tooltip="Mark Attendance" className={classes.icons} img={Attendance} link="/mark-attendance" />
