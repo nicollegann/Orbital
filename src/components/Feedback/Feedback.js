@@ -103,8 +103,10 @@ export default function Feedback() {
 
   return (
     <Grid className="styling bg4">
-      <NavigationBar />
-      <Grid xs={12} className={classes.grid} >
+      <Grid item xs={12}>
+        <NavigationBar/>
+      </Grid>
+      <Grid item xs={12} className={classes.grid} >
         <Card className={classes.card}>
           <CardContent>
             <center><h2 className="text-center bottomBorder" style={{width: "30%"}}>Feedback</h2></center>

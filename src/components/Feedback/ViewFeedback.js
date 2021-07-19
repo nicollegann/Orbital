@@ -73,8 +73,10 @@ export default function ViewFeedback() {
 
   return (
     <Grid className="styling bg4">
-      <NavigationBar />
-      <Grid xs={12} className={classes.grid} >
+      <Grid item xs={12}>
+        <NavigationBar/>
+      </Grid>
+      <Grid item xs={12} className={classes.grid} >
         {(getEmail() === "toinfinityandbeyond.orbital@gmail.com")
           ? <Card className={classes.card}>
               <CardContent>
