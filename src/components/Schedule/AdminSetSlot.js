@@ -1,12 +1,13 @@
 import React, { useState, useRef } from "react"
 import { Link } from "react-router-dom"
 import { db } from "../../firebase"
+import { useAuth } from "../../contexts/AuthContext"
 import { useGetLessonOptions } from "../../hooks/useGetData"
 import { nextWeek, orderByTime, today } from "./Date"
 import moment from "moment"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Paper, Grid, Button, TextField, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core"
-import Alert from '@material-ui/lab/Alert'
+import { Container, Paper, Grid, Button, TextField, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core"
+import { Alert, AlertTitle } from '@material-ui/lab'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import NavigationBar from "../NavigationBar"
@@ -43,7 +44,10 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     marginTop: theme.spacing(4),
-  }
+  },
+  alert: {
+    marginTop: theme.spacing(6)
+  },
 }));
 
 const StyledLink = withStyles((theme) => ({
@@ -74,6 +78,7 @@ const StyledTableRow = withStyles((theme) => ({
 export default function AdminSetSlot() { 
   const classes = useStyles()
   
+  const { getEmail } = useAuth()
   const nextWeekSlots = useGetLessonOptions(nextWeek)
 
   return (
@@ -81,7 +86,8 @@ export default function AdminSetSlot() {
       <Grid item xs={12}>
         <NavigationBar/>
       </Grid>
-      <Grid item xs={12} className={classes.grid} >
+      {(getEmail() === "toinfinityandbeyond.orbital@gmail.com") 
+      ? <Grid item xs={12} className={classes.grid} >
         <Card className={classes.card}>
           {nextWeekSlots && <AvailableSlots nextWeekSlots={nextWeekSlots}/>}
         </Card>
@@ -91,6 +97,12 @@ export default function AdminSetSlot() {
           </Link>
         </Grid>
       </Grid>
+      : <Container className={classes.card}>
+          <Alert severity="error" className={classes.alert}>
+            <AlertTitle>Error</AlertTitle>
+            You are not authorised to view this page. Please return to the dashboard.
+          </Alert>
+        </Container>}
       <Footer/>
     </Grid>
   );

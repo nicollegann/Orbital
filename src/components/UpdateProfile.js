@@ -124,7 +124,7 @@ export default function UpdateTutorProfile() {
             <TextField 
               className={classes.textfield}
               label="Email" 
-              type="text" 
+              type="email" 
               InputLabelProps={{
                 shrink: true,
               }}
@@ -161,7 +161,7 @@ export default function UpdateTutorProfile() {
             <TextField 
               className={classes.textfield}
               label="Date of Birth" 
-              type="text" 
+              type="date" 
               InputLabelProps={{
                 shrink: true,
               }}

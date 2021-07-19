@@ -19,11 +19,16 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(14),
   },
   card: {
-    width: "70%",
+    width: "75%",
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: theme.spacing(8),
     paddingBottom: theme.spacing(4),
+  },
+  cardcontent: {
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto"
   },
   textfield: {
     marginBottom: theme.spacing(3),
@@ -76,7 +81,7 @@ export default function ViewFeedback() {
                 <center><h2 className="text-center bottomBorder" style={{width: "32%"}}>Feedback Records</h2></center>
                 <p>View feedback submitted by tutors.</p>
               </CardContent>
-              <CardContent style={{width: "50%"}}>  
+              <CardContent className={classes.cardcontent}>  
                 <form>
                   <TextField 
                     className={classes.textfield}
@@ -102,7 +107,7 @@ export default function ViewFeedback() {
                   </Button>
                 </form>
               </CardContent>
-              <CardContent>
+              <CardContent className={classes.cardcontent}>
               {<FeedbackRecord date={date}/>}
               </CardContent>
             </Card>

@@ -9,8 +9,8 @@ import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import ChangePassword from "./ChangePassword"
 import UpdateProfile from "./UpdateProfile"
-import CreateTuteeProfile from "./TuteeProfile/CreateTuteeProfile"
-import ViewTuteeProfile from "./TuteeProfile/ViewTuteeProfile"
+import CreateTuteeProfile from "./TuteeTutorProfile/CreateTuteeProfile"
+import ViewTuteeProfile from "./TuteeTutorProfile/ViewTuteeProfile"
 import MarkAttendance from "./Attendance/MarkAttendance"
 import ViewAttendance from "./Attendance/ViewAttendance"
 import TuteeObservation from "./Observation/TuteeObservation"
@@ -23,8 +23,9 @@ import CancelLesson from "./Schedule/CancelLesson"
 import TuteeVerificationCode from "./Schedule/TuteeVerificationCode"
 import Feedback from "./Feedback/Feedback"
 import ViewFeedback from "./Feedback/ViewFeedback"
-import ViewTutorProfile from "./ViewTutorProfile"
-import TutorVerificationCode from "./TutorVerificationCode"
+import ViewTutorProfile from "./TuteeTutorProfile/ViewTutorProfile"
+import EditProfile from "./TuteeTutorProfile/EditProfile"
+import TutorVerificationCode from "./TuteeTutorProfile/TutorVerificationCode"
 
 function App() {
   return (
@@ -35,9 +36,7 @@ function App() {
               <PrivateRoute exact path="/" component = {Dashboard} />
               <PrivateRoute exact path="/profile" component={Profile} />
               <PrivateRoute path="/change-password" component={ChangePassword} />
-              <PrivateRoute path="/create-tutee-profile" component={CreateTuteeProfile} />
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
-              <PrivateRoute path="/tutee-profile" component={ViewTuteeProfile} />
               <PrivateRoute path="/mark-attendance" component={MarkAttendance} />
               <PrivateRoute path="/view-attendance" component={ViewAttendance} />
               <PrivateRoute path="/tutee-observation" component={TuteeObservation} />
@@ -51,6 +50,9 @@ function App() {
               <PrivateRoute path="/view-feedback" component={ViewFeedback} />
               <PrivateRoute path="/view-tutor-profile" component={ViewTutorProfile} />
               <PrivateRoute path="/tutor-verification-code" component={TutorVerificationCode} />
+              <PrivateRoute path="/tutee-profile" component={ViewTuteeProfile} />
+              <PrivateRoute path="/create-tutee-profile" component={CreateTuteeProfile} />
+              <PrivateRoute path="/edit-profile" component={EditProfile} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/create-account" component={CreateTutorAccount} />

@@ -2,14 +2,13 @@ import React, { useState, useRef } from "react"
 import { Link } from "react-router-dom"
 import { db } from "../../firebase"
 import { useAuth } from "../../contexts/AuthContext"
-import { useGetTuteeCode } from "../../hooks/useGetData"
+import { useGetTutorCode } from "../../hooks/useGetData"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { Container, Grid, Button, TextField, Card, CardContent, Typography } from "@material-ui/core"
 import { Alert, AlertTitle } from '@material-ui/lab'
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import "../TutorManager.css"
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,31 +46,32 @@ const useStyles = makeStyles((theme) => ({
     },
   }))(Typography)
 
-export default function TuteeVerificationCode() {
-  const classes = useStyles()
+
+export default function TutorVerificationCode() {
+  const classes = useStyles()  
   
   const { getEmail } = useAuth()
-  const currentCode = useGetTuteeCode()
-  
+  const currentCode = useGetTutorCode()
+
   function ChangeCode() {
     const [disabled, setDisabled] = useState(true)
     const codeRef = useRef()
-    
+
     function handleSetCode(event) {
-        event.preventDefault()
-        
-        if (disabled) {
-        setDisabled(false)
-        } else {
-        db.collection("Schedule")
-            .doc("VerificationCode")
-            .set({
-            code: codeRef.current.value
-            })
-        setDisabled(true)  
-        }
+      event.preventDefault()
+      
+      if (disabled) {
+          setDisabled(false)
+      } else {
+          db.collection("TutorProfile")
+          .doc("VerificationCode")
+          .set({
+              code: codeRef.current.value
+          })
+          setDisabled(true)  
+      }
     }
-    
+        
     return (
       <Grid className="styling bg4">
         <Grid item xs={12}>
@@ -81,8 +81,8 @@ export default function TuteeVerificationCode() {
         ? <Grid item xs={12} className={classes.grid} >
           <Card className={classes.card}>
             <CardContent>
-              <center><h2 className="bottomBorder" style={{width: "60%"}}>Tutee Verification Code</h2></center>
-              <p>Tutees will use this code to submit their availability for the next lesson.</p>
+              <center><h2 className="bottomBorder" style={{width: "50%"}}>Tutor Verification Code</h2></center>
+              <p>Tutors will use this code to create their account.</p>
             </CardContent>
             <CardContent className={classes.cardcontent}>
               <Grid container justifyContent="center" spacing={2}>
@@ -116,8 +116,8 @@ export default function TuteeVerificationCode() {
             </CardContent>
           </Card>
           <Grid container justifyContent="center" className={classes.link}>
-            <Link to="/view-upcoming-lesson" style={{textDecoration: "none"}}>
-              <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to View Upcoming Lessons</StyledLink>
+            <Link to="/view-tutor-profile" style={{textDecoration: "none"}}>
+              <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to View Tutor Profile</StyledLink>
             </Link>
           </Grid>
         </Grid>
@@ -132,5 +132,4 @@ export default function TuteeVerificationCode() {
     )}
 
   return currentCode && <ChangeCode/>
-} 
- 
+}
