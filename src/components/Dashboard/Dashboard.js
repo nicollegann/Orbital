@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { Container, Row, Col, Card, Alert } from "react-bootstrap"
-import NavigationBar from "../NavigationBar"
-import Footer from "../Footer/Footer"
-import Buttons from "./Buttons"
+import { useAuth } from "../../contexts/AuthContext"
+import { useGetCurrUserName, useGetCounter } from "../../hooks/useGetData"
 import Attendance from "../images/markAttendance.png"
 import AttendanceRecord from "../images/attendanceRecord.png"
 import Observation from "../images/tuteeObservation.png"
@@ -11,25 +9,49 @@ import ObservationRecord from "../images/observationRecord.png"
 import Schedule from "../images/lessonSchedule.png"
 import Feedback from "../images/giveFeedback.png"
 import TuteeProfile from "../images/tuteeProfile.png"
-import { useGetCurrUserName, useGetCounter } from "../../hooks/useGetData"
+import { makeStyles } from '@material-ui/core/styles'
+import { Grid, Typography } from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert'
+import NavigationBar from "../NavigationBar"
+import Footer from "../Footer/Footer"
+import Buttons from "./Buttons"
 import "./Dashboard.css"
 import "../TutorManager.css"
-import { useAuth } from "../../contexts/AuthContext"
-import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles((theme) => ({
+  grid: {
+    height: "100%",
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(18),
+  },
+  heading: {
+    width: "75%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: theme.spacing(2)
+  },
+  buttonsgrid: {
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: theme.spacing(4)
+  },
+  buttonsgrid2: {
+    width: "75%",
+    marginLeft: "auto",
+    marginRight: "auto"
+  },
   icons: {
     backgroundColor: "#818e7d !important"
   }
 }))
 
 export default function Dashboard() {    
+  const classes = useStyles()
+  
   const getUserData = useGetCurrUserName()  
   const { getEmail } = useAuth()
   const isAdmin = getEmail() === "toinfinityandbeyond.orbital@gmail.com"
-  const classes = useStyles()
 
   const count = useGetCounter()
   const [feedbackNotif, setFeedbackNotif] = useState(false)
@@ -45,14 +67,14 @@ export default function Dashboard() {
       return (
         <>
           <Buttons tooltip="View Feedback" img={Feedback} link="/view-feedback"/>
-          <div><h5>View Feedback</h5></div>
+          <center><h5>View Feedback</h5></center>
         </> 
       )
     } else {
       return (
         <>
           <Buttons tooltip="Submit Feedback" img={Feedback} link="/feedback"/>
-          <div><h5>Submit Feedback</h5></div>
+          <center><h5>Submit Feedback</h5></center>
         </>
       )
     }
@@ -60,70 +82,63 @@ export default function Dashboard() {
 
 
   return (
-    <>
-      <NavigationBar />
-      <Container fluid className="bg3" style={{paddingLeft: "0", paddingRight: "0", fontFamily: "Georgia" }}>
-        <Container className="contents-dashboard">
-          <Row className="mb-2">
-            <center><Grid container alignItems="center" direction="row" justifyContent="center" className="mt-4 styling card-color" style={{width: "100%", backgroundColor:"secondary", border: "none", height: "4rem" }}>
-              <Grid item>
-              <h3>Welcome, <strong>{getUserData}</strong></h3>
-              </Grid>
-            </Grid>
-            </center>
-          </Row>
+    <Grid className="styling bg3">
+      <Grid item xs={12}>
+        <NavigationBar/>
+      </Grid>
+      <Grid item xs={12} className={classes.grid} > 
+        <Grid container alignItems="center" justifyContent="center" className={classes.heading} style={{backgroundColor:'#c7d6c2', height: "4rem" }}>
+          <Grid item>
+            <h3>Welcome, <strong>{getUserData}</strong></h3>
+          </Grid>
+        </Grid>
+        <Grid container alignItems="center" justifyContent="center" className={classes.heading}>
           {feedbackNotif && 
-            <Alert variant="warning" onClose={() => setFeedbackNotif(false)} dismissible style={{marginTop: "2%"}}>
+            <Alert severity="warning" onClose={() => setFeedbackNotif(false)} dismissible style={{ width: "100%" }}>
               <Typography align="left" color="textSecondary" variant="button">
                 There is new feedback! Click {<Link to="/view-feedback" style={{color: '#818e7d'}}>here</Link>} to view.
               </Typography>
-            </Alert>
-          }
-          <Row md={4} className="mt-5 icons">
-            <Col style={{backgroundColor: "secondary"}}>
-              <Buttons style={{backgroundColor: "secondary"}} tooltip="Mark Attendance" className={classes.icons} img={Attendance} link="/mark-attendance" />
-              <div><h5>Mark Attendance</h5></div>
-            </Col>
-            <Col>
-              <Buttons tooltip="View Attendance Record" rel="stylesheet" href="./TutorManager.css" img={AttendanceRecord} link="/view-attendance"/>
-              <div><h5>Attendance Records</h5></div>
-            </Col>
-            <Col>
-              <Buttons tooltip="Input Tutee Observation" img={Observation} link="/tutee-observation"/>  
-              <div><h5>Tutee Observation</h5></div>
-            </Col>
-            <Col>
-              <Buttons tooltip="View Observation Record" img={ObservationRecord} link="/view-observation"/>  
-              <div><h5>Observation Records</h5></div>
-            </Col>
-          </Row>
-          <Row md={4} className="mt-5 icons">
-            <Col>
-              <Buttons tooltip="Lesson Schedule" img={Schedule} link="/view-upcoming-lesson" />
-              <div><h5>Lesson Schedule</h5></div>
-            </Col>
-            <Col>
-              <FeedbackRouting/> 
-            </Col>
-            <Col>
-              <Buttons tooltip="Tutee Profiles" img={TuteeProfile} link="/tutee-profile"/>  
-              <div><h5>Tutee Profiles</h5></div>
-            </Col>
-            <Col>
-              {isAdmin && 
-              <div>
-                <Buttons tooltip="Tutor Profiles" img={TuteeProfile} link="/view-tutor-profile"/>
-                <h5>Tutor Profiles</h5>
-              </div>
-              }
-            </Col>
-            {/* <Row>
-              <Profiles></Profiles>
-            </Row> */}
-          </Row>
-        </Container>
-        <Footer credit={<>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></>}/>
-      </Container>
-    </>
+            </Alert>}
+        </Grid>
+        <Grid container justifyContent="space-evenly" className={classes.buttonsgrid}> 
+          <Grid item>
+            <Buttons style={{backgroundColor: "secondary"}} tooltip="Mark Attendance" className={classes.icons} img={Attendance} link="/mark-attendance" />
+            <center><h5>Mark Attendance</h5></center>
+          </Grid>
+          <Grid item>
+            <Buttons tooltip="View Attendance Record" rel="stylesheet" href="./TutorManager.css" img={AttendanceRecord} link="/view-attendance"/>
+            <center><h5>Attendance Records</h5></center>
+          </Grid>
+          <Grid item>
+            <Buttons tooltip="Input Tutee Observation" img={Observation} link="/tutee-observation"/>  
+            <center><h5>Tutee Observation</h5></center>
+          </Grid>
+          <Grid item>
+            <Buttons tooltip="View Observation Record" img={ObservationRecord} link="/view-observation"/>  
+            <center><h5>Observation Records</h5></center>
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="space-evenly" className={isAdmin ? classes.buttonsgrid : classes.buttonsgrid2}>
+          <Grid item>
+            <Buttons tooltip="Lesson Schedule" img={Schedule} link="/view-upcoming-lesson" />
+            <center><h5>Lesson Schedule</h5></center>
+          </Grid>
+          <Grid item>
+            <FeedbackRouting/> 
+          </Grid>
+          <Grid item>
+            <Buttons tooltip="Tutee Profiles" img={TuteeProfile} link="/tutee-profile"/>  
+            <center><h5>Tutee Profiles</h5></center>
+          </Grid>
+          {isAdmin && 
+            <Grid item>
+              <Buttons tooltip="Tutor Profiles" img={TuteeProfile} link="/view-tutor-profile"/>
+              <center><h5>Tutor Profiles</h5></center>
+            </Grid>
+          } 
+        </Grid> 
+      </Grid>
+      <Footer credit={<>Icons made by <a href="https://www.freepik.com" title="Freepik" style={{color: '#818e7d'}}>Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon" style={{color: '#818e7d'}}>www.flaticon.com</a></>}/>
+    </Grid>
   )
 }

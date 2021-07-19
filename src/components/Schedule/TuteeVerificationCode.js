@@ -1,10 +1,9 @@
 import React, { useState, useRef } from "react"
-import { Link } from "react-router-dom"
 import { db } from "../../firebase"
 import { useAuth } from "../../contexts/AuthContext"
 import { useGetTuteeCode } from "../../hooks/useGetData"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Container, Grid, Button, TextField, Card, CardContent, Typography } from "@material-ui/core"
+import { Container, Grid, Button, TextField, Card, CardContent } from "@material-ui/core"
 import { Alert, AlertTitle } from '@material-ui/lab'
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
@@ -41,11 +40,15 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
   
-  const StyledLink = withStyles((theme) => ({
+  const StyledButton = withStyles((theme) => ({
     root: {
       color: theme.palette.secondary.dark,
+      '&:hover': {
+        color: theme.palette.secondary.dark,
+     },
     },
-  }))(Typography)
+  }))(Button);
+
 
 export default function TuteeVerificationCode() {
   const classes = useStyles()
@@ -114,12 +117,10 @@ export default function TuteeVerificationCode() {
                 </Grid>
               </Grid>
             </CardContent>
+            <Grid container justifyContent="center" alignItems="center">
+              <StyledButton href="#view-upcoming-lesson">Back to View Upcoming Lessons</StyledButton>
+            </Grid>
           </Card>
-          <Grid container justifyContent="center" className={classes.link}>
-            <Link to="/view-upcoming-lesson" style={{textDecoration: "none"}}>
-              <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to View Upcoming Lessons</StyledLink>
-            </Link>
-          </Grid>
         </Grid>
         : <Container className={classes.card}>
             <Alert severity="error" className={classes.alert}>

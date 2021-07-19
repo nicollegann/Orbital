@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react"
 import { db } from "../../firebase"
 import firebase from "firebase/app"
-import { Link } from "react-router-dom"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Card, CardContent, Button, Grid, TextField, Typography } from "@material-ui/core"
+import { Card, CardContent, Button, Grid, TextField } from "@material-ui/core"
 import { Alert } from '@material-ui/lab'
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
@@ -27,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
   cardcontent: {
     marginRight: "auto",
     marginLeft: "auto",
-    width: "70%",
+    width: "80%",
+    marginBottom: theme.spacing(4),
   },
   textfield: {
     marginBottom: theme.spacing(4),
@@ -37,15 +37,19 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2)
   },
   button: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    width: "100%"
   }
 }))
 
-const StyledLink = withStyles((theme) => ({
+const StyledButton = withStyles((theme) => ({
   root: {
     color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
   },
-}))(Typography)
+}))(Button);
 
 
 export default function CreateTuteeProfile() {   
@@ -101,7 +105,7 @@ export default function CreateTuteeProfile() {
         <Grid item xs={12} className={classes.grid} >
           <Card className={classes.card}>
             <CardContent>
-              <center><h2 className="bottomBorder" style={{width: "45%"}}>Create Tutee Profile</h2></center>
+              <center><h2 className="bottomBorder" style={{width: "50%"}}>Create Tutee Profile</h2></center>
             </CardContent>
             <CardContent className={classes.cardcontent}>
               {error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}
@@ -185,11 +189,9 @@ export default function CreateTuteeProfile() {
                 </Button>
               </form>
             </CardContent>
-            <Grid container justifyContent="center">
-            <Link to="/tutee-profile" style={{textDecoration: "none", marginTop: "6%"}}>
-              <StyledLink variant="button" align="center">Back to View Tutee Profile</StyledLink>
-            </Link>
-          </Grid>
+            <Grid container justifyContent="center" alignItems="center">
+              <StyledButton href="#tutee-profile">Back to View Tutee Profile</StyledButton>
+            </Grid>
           </Card>
         </Grid>
         <Footer/>

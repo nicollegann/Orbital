@@ -2,7 +2,7 @@ import React from "react"
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 import { useGetProfile } from "../hooks/useGetData"
-import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import { Button, Card, CardContent, Grid, Typography } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
@@ -34,15 +34,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 15
   },
   button: {
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(2)
   }
 }))
-
-const StyledLink = withStyles((theme) => ({
-  root: {
-    color: theme.palette.secondary.dark,
-  },
-}))(Typography)
 
 
 export default function Profile() {
@@ -103,12 +97,7 @@ export default function Profile() {
               </Grid>
             </Grid>
           </CardContent>
-        </Card>
-        <Grid container justifyContent="center">
-          <Link to="/" style={{textDecoration: "none"}}>
-            <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to Dashboard</StyledLink>
-          </Link>
-        </Grid>  
+        </Card> 
       </Grid>
       <Footer/>
     </Grid>

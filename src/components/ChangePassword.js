@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Button, Grid, Card, CardContent, TextField, Typography } from "@material-ui/core"
+import { Button, Grid, Card, CardContent, TextField } from "@material-ui/core"
 import Alert from '@material-ui/lab/Alert'
 import NavigationBar from "./NavigationBar"
 import Footer from "./Footer/Footer"
@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
     marginRight: "auto",
     marginLeft: "auto",
+    marginBottom: theme.spacing(4),
   },
   typography: {
     marginBottom: theme.spacing(4),
@@ -45,11 +46,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StyledLink = withStyles((theme) => ({
+const StyledButton = withStyles((theme) => ({
   root: {
     color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
   },
-}))(Typography)
+}))(Button);
 
 
 export default function ChangePassword() {   
@@ -151,12 +155,10 @@ export default function ChangePassword() {
             </Button> 
           </form>
           </CardContent>
+          <Grid container justifyContent="center" alignItems="center">
+            <StyledButton href="#profile">Back to Profile</StyledButton>
+          </Grid>
         </Card>
-        <Grid container justifyContent="center">
-          <Link to="/profile" style={{textDecoration: "none"}}>
-            <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to Profile</StyledLink>
-          </Link>
-        </Grid> 
       </Grid>
       <Footer/>
     </Grid>

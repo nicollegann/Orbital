@@ -2,21 +2,22 @@ import React, { useRef, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import "./TutorManager.css"
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles'
-import { Card, Container, CardContent, FormControl, TextField, InputLabel } from '@material-ui/core'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { Grid, Card, CardContent, FormControl, TextField } from '@material-ui/core'
 import { Alert } from '@material-ui/lab';
 
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    position: "relative",
-    top: "12px",
+  grid: {
+    height: "100%",
+    paddingTop: theme.spacing(20),
+    paddingBottom: theme.spacing(5)
   },
   card: {
-    width: "70%",
+    width: "40%",
     marginLeft: "auto",
     marginRight: "auto",
-    paddingTop: theme.spacing(2),
+    marginBottom: theme.spacing(8),
     paddingBottom: theme.spacing(2),
   },
   cardcontent: {
@@ -32,11 +33,24 @@ const useStyles = makeStyles((theme) => ({
   input: {
     paddingBottom: theme.spacing(2)
   },
+  button: {
+    marginBottom: theme.spacing(2)
+  },
   alert: {
     marginBottom: theme.spacing(2),
     width: "85%",
   },
 }))
+
+const StyledButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
+  },
+}))(Button);
+
 
 export default function ForgotPassword() {   
   const emailRef = useRef();
@@ -63,42 +77,42 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className="styling bg9" style={{height: "100% !important"}}>
-    <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "30%"}}>
-      <Card className={classes.card, "justify-content-md-center"}  style={{paddingBottom: "2%", width: "35rem", margin: "10% auto 2%"}}>
-        <CardContent className={classes.cardContent}>
-          <center><h2 className="bottomBorder text-center mb-4" style={{width: "48%", paddingTop: "3%"}}>Reset Password</h2></center>
-          <center>{error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}</center>
-          <center>{message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}</center>
-          <form onSubmit={handleSubmit}>
-            <center><FormControl className={classes.formControl}>
-              <TextField
-                textAlign="center"
-                label="Email" 
-                type="email"
-                inputRef={emailRef} 
-                InputLabelProps={{shrink: true,}}
-                fullWidth
-                className={classes.input}
-                variant="filled"
-                required
-              />
-            <Button 
-              disabled={loading} 
-              variant="contained" 
-              color="secondary"
-              size="medium" 
-              type="submit" 
-              className={classes.button, "w-100"}
-            >Reset Password</Button>
-          </FormControl></center>
-          </form>
-          <div className="w-100 text-center mt-3">
-            <Button href="#login" color="darkgreen">Back to Login</Button>
-          </div>
-        </CardContent>
-      </Card>
-      </Container>
-    </div>
+    <Grid className="styling bg7">
+      <Grid item xs={12} className={classes.grid} > 
+        <Card className={classes.card}>
+          <CardContent className={classes.cardContent}>
+            <center><h2 className="bottomBorder text-center mb-4" style={{width: "48%", paddingTop: "3%"}}>Reset Password</h2></center>
+            <center>{error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}</center>
+            <center>{message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}</center>
+            <form onSubmit={handleSubmit}>
+              <center><FormControl className={classes.formControl}>
+                <TextField
+                  textAlign="center"
+                  label="Email" 
+                  type="email"
+                  inputRef={emailRef} 
+                  InputLabelProps={{shrink: true,}}
+                  fullWidth
+                  className={classes.input}
+                  variant="filled"
+                  required
+                />
+              <Button 
+                disabled={loading} 
+                variant="contained" 
+                color="secondary"
+                size="medium" 
+                type="submit" 
+                className={classes.button}
+              >Reset Password</Button>
+            </FormControl></center>
+            </form>
+          </CardContent>
+          <Grid container justifyContent="center" alignItems="center">
+            <StyledButton href="#login">Back to Login</StyledButton>
+          </Grid>
+        </Card>
+      </Grid>
+    </Grid>
   );
 }

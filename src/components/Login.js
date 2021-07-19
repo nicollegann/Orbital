@@ -2,17 +2,17 @@ import React, { useRef, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import "./TutorManager.css"
 import { useHistory } from "react-router-dom"
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles'
-import { Card, Container, CardContent, FormControl, TextField } from '@material-ui/core'
-import { Alert } from '@material-ui/lab';
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { Grid, Card, CardContent, FormControl, TextField } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import { Alert } from '@material-ui/lab'
+import "./TutorManager.css"
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    position: "relative",
-    top: "12px",
+  grid: {
+    height: "100%",
+    paddingTop: "8%",
   },
-
   formControl: {
     width: "80%",
     textAlign: "left",
@@ -23,21 +23,27 @@ const useStyles = makeStyles((theme) => ({
     width: "65%",
     marginLeft: "auto",
     marginRight: "auto",
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-  },
-  cardcontent: {
-    marginRight: 30,
-    marginLeft: 30,
   },
   input: {
     paddingBottom: theme.spacing(2)
   },
   alert: {
     marginBottom: theme.spacing(2),
-    width: "85%",
+    width: "90%",
   },
+  link: {
+    marginTop: theme.spacing(1)
+  }
 }))
+
+const StyledButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
+  },
+}))(Button);
 
 export default function Login() {   
   const emailRef = useRef()
@@ -64,14 +70,15 @@ export default function Login() {
     }
 
   return (
-    <div className="styling bg7" style={{height: "100% !important"}}>
-      <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "30%"}}>
-        <Card className={classes.card, "justify-content-md-center"} style={{width: "35rem", margin: "10% auto 2%"}}>
-          <CardContent className={classes.cardContent}>
-            <center><h2 className="text-center mb-4 bottomBorder">TutorManager</h2></center>
+    <Grid className="styling bg7">
+      <Grid item xs={12} className={classes.grid} > 
+        <Card className={classes.card} style={{width: "35rem"}}>
+          <CardContent>
+            <center><h2 className="bottomBorder" style={{marginBottom: "5%"}}>TutorManager</h2></center>
             <center>{error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}</center>
             <form onSubmit={handleSubmit}>
-            <center><FormControl className={classes.formControl}>
+            <center>
+              <FormControl className={classes.formControl}>
                 <TextField
                   textAlign="center"
                   label="Email" 
@@ -84,7 +91,6 @@ export default function Login() {
                   variant="filled"
                   required
                 />
-
                 <TextField 
                   label="Password" 
                   type="password"
@@ -96,28 +102,31 @@ export default function Login() {
                   size="small"
                   required
                 />
-              <Button variant="contained" 
-                color="secondary"
-                size="medium" 
-                type="submit" 
-                className={classes.button, "w-100"}
-              >Login</Button>
-              </FormControl></center>
+                <Button variant="contained" 
+                  color="secondary"
+                  size="medium" 
+                  type="submit" 
+                  disabled={loading}
+                >Login</Button>
+              </FormControl>
+            </center>
             </form>
-            <div className="w-100 text-center mt-3">
-              <Button href="#forgot-password" color="darkgreen">Forgot Password?</Button>
-            </div>
-            <div className="w-100 text-center mt-2">
-              Need an account? <Button color="darkgreen" href="#create-account">Sign Up</Button>
-            </div>
-            <div className="w-100 text-center mt-2">
-              Schedule your next lesson <Button color="darkgreen" href="#tutee-schedule-lesson">here</Button> (for tutees)
-            </div>
+            <Grid container justifyContent="center" className={classes.link}>
+              <StyledButton href="#forgot-password">Forgot Password?</StyledButton>
+            </Grid>
+            <Grid container justifyContent="center" alignItems="center" className={classes.link}>
+              <Grid item>Need an account?</Grid>
+              <Grid item><StyledButton href="#create-account">Sign Up</StyledButton></Grid>
+            </Grid>
+            <Grid container justifyContent="center" alignItems="center" className={classes.link}>
+              <Grid item>Schedule your next lesson </Grid>
+              <Grid item><StyledButton href="#tutee-schedule-lesson">here</StyledButton></Grid>
+              <Grid item>(for tutees)</Grid>
+            </Grid>
           </CardContent>
         </Card>
-        
-      </Container>
-    </div>
+      </Grid>
+    </Grid>
   );
 }
 

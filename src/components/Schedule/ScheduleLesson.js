@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom"
 import { useGetTutee } from "../../hooks/useGetData"
 import { nextWeek } from "./Date"
 import TutorSelectSlot from './TutorSelectSlot'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Grid, Card, CardContent, FormControl, InputLabel, Select, MenuItem, Typography } from "@material-ui/core"
+import { Grid, Card, CardContent, FormControl, InputLabel, Select, MenuItem, Button } from "@material-ui/core"
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 
@@ -25,11 +24,12 @@ const useStyles = makeStyles((theme) => ({
   cardcontent: {
     marginRight: 30,
     marginLeft: 30,
+    marginBottom: theme.spacing(4)
   },
   formControl: {
     minWidth: 250,
     textAlign: "left",
-    marginBottom: theme.spacing(4)
+    marginBottom: theme.spacing(4),
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -43,11 +43,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const StyledLink = withStyles((theme) => ({
+const StyledButton = withStyles((theme) => ({
   root: {
     color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
   },
-}))(Typography)
+}))(Button);
 
 
 export default function TutorSchedule() {
@@ -68,7 +71,7 @@ export default function TutorSchedule() {
           </CardContent>
           <CardContent className={classes.cardcontent}>
             <form>
-            <FormControl className={classes.formControl}>
+              <FormControl className={classes.formControl}>
                 <InputLabel shrink id="tutee-name-label">Tutee</InputLabel>
                 <Select
                   labelId="tutee-name-label"
@@ -86,12 +89,10 @@ export default function TutorSchedule() {
             </form>
             {tutee && <TutorSelectSlot tutee={tutee} dateRange={nextWeek}/>}
           </CardContent>
+          <Grid container justifyContent="center" alignItems="center">
+            <StyledButton href="#view-upcoming-lesson">Back to View Upcoming Lessons</StyledButton>
+          </Grid>
         </Card>
-        <Grid container justifyContent="center" className={classes.link}>
-          <Link to="/view-upcoming-lesson" style={{textDecoration: "none"}}>
-            <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to View Upcoming Lessons</StyledLink>
-          </Link>
-        </Grid>
       </Grid>
       <Footer/>
     </Grid>

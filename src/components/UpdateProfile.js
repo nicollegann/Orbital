@@ -1,10 +1,9 @@
 import React, { useState, useRef } from "react"
 import { db } from "../firebase"
 import { useAuth } from "../contexts/AuthContext"
-import { Link } from "react-router-dom"
 import { useGetProfile } from "../hooks/useGetData"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Button, Grid, Card, CardContent, TextField, Typography } from "@material-ui/core"
+import { Button, Grid, Card, CardContent, TextField } from "@material-ui/core"
 import Alert from '@material-ui/lab/Alert'
 import NavigationBar from "./NavigationBar"
 import Footer from "./Footer/Footer"
@@ -29,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
     marginRight: "auto",
     marginLeft: "auto",
+    marginBottom: theme.spacing(4),
   },
   typography: {
     marginBottom: theme.spacing(4),
@@ -47,11 +47,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StyledLink = withStyles((theme) => ({
+const StyledButton = withStyles((theme) => ({
   root: {
     color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
   },
-}))(Typography)
+}))(Button);
 
 export default function UpdateTutorProfile() {
   const classes = useStyles()
@@ -194,12 +197,10 @@ export default function UpdateTutorProfile() {
             </Button>
           </form>}
           </CardContent>
-        </Card>
-        <Grid container justifyContent="center">
-          <Link to="/profile" style={{textDecoration: "none"}}>
-            <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to Profile</StyledLink>
-          </Link>
-        </Grid>   
+          <Grid container justifyContent="center" alignItems="center">
+            <StyledButton href="#profile">Back to Profile</StyledButton>
+          </Grid>
+        </Card>  
       </Grid>
       <Footer/>
     </Grid>

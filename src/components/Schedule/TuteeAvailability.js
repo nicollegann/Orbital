@@ -1,32 +1,36 @@
 import React, { useRef, useState } from "react"
-import { Card, Container, CardContent, FormControl, TextField, Checkbox } from '@material-ui/core'
 import { Alert } from '@material-ui/lab';
 import { db } from "../../firebase"
 import { useGetTuteeNames, useGetLessonOptions, useGetTuteeCode } from "../../hooks/useGetData"
 import { nextWeek } from "./Date"
 import moment from "moment"
-import { Button } from '@material-ui/core'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { Button, Grid, Card, Container, CardContent, FormControl, TextField, Checkbox, Typography } from '@material-ui/core'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { InputLabel } from "@material-ui/core";
+
 
 const useStyles = makeStyles((theme) => ({
+  grid: {
+    height: "100%",
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(6)
+  },
   card: {
-    width: "75%",
+    width: "50%",
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: theme.spacing(8),
-    paddingBottom: theme.spacing(1),
+    paddingBottom: theme.spacing(2),
   },
   cardcontent: {
     marginRight: "auto",
     marginLeft: "auto",
-    width: "90%",
+    width: "100%",
   },
   textfield: {
     marginBottom: theme.spacing(3),
@@ -70,6 +74,15 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
+
+const StyledButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
+  },
+}))(Button);
 
 export default function TuteeAvailability() {
   let slots = useGetLessonOptions(nextWeek)
@@ -145,12 +158,12 @@ export default function TuteeAvailability() {
 
 
     return (
-      <div className="styling bg5" style={{height: "100% !important"}}>
-      <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "15%"}}>
-            <Card className={classes.card} style={{width: "55rem", margin: "3% auto 1%"}}>
+      <Grid className="styling bg7">
+        <Grid item xs={12} className={classes.grid} > 
+          <Card className={classes.card}>
             <CardContent className={classes.cardcontent}>
-            <center><h2 className="text-center bottomBorder" style={{width: "40%", paddingTop: "3%"}}>Schedule Lesson</h2></center>
-            <em><p className="text-center mb-4">Select your available time slots for <em>{nextWeek}</em>.</p></em>
+            <center><h2 className="bottomBorder" style={{width: "40%", paddingTop: "3%"}}>Schedule Lesson</h2></center>
+            <p>Select your available time slots for your next lesson.</p>
             <center>{error && <Alert className={classes.alert} severity="error" onClose={() => {setError("")}}>{error}</Alert>}</center>
             <center>{message && <Alert className={classes.alert} severity="success" onClose={() => {setMessage("")}}>{message}</Alert>}</center>
             <form onSubmit={handleSubmit} style={{paddingTop: "2%"}}>
@@ -213,12 +226,12 @@ export default function TuteeAvailability() {
                 </FormControl></center>
             </form>
             </CardContent>
-            </Card>
-            <div className="w-100 text-center mt-2">
-            <Button color="link" href="#login">Back to Login</Button>
-           </div>
-        </Container>
-      </div>
+            <Grid container justifyContent="center" alignItems="center">
+              <StyledButton href="#login">Back to Login</StyledButton>
+            </Grid>
+          </Card>
+        </Grid>
+      </Grid>
     )
   }
   return (<>{slots && <Helper/>}</>)

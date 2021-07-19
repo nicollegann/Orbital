@@ -3,7 +3,7 @@ import { db } from "../../firebase"
 import { useGetTutorProfile, useGetTuteeProfile, useGetTutee } from "../../hooks/useGetData"
 import { Link } from "react-router-dom"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Card, CardContent, Button, Grid, TextField, Typography } from "@material-ui/core"
+import { Card, CardContent, Button, Grid, TextField } from "@material-ui/core"
 import { Alert } from '@material-ui/lab'
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "auto",
     marginLeft: "auto",
     width: "85%",
+    marginBottom: theme.spacing(4),
   },
   textfield: {
     marginBottom: theme.spacing(4),
@@ -38,11 +39,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StyledLink = withStyles((theme) => ({
+const StyledButton = withStyles((theme) => ({
   root: {
     color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
   },
-}))(Typography)
+}))(Button);
 
 
 export default function EditProfile() {
@@ -217,17 +221,15 @@ export default function EditProfile() {
                   </Button>
                 </form>
               </CardContent>
-            </Card>
-            <Grid container justifyContent="center">
               {details.role === "Tutor"
-              ? <Link to="/view-tutor-profile" style={{textDecoration: "none"}}>
-                  <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to View Tutor Profile</StyledLink>
-                </Link>
-              : <Link to="/tutee-profile" style={{textDecoration: "none"}}>
-                  <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to View Tutee Profile</StyledLink>
-                </Link>}
-            </Grid></>
-            }
+              ? <Grid container justifyContent="center" alignItems="center">
+                  <StyledButton href="#view-tutor-profile">Back to View Tutor Profile</StyledButton>
+                </Grid>
+              : <Grid container justifyContent="center" alignItems="center">
+                  <StyledButton href="#tutee-profile">Back to View Tutee Profile</StyledButton>
+                </Grid>}
+            </Card>
+          </>}
         </Grid>
         <Footer/>
       </Grid>

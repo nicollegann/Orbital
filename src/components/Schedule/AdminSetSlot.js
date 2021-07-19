@@ -1,12 +1,11 @@
 import React, { useState, useRef } from "react"
-import { Link } from "react-router-dom"
 import { db } from "../../firebase"
 import { useAuth } from "../../contexts/AuthContext"
 import { useGetLessonOptions } from "../../hooks/useGetData"
 import { nextWeek, orderByTime, today } from "./Date"
 import moment from "moment"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Container, Paper, Grid, Button, TextField, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core"
+import { Container, Paper, Grid, Button, TextField, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core"
 import { Alert, AlertTitle } from '@material-ui/lab'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -43,18 +42,24 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   paper: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(5),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
   },
   alert: {
     marginTop: theme.spacing(6)
   },
 }));
 
-const StyledLink = withStyles((theme) => ({
+const StyledButton = withStyles((theme) => ({
   root: {
     color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
   },
-}))(Typography)
+}))(Button);
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -90,12 +95,10 @@ export default function AdminSetSlot() {
       ? <Grid item xs={12} className={classes.grid} >
         <Card className={classes.card}>
           {nextWeekSlots && <AvailableSlots nextWeekSlots={nextWeekSlots}/>}
+          <Grid container justifyContent="center" alignItems="center">
+            <StyledButton href="#view-upcoming-lesson">Back to View Upcoming Lessons</StyledButton>
+          </Grid>
         </Card>
-        <Grid container justifyContent="center" className={classes.link}>
-          <Link to="/view-upcoming-lesson" style={{textDecoration: "none"}}>
-            <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to View Upcoming Lessons</StyledLink>
-          </Link>
-        </Grid>
       </Grid>
       : <Container className={classes.card}>
           <Alert severity="error" className={classes.alert}>
@@ -214,7 +217,7 @@ function AvailableSlots(props) {
       </TableContainer>
       </form>
     </CardContent>
-    <CardContent className={classes.cardcontent}>
+    <CardContent className={classes.cardcontent}>  
       <Button
         variant="contained" 
         color="secondary"
@@ -224,9 +227,10 @@ function AvailableSlots(props) {
       >
         {showAdd ? "Close" : "Add Lesson Slot"}
       </Button>
-      <Paper className={classes.paper}>
       {showAdd && <>
+      <Paper variant="outlined" style={{border: "1px solid", borderColor: "#bebebe"}} className={classes.paper}>
       {error && <Alert severity="error">{error}</Alert>}
+      <form onSubmit={handleAdd}>
       <Grid container spacing={4} justifyContent="center">
         <Grid item>
           <TextField
@@ -271,15 +275,15 @@ function AvailableSlots(props) {
             size="medium" 
             type="submit"  
             disabled={loading}
-            onClick={handleAdd}
             className={classes.button}
           >
           Confirm
           </Button>
-        </Grid>  
+        </Grid> 
       </Grid>
-      </>}
+      </form> 
       </Paper>
+      </>}
     </CardContent>
     </>
   )

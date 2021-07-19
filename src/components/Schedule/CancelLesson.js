@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import { db } from "../../firebase"
-import { Link } from "react-router-dom"
 import { nextWeek, thisWeek, today } from "./Date"
 import moment from "moment"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Grid, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@material-ui/core"
+import { Grid, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from "@material-ui/core"
 import IconButton from '@material-ui/core/IconButton'
-// import DeleteIcon from '@material-ui/icons/Delete'
 import ClearIcon from '@material-ui/icons/Clear'
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
@@ -33,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   cardcontent: {
     marginRight: 30,
     marginLeft: 30,
+    marginBottom: theme.spacing(4),
   },
 }))
 
@@ -54,11 +53,14 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow)
 
-const StyledLink = withStyles((theme) => ({
+const StyledButton = withStyles((theme) => ({
   root: {
     color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
   },
-}))(Typography)
+}))(Button);
 
 
 export default function CancelLesson() { 
@@ -145,12 +147,10 @@ export default function CancelLesson() {
               </Table>
             </TableContainer>
           </CardContent>
+          <Grid container justifyContent="center" alignItems="center">
+            <StyledButton href="#view-upcoming-lesson">Back to View Upcoming Lessons</StyledButton>
+          </Grid>
         </Card>
-        <Grid container justifyContent="center">
-          <Link to="/view-upcoming-lesson" style={{textDecoration: "none"}}>
-            <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to View Upcoming Lessons</StyledLink>
-          </Link>
-        </Grid>   
       </Grid>
       <Footer/>
     </Grid>

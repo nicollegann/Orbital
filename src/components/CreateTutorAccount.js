@@ -1,36 +1,35 @@
 import React, { useRef, useState } from "react"
-import { Card, Container, CardContent, FormControl, TextField, InputLabel } from '@material-ui/core'
-import { Alert } from '@material-ui/lab';
 import { useAuth } from "../contexts/AuthContext"
-import "./TutorManager.css"
 import { useGetTutorCode } from "../hooks/useGetData"
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { Grid, Card, CardContent, FormControl, TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles'
-import { Form } from "react-bootstrap";
-
+import { Alert } from '@material-ui/lab';
+import "./TutorManager.css"
 
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    position: "relative",
-    top: "12px",
+  grid: {
+    height: "100%",
+    paddingTop: theme.spacing(11),
+    paddingBottom: theme.spacing(4)
   },
   card: {
+    width: "40%",
+    marginLeft: "auto",
+    marginRight: "auto",
     marginBottom: theme.spacing(8),
-    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
   },
   cardcontent: {
     marginRight: "auto",
     marginLeft: "auto",
-    width: "90%",
-    
+    width: "95%",
   },
   formControl: {
     width: "87%",
     textAlign: "left",
     marginBottom: theme.spacing(2)
-
   },
   input: {
     paddingBottom: theme.spacing(2)
@@ -40,6 +39,16 @@ const useStyles = makeStyles((theme) => ({
     width: "93%",
   },
 }))
+
+const StyledButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.secondary.dark,
+    '&:hover': {
+      color: theme.palette.secondary.dark,
+   },
+  },
+}))(Button);
+
 
 export default function CreateTutorAccount() {   
   const emailRef = useRef()
@@ -62,7 +71,6 @@ export default function CreateTutorAccount() {
     }
 
     //Check if verification code is correct
-    // console.log(correctCode)
     if (codeRef.current.value !== correctCode) {
       setMessage("")
       return setError("Invalid verification code. Please contact admin for assistance.")
@@ -81,12 +89,11 @@ export default function CreateTutorAccount() {
   }
 
     return (
-      <div className="styling bg5" style={{height: "100% !important"}}>
-      <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "30%"}}>
-          <Card className={classes.card, "justify-content-md-center"} style={{width: "38rem", margin: "10% auto 1%"}}>
+      <Grid className="styling bg7">
+        <Grid item xs={12} className={classes.grid} > 
+          <Card className={classes.card}>
             <CardContent className={classes.cardcontent} style={{paddingTop: "8%", paddingBottom: "5%"}}>
-              <center><h2 className="text-center mb-4 bottomBorder" style={{width: "75%", }}>Create New Tutor Account</h2></center>
-              {/* <br></br> */}
+              <center><h2 className="bottomBorder" style={{width: "65%", marginBottom: "5%"}}>Create Tutor Account</h2></center>
               <center>{error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}</center>
               <center>{message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}</center>
               <form onSubmit={handleSubmit}>
@@ -130,7 +137,7 @@ export default function CreateTutorAccount() {
                   fullWidth
                   className={classes.input}
                   variant="filled"
-                  style={{paddingBottom: "10%"}}
+                  style={{paddingBottom: "8%"}}
                   required
                 />
                 <Button 
@@ -139,16 +146,16 @@ export default function CreateTutorAccount() {
                   color="secondary"
                   size="medium" 
                   type="submit"  
-                  className={classes.button, "w-100"}
+                  className={classes.button}
                 >Confirm</Button>
                 </FormControl></center>
               </form>
             </CardContent>
+            <Grid container justifyContent="center" alignItems="center">
+              <StyledButton href="#login">Back to Login</StyledButton>
+            </Grid>
           </Card>
-          <div className="w-100 text-center mt-2">
-            <Button href="#login">Back to Login</Button>
-          </div>
-          </Container>
-        </div>
+        </Grid>
+      </Grid>
     );
 }
