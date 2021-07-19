@@ -71,7 +71,7 @@ export default function TutorProfileRecord(props) {
 
     return (<>
       {details && 
-      <Paper className={classes.paper}>
+      <Paper variant="outlined" style={{border: "1px solid", borderColor: "#bebebe"}} className={classes.paper}>
         {error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}
         {message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}
         <Typography variant='overline' className={classes.typography}><strong>Name:</strong> {details.name}</Typography>

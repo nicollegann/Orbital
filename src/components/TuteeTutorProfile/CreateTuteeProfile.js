@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(18),
   },
   card: {
-    width: "50%",
+    width: "40%",
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: theme.spacing(2),
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   cardcontent: {
     marginRight: "auto",
     marginLeft: "auto",
-    width: "85%",
+    width: "70%",
   },
   textfield: {
     marginBottom: theme.spacing(4),
@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   },
   alert: {
     marginBottom: theme.spacing(2)
+  },
+  button: {
+    marginTop: theme.spacing(2)
   }
 }))
 
@@ -107,7 +110,7 @@ export default function CreateTuteeProfile() {
                 <TextField 
                   className={classes.textfield}
                   label="Name" 
-                  type="text" 
+                  type="text"
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -129,7 +132,7 @@ export default function CreateTuteeProfile() {
                 <TextField 
                   className={classes.textfield}
                   label="Contact No." 
-                  type="text" 
+                  type="text"
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -182,12 +185,12 @@ export default function CreateTuteeProfile() {
                 </Button>
               </form>
             </CardContent>
-          </Card>
-          <Grid container justifyContent="center">
-            <Link to="/tutee-profile" style={{textDecoration: "none"}}>
-              <StyledLink variant="button" align="center" style={{textDecoration: "underline"}}>Back to View Tutee Profile</StyledLink>
+            <Grid container justifyContent="center">
+            <Link to="/tutee-profile" style={{textDecoration: "none", marginTop: "6%"}}>
+              <StyledLink variant="button" align="center">Back to View Tutee Profile</StyledLink>
             </Link>
           </Grid>
+          </Card>
         </Grid>
         <Footer/>
       </Grid>

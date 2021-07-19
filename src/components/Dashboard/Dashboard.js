@@ -17,6 +17,7 @@ import "../TutorManager.css"
 import { useAuth } from "../../contexts/AuthContext"
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles((theme) => ({
   icons: {
@@ -63,16 +64,16 @@ export default function Dashboard() {
       <NavigationBar />
       <Container fluid className="bg3" style={{paddingLeft: "0", paddingRight: "0", fontFamily: "Georgia" }}>
         <Container className="contents-dashboard">
-          <Row className="mb-2" style={{paddingTop: "2%"}}>
-            <center><Card className="mt-4 styling card-color" style={{width: "70%", backgroundColor:"secondary", border: "none"}}>
-            <Card.Body>
+          <Row className="mb-2">
+            <center><Grid container alignItems="center" direction="row" justifyContent="center" className="mt-4 styling card-color" style={{width: "100%", backgroundColor:"secondary", border: "none", height: "4rem" }}>
+              <Grid item>
               <h3>Welcome, <strong>{getUserData}</strong></h3>
-            </Card.Body>
-            </Card>
+              </Grid>
+            </Grid>
             </center>
           </Row>
           {feedbackNotif && 
-            <Alert variant="info" onClose={() => setFeedbackNotif(false)} dismissible>
+            <Alert variant="warning" onClose={() => setFeedbackNotif(false)} dismissible style={{marginTop: "2%"}}>
               <Typography align="left" color="textSecondary" variant="button">
                 There is new feedback! Click {<Link to="/view-feedback" style={{color: '#818e7d'}}>here</Link>} to view.
               </Typography>
