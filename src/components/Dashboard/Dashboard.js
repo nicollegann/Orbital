@@ -15,7 +15,6 @@ import "./Dashboard.css"
 import "../TutorManager.css"
 import { useAuth } from "../../contexts/AuthContext"
 import { makeStyles } from '@material-ui/core/styles'
-import green from '@material-ui/core/colors/green'
 
 const useStyles = makeStyles((theme) => ({
   icons: {
@@ -62,9 +61,11 @@ export default function Dashboard() {
       <NavigationBar />
       <Container fluid className="bg3" style={{paddingLeft: "0", paddingRight: "0", fontFamily: "Georgia" }}>
         <Container className="contents-dashboard">
-          <Row className="mb-2">
+          <Row className="mb-2" style={{paddingTop: "2%"}}>
             <center><Card className="mt-4 styling card-color" style={{width: "70%", backgroundColor:"secondary", border: "none"}}>
-              <h3>Welcome, <em>{getUserData}</em></h3>
+            <Card.Body>
+              <h3>Welcome, <strong>{getUserData}</strong></h3>
+            </Card.Body>
             </Card>
             </center>
           </Row>

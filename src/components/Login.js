@@ -1,18 +1,42 @@
 import React, { useRef, useState } from 'react'
-import { Form, Card, Alert, Container } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import "./TutorManager.css"
 import { useHistory } from "react-router-dom"
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles'
-
-
+import { Card, Container, CardContent, FormControl, TextField, InputLabel } from '@material-ui/core'
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   button: {
     position: "relative",
     top: "12px",
-  }
+  },
+
+  formControl: {
+    width: "80%",
+    textAlign: "left",
+    marginBottom: theme.spacing(2)
+
+  },
+  card: {
+    width: "65%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  cardcontent: {
+    marginRight: 30,
+    marginLeft: 30,
+  },
+  input: {
+    paddingBottom: theme.spacing(2)
+  },
+  alert: {
+    marginBottom: theme.spacing(2),
+    width: "85%",
+  },
 }))
 
 export default function Login() {   
@@ -42,26 +66,42 @@ export default function Login() {
   return (
     <div className="styling bg7" style={{height: "100% !important"}}>
       <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "30%"}}>
-        <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 2%"}}>
-          <Card.Body>
+        <Card className={classes.card, "justify-content-md-center"} style={{width: "35rem", margin: "10% auto 2%"}}>
+          <CardContent className={classes.cardContent}>
             <center><h2 className="text-center mb-4 bottomBorder">TutorManager</h2></center>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="email" className="mb-3">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" ref={emailRef} required />
-              </Form.Group>
-              <Form.Group id="password" className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" ref={passwordRef} required />
-              </Form.Group>
+            <center>{error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}</center>
+            <form onSubmit={handleSubmit}>
+            <center><FormControl className={classes.formControl}>
+                <TextField
+                  textAlign="center"
+                  label="Email" 
+                  type="email"
+                  inputRef={emailRef} 
+                  InputLabelProps={{shrink: true,}}
+                  fullWidth
+                  className={classes.input}
+                  variant="filled"
+                  required
+                />
+
+                <TextField 
+                  label="Password" 
+                  type="password"
+                  inputRef={passwordRef} 
+                  InputLabelProps={{shrink: true,}}
+                  fullWidth
+                  style={{paddingBottom: "10%"}}
+                  variant="filled"
+                  required
+                />
               <Button variant="contained" 
                 color="secondary"
                 size="medium" 
                 type="submit" 
                 className={classes.button, "w-100"}
               >Login</Button>
-            </Form>
+              </FormControl></center>
+            </form>
             <div className="w-100 text-center mt-3">
               <Button href="#forgot-password" color="darkgreen">Forgot Password?</Button>
             </div>
@@ -71,7 +111,7 @@ export default function Login() {
             <div className="w-100 text-center mt-2">
               Schedule your next lesson <Button color="darkgreen" href="#tutee-schedule-lesson">here</Button> (for tutees)
             </div>
-          </Card.Body>
+          </CardContent>
         </Card>
         
       </Container>

@@ -1,10 +1,12 @@
 import React, { useRef, useState } from "react"
-import { Form, Card, Alert, Container } from "react-bootstrap"
+import { Card, Container, CardContent, FormControl, TextField, InputLabel } from '@material-ui/core'
+import { Alert } from '@material-ui/lab';
 import { useAuth } from "../contexts/AuthContext"
 import "./TutorManager.css"
 import { useGetTutorCode } from "../hooks/useGetData"
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles'
+import { Form } from "react-bootstrap";
 
 
 
@@ -14,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
     top: "12px",
   },
   card: {
-    width: "70%",
-    marginLeft: "auto",
-    marginRight: "auto",
     marginBottom: theme.spacing(8),
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
@@ -24,8 +23,21 @@ const useStyles = makeStyles((theme) => ({
   cardcontent: {
     marginRight: "auto",
     marginLeft: "auto",
-    width: "100%",
+    width: "90%",
     
+  },
+  formControl: {
+    width: "87%",
+    textAlign: "left",
+    marginBottom: theme.spacing(2)
+
+  },
+  input: {
+    paddingBottom: theme.spacing(2)
+  },
+  alert: {
+    marginBottom: theme.spacing(2),
+    width: "93%",
   },
 }))
 
@@ -69,40 +81,69 @@ export default function CreateTutorAccount() {
   }
 
     return (
-      <div className="bg5 styling">
+      <div className="styling bg5" style={{height: "100% !important"}}>
       <Container fluid style={{paddingLeft: "0", paddingRight: "0", paddingTop: "2%", paddingBottom: "30%"}}>
-          <Card className="justify-content-md-center" style={{width: "35rem", margin: "10% auto 1%"}}>
-            <Card.Body className={classes.cardcontent}>
-              <center><h2 className="text-center mb-4 bottomBorder" style={{width: "75%"}}>Create New Tutor Account</h2></center>
-              {error && <Alert variant="danger">{error}</Alert>}
-              {message && <Alert variant="success">{message}</Alert>}
-              <Form onSubmit={handleSubmit}>
-                <Form.Group id="email" className="mb-3">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control type="email" ref={emailRef} required />
-                </Form.Group>
-                <Form.Group id="password" className="mb-3">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" ref={passwordRef} required />
-                </Form.Group>
-                <Form.Group id="password-confirm" className="mb-4">
-                  <Form.Label>Password Confirmation</Form.Label>
-                  <Form.Control type="password" ref={passwordConfirmRef} required />
-                </Form.Group>
-                <Form.Group id="verification-code" className="mb-3">
-                  <Form.Label><strong>Verification Code</strong></Form.Label>
-                  <Form.Control type="text" ref={codeRef} required />
-                </Form.Group>
+          <Card className={classes.card, "justify-content-md-center"} style={{width: "38rem", margin: "10% auto 1%"}}>
+            <CardContent className={classes.cardcontent} style={{paddingTop: "8%", paddingBottom: "5%"}}>
+              <center><h2 className="text-center mb-4 bottomBorder" style={{width: "75%", }}>Create New Tutor Account</h2></center>
+              {/* <br></br> */}
+              <center>{error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}</center>
+              <center>{message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}</center>
+              <form onSubmit={handleSubmit}>
+              <center><FormControl className={classes.formControl}>
+                <TextField
+                  textAlign="center"
+                  label="Email" 
+                  type="email"
+                  inputRef={emailRef} 
+                  InputLabelProps={{shrink: true,}}
+                  fullWidth
+                  className={classes.input}
+                  variant="filled"
+                  required
+                />
+                <TextField 
+                  label="Password" 
+                  type="password"
+                  inputRef={passwordRef} 
+                  InputLabelProps={{shrink: true,}}
+                  fullWidth
+                  className={classes.input}
+                  variant="filled"
+                  required
+                />
+                <TextField 
+                  label="Password Confirmation" 
+                  type="password"
+                  inputRef={passwordConfirmRef} 
+                  InputLabelProps={{shrink: true,}}
+                  fullWidth
+                  className={classes.input}
+                  variant="filled"
+                  required
+                />
+                <TextField 
+                  label="Verification Code" 
+                  type="password"
+                  inputRef={codeRef} 
+                  InputLabelProps={{shrink: true,}}
+                  fullWidth
+                  className={classes.input}
+                  variant="filled"
+                  style={{paddingBottom: "10%"}}
+                  required
+                />
                 <Button 
-                disabled={loading}
+                  disabled={loading}
                   variant="contained" 
                   color="secondary"
                   size="medium" 
                   type="submit"  
                   className={classes.button, "w-100"}
                 >Confirm</Button>
-              </Form>
-            </Card.Body>
+                </FormControl></center>
+              </form>
+            </CardContent>
           </Card>
           <div className="w-100 text-center mt-2">
             <Button href="#login">Back to Login</Button>
