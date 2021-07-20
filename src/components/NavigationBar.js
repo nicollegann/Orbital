@@ -32,6 +32,14 @@ const StyledAppBar = withStyles((theme) => ({
   },
 }))(AppBar);
 
+const StyledButton = withStyles((theme) => ({
+  root: {
+    '&:hover': {
+      color: theme.palette.common.white,
+   },
+  },
+}))(Button);
+
 
 export default function NavigationBar() {
   const classes = useStyles()
@@ -62,8 +70,8 @@ export default function NavigationBar() {
           <Typography variant="h6" className={classes.title} style={{ fontFamily: "Georgia" }}>
             TutorManager
           </Typography>
-          <Button className={classes.menuButton} color="inherit" onClick={() => history.push("/")} startIcon={<HomeIcon/>}>Dashboard</Button>
-          <Button className={classes.menuButton} color="inherit" onClick={ () => history.push("/profile")} startIcon={<AccountCircleIcon/>}>My Profile</Button>
+          <StyledButton className={classes.menuButton} color="inherit" href="#" startIcon={<HomeIcon/>}>Dashboard</StyledButton>
+          <StyledButton className={classes.menuButton} color="inherit" href="#profile" startIcon={<AccountCircleIcon/>}>My Profile</StyledButton>
           <Button color="inherit" onClick={handleLogout} startIcon={<ExitToAppIcon/>}>Logout</Button>
         </Toolbar>
       </StyledAppBar>

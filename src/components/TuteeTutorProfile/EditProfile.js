@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react"
 import { db } from "../../firebase"
 import { useGetTutorProfile, useGetTuteeProfile, useGetTutee } from "../../hooks/useGetData"
-import { Link } from "react-router-dom"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { Card, CardContent, Button, Grid, TextField } from "@material-ui/core"
 import { Alert } from '@material-ui/lab'
@@ -223,7 +222,7 @@ export default function EditProfile() {
               </CardContent>
               {details.role === "Tutor"
               ? <Grid container justifyContent="center" alignItems="center">
-                  <StyledButton href="#view-tutor-profile">Back to View Tutor Profile</StyledButton>
+                  <StyledButton href="/view-tutor-profile">Back to View Tutor Profile</StyledButton>
                 </Grid>
               : <Grid container justifyContent="center" alignItems="center">
                   <StyledButton href="#tutee-profile">Back to View Tutee Profile</StyledButton>

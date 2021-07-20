@@ -87,7 +87,7 @@ export default function AdminSetSlot() {
   const nextWeekSlots = useGetLessonOptions(nextWeek)
 
   return (
-    <Grid className="styling bg4">
+    <Grid className="styling bg9">
       <Grid item xs={12}>
         <NavigationBar/>
       </Grid>

@@ -60,7 +60,7 @@ export default function TutorSchedule() {
   const [tutee, setTutee] = useState("")
 
   return (
-    <Grid className="styling bg4">
+    <Grid className="styling bg9">
       <Grid item xs={12}>
         <NavigationBar/>
       </Grid>

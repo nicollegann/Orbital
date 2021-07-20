@@ -6,7 +6,6 @@ import Footer from "../Footer/Footer"
 import { makeStyles } from '@material-ui/core/styles'
 import { Button, TextField, Card, CardContent, Grid, MenuItem } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
-import "./Observation.css"
 import "../TutorManager.css"
 
 

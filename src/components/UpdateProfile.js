@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(18),
   },
   card: {
-    width: "50%",
+    width: "40%",
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: theme.spacing(2),
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
   },
   cardcontent: {
-    width: "80%",
+    width: "85%",
     marginRight: "auto",
     marginLeft: "auto",
     marginBottom: theme.spacing(4),
@@ -99,7 +99,7 @@ export default function UpdateTutorProfile() {
   }
 
   return (
-    <Grid className="styling bg4">
+    <Grid className="styling bg10">
       <Grid item xs={12}>
         <NavigationBar/>
       </Grid>

@@ -102,7 +102,7 @@ export default function Feedback() {
   }
 
   return (
-    <Grid className="styling bg4">
+    <Grid className="styling bg2">
       <Grid item xs={12}>
         <NavigationBar/>
       </Grid>

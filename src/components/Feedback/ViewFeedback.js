@@ -9,7 +9,6 @@ import { Button, TextField, Card, CardContent, Container, Grid } from '@material
 import { Alert, AlertTitle } from '@material-ui/lab'
 import SearchIcon from '@material-ui/icons/Search';
 import "../TutorManager.css"
-import "./Feedback.css"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +71,7 @@ export default function ViewFeedback() {
   }
 
   return (
-    <Grid className="styling bg4">
+    <Grid className="styling bg2">
       <Grid item xs={12}>
         <NavigationBar/>
       </Grid>

@@ -70,7 +70,7 @@ export default function ViewUpcomingLesson() {
   const thisWeekLessons = useGetLessonDetails(thisWeek)
 
   return (
-    <Grid className="styling bg4">
+    <Grid className="styling bg9">
       <Grid item xs={12}>
         <NavigationBar/>
       </Grid>

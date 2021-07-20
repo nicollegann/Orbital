@@ -58,7 +58,7 @@ export default function ViewAttendance() {
   }
 
   return (
-    <Grid className="styling bg4">
+    <Grid className="styling bg1">
       <Grid item xs={12}>
         <NavigationBar/>
       </Grid>

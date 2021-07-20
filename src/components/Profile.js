@@ -13,8 +13,8 @@ import "./TutorManager.css"
 const useStyles = makeStyles((theme) => ({
   grid: {
     height: "100%",
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(18),
+    paddingTop: theme.spacing(9),
+
   },
   card: {
     width: "50%",
@@ -25,8 +25,9 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
   },
   cardcontent: {
-    marginRight: 50,
-    marginLeft: 50,
+    width: "85%",
+    marginLeft: "auto",
+    marginRight: "auto"
   },
   typography: {
     marginBottom: theme.spacing(4),
@@ -46,7 +47,7 @@ export default function Profile() {
   const getUserData = useGetProfile()
 
   return (
-    <Grid className="styling bg4">
+    <Grid className="styling bg10">
       <Grid item xs={12}>
         <NavigationBar/>
       </Grid>

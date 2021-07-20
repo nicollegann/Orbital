@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react"
-import { Link } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { Button, Grid, Card, CardContent, TextField } from "@material-ui/core"
@@ -12,11 +11,11 @@ import "./TutorManager.css"
 const useStyles = makeStyles((theme) => ({
   grid: {
     height: "100%",
-    paddingTop: theme.spacing(8),
+    paddingTop: theme.spacing(10),
     paddingBottom: theme.spacing(18),
   },
   card: {
-    width: "50%",
+    width: "35%",
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: theme.spacing(2),
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
   },
   cardcontent: {
-    width: "80%",
+    width: "85%",
     marginRight: "auto",
     marginLeft: "auto",
     marginBottom: theme.spacing(4),
@@ -93,7 +92,7 @@ export default function ChangePassword() {
   }
 
   return (
-    <Grid className="styling bg4">
+    <Grid className="styling bg10">
       <Grid item xs={12}>
         <NavigationBar/>
       </Grid>

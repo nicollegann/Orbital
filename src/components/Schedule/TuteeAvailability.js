@@ -5,7 +5,7 @@ import { useGetTuteeNames, useGetLessonOptions, useGetTuteeCode } from "../../ho
 import { nextWeek } from "./Date"
 import moment from "moment"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Button, Grid, Card, Container, CardContent, FormControl, TextField, Checkbox, Typography } from '@material-ui/core'
+import { Button, Grid, Card, CardContent, FormControl, TextField, Checkbox } from '@material-ui/core'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -221,7 +221,7 @@ export default function TuteeAvailability() {
                   color="secondary"
                   size="medium" 
                   type="submit"  
-                  className={classes.button, "w-100"}
+                  className={classes.button}
                 >Submit</Button>
                 </FormControl></center>
             </form>

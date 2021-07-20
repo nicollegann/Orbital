@@ -15,7 +15,6 @@ import Alert from '@material-ui/lab/Alert'
 import NavigationBar from "../NavigationBar"
 import Footer from "../Footer/Footer"
 import Buttons from "./Buttons"
-import "./Dashboard.css"
 import "../TutorManager.css"
 
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +65,7 @@ export default function Dashboard() {
     if (isAdmin) {
       return (
         <>
-          <Buttons tooltip="View Feedback" img={Feedback} link="/view-feedback"/>
+          <Buttons img={Feedback} link="/view-feedback"/>
           <center><h5>View Feedback</h5></center>
         </> 
       )
