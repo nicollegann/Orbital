@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import { db } from "../../firebase"
 import { useAuth } from "../../contexts/AuthContext"
 import moment from "moment"
+import { today } from "../Schedule/Date"
 import { useGetSelectedSlots, useGetCurrUserName, useGetTutorNamesAndEmail } from "../../hooks/useGetData"
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles'
@@ -96,6 +97,8 @@ export default function TutorSelectSlot(props) {
           setError("Please fill in all fields.")
         } else if (selectedStartTime >= selectedEndTime) {
           setError("Failed to schedule lesson. Please change the lesson end time.")
+        } else if (selectedDate < today) {
+          setError("Failed to schedule lesson. Date has already passed!")
         } else {
           db.collection("Schedule")
           .doc("ScheduledLesson")
