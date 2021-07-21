@@ -33,10 +33,12 @@ const useStyles = makeStyles((theme) => ({
   },
   textfield: {
     minWidth: 200,
+    marginTop: theme.spacing(2)
   },
   button: {
     position: "relative",
     top: "8px",
+    marginTop: theme.spacing(2)
   },
   link: {
     marginTop: theme.spacing(2),
@@ -44,8 +46,10 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(5),
-    paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(3),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
   alert: {
     marginTop: theme.spacing(6)
@@ -158,21 +162,27 @@ function AvailableSlots(props) {
       setError("")
       setLoading(true) 
       
-      //add lesson option to firestore
-      db.collection("Schedule")
-        .doc("LessonOptions")
-        .collection(nextWeek)
-        .add({
-          date: dateRef.current.value,
-          startTime: startTimeRef.current.value,
-          endTime: endTimeRef.current.value
-        })
+      if (dateRef.current.value < today) {
+        setError("Failed to add lesson slot. The date has already passed!")
+      } else if (startTimeRef.current.value >= endTimeRef.current.value) {
+        setError("Failed to add lesson slot. Please change the lesson end time.")
+      } else {
+        //add lesson option to firestore
+        db.collection("Schedule")
+          .doc("LessonOptions")
+          .collection(nextWeek)
+          .add({
+            date: dateRef.current.value,
+            startTime: startTimeRef.current.value,
+            endTime: endTimeRef.current.value
+          })
 
-      //add lesson option to displayed table
-      let newLessons = []
-      lessons.map(lesson => newLessons.push(lesson))
-      newLessons.push({date: dateRef.current.value, startTime: startTimeRef.current.value, endTime: endTimeRef.current.value})
-      setLessons(newLessons)
+        //add lesson option to displayed table
+        let newLessons = []
+        lessons.map(lesson => newLessons.push(lesson))
+        newLessons.push({date: dateRef.current.value, startTime: startTimeRef.current.value, endTime: endTimeRef.current.value})
+        setLessons(newLessons)
+      }
     } catch(e) {
       console.log(e.message)
       setError("Failed to add lesson slot.")
@@ -229,7 +239,7 @@ function AvailableSlots(props) {
       </Button>
       {showAdd && <>
       <Paper variant="outlined" style={{border: "1px solid", borderColor: "#bebebe"}} className={classes.paper}>
-      {error && <Alert severity="error">{error}</Alert>}
+      {error && <Alert severity="error" onClose={() => setError("")} dismissable>{error}</Alert>}
       <form onSubmit={handleAdd}>
       <Grid container spacing={4} justifyContent="center">
         <Grid item>

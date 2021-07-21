@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     alert: {
       marginTop: theme.spacing(6)
     },
+    emptyalert: {
+      marginBottom: theme.spacing(2)
+    }
   }));
   
   const StyledButton = withStyles((theme) => ({
@@ -58,20 +61,24 @@ export default function TuteeVerificationCode() {
   
   function ChangeCode() {
     const [disabled, setDisabled] = useState(true)
+    const [error, setError] = useState("")
     const codeRef = useRef()
     
     function handleSetCode(event) {
         event.preventDefault()
+        setError("")
         
         if (disabled) {
-        setDisabled(false)
+          setDisabled(false)
+        } else if (codeRef.current.value === "") {
+          setError("You are not allowed to leave the field empty.")
         } else {
-        db.collection("Schedule")
+          db.collection("Schedule")
             .doc("VerificationCode")
             .set({
-            code: codeRef.current.value
+              code: codeRef.current.value
             })
-        setDisabled(true)  
+          setDisabled(true)  
         }
     }
     
@@ -88,6 +95,7 @@ export default function TuteeVerificationCode() {
               <p>Tutees will use this code to submit their availability for the next lesson.</p>
             </CardContent>
             <CardContent className={classes.cardcontent}>
+              {error && <Alert severity="error" className={classes.emptyalert} onClose={() => setError("")}>{error}</Alert>}
               <Grid container justifyContent="center" spacing={2}>
                 <Grid item>
                   <TextField

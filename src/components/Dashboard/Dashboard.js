@@ -93,7 +93,7 @@ export default function Dashboard() {
         </Grid>
         <Grid container alignItems="center" justifyContent="center" className={classes.heading}>
           {feedbackNotif && 
-            <Alert severity="warning" onClose={() => setFeedbackNotif(false)} dismissible style={{ width: "100%" }}>
+            <Alert severity="warning" onClose={() => setFeedbackNotif(false)} style={{ width: "100%" }}>
               <Typography align="left" color="textSecondary" variant="button">
                 There is new feedback! Click {<Link to="/view-feedback" style={{color: '#818e7d'}}>here</Link>} to view.
               </Typography>

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react"
 import { db } from "../../firebase"
-import { useGetTutorProfile, useGetTuteeProfile, useGetTutee } from "../../hooks/useGetData"
+import { useGetTuteeProfile, useGetTutee } from "../../hooks/useGetData"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { Card, CardContent, Button, Grid, TextField } from "@material-ui/core"
 import { Alert } from '@material-ui/lab'
@@ -58,9 +58,7 @@ export default function EditProfile() {
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
 
-    const tutorProfile = useGetTutorProfile(profile)
-    const tuteeProfile = useGetTuteeProfile(profile)
-    let details = tutorProfile || tuteeProfile
+    const details = useGetTuteeProfile(profile)
     const [tuteeNameList] = useGetTutee() 
 
     const nameRef = useRef()
@@ -77,45 +75,30 @@ export default function EditProfile() {
     setError("")
     
     try {
-      if (details.role === "Tutor") {
-        db.collection("TutorProfile")
-          .doc(details.email)
-          .set({
-            name: nameRef.current.value,
-            email: emailRef.current.value,
-            contact: contactRef.current.value,
-            emergencyContact: emergencyRef.current.value,
-            dateOfBirth: dobRef.current.value,
-            school: schoolRef.current.value,
-            role: "Tutor"
-          })
-      }
+      db.collection("TuteeProfile")
+        .doc(nameRef.current.value)
+        .set({
+          name: nameRef.current.value,
+          email: emailRef.current.value,
+          contact: contactRef.current.value,
+          emergencyContact: emergencyRef.current.value,
+          dateOfBirth: dobRef.current.value,
+          school: schoolRef.current.value,
+          role: "Tutee"
+        })
 
-      if (details.role === "Tutee") {
-        db.collection("TuteeProfile")
-          .doc(nameRef.current.value)
-          .set({
-            name: nameRef.current.value,
-            email: emailRef.current.value,
-            contact: contactRef.current.value,
-            emergencyContact: emergencyRef.current.value,
-            dateOfBirth: dobRef.current.value,
-            school: schoolRef.current.value,
-            role: "Tutee"
-          })
-        let newNameList = []
-        tuteeNameList.map(tutee => (tutee.value === details.name) ? newNameList.push(nameRef.current.value) : newNameList.push(tutee.value))
-        db.collection("TuteeProfile")
-          .doc("NameList")
-          .set({
-            names: newNameList
-          })
-      }
+      let newNameList = []
+      tuteeNameList.map(tutee => (tutee.value === details.name) ? newNameList.push(nameRef.current.value) : newNameList.push(tutee.value))
+      db.collection("TuteeProfile")
+        .doc("NameList")
+        .set({
+          names: newNameList
+        })
 
-      setMessage("Successfully updated profile.")
+      setMessage("Successfully updated tutee profile.")
     } catch(e) {
       console.log(e.message)
-      setError("Failed to update profile.")
+      setError("Failed to update tutee profile.")
     }
     setLoading(false)
     }
@@ -220,13 +203,9 @@ export default function EditProfile() {
                   </Button>
                 </form>
               </CardContent>
-              {details.role === "Tutor"
-              ? <Grid container justifyContent="center" alignItems="center">
-                  <StyledButton href="/view-tutor-profile">Back to View Tutor Profile</StyledButton>
-                </Grid>
-              : <Grid container justifyContent="center" alignItems="center">
-                  <StyledButton href="#tutee-profile">Back to View Tutee Profile</StyledButton>
-                </Grid>}
+              <Grid container justifyContent="center" alignItems="center">
+                <StyledButton href="#tutee-profile">Back to View Tutee Profile</StyledButton>
+              </Grid>
             </Card>
           </>}
         </Grid>

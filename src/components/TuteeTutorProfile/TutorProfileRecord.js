@@ -1,12 +1,8 @@
 import React, { useState } from "react"
-import { db } from "../../firebase"
-import { Link } from "react-router-dom"
 import { useGetTutorProfile } from "../../hooks/useGetData"
 import { makeStyles } from '@material-ui/core/styles'
-import { Paper, Button, Typography, Grid } from "@material-ui/core"
+import { Paper, Typography } from "@material-ui/core"
 import { Alert } from '@material-ui/lab'
-import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
 import "../TutorManager.css"
 
 
@@ -49,25 +45,6 @@ export default function TutorProfileRecord(props) {
 
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
-    const [loading, setLoading] = useState(false)
-    
-    function handleDelete(e) {
-      e.preventDefault() 
-      setLoading(true)
-      try {
-        db.collection("TutorProfile")
-          .doc(details.email)
-          .get()
-          .then(doc => doc.ref.delete())
-
-        setMessage("Successfully deleted tutor profile. Please refresh page.")
-      } catch(e) {
-        console.log(e.message)
-        setError("Failed to delete tutor profile.")
-      }
-      setLoading(false)
-    }
-
 
     return (<>
       {details && 
@@ -86,36 +63,6 @@ export default function TutorProfileRecord(props) {
         <br/>
         <Typography variant='overline' className={classes.typography}><strong>School:</strong> {details.school}</Typography>
         <br/>
-        <Grid container spacing={3}>
-        <Grid item>
-        <Link to="/edit-profile" style={{textDecoration: "none"}}>
-          <Button 
-            variant="contained" 
-            color="secondary"
-            size="medium" 
-            type="button"  
-            startIcon={<EditIcon/>}
-            className={classes.button}
-          >
-          Edit
-          </Button>
-        </Link>
-        </Grid>
-        <Grid item>
-        <Button 
-          variant="contained" 
-          color="secondary"
-          size="medium" 
-          type="submit"  
-          startIcon={<DeleteIcon/>}
-          disabled={loading}
-          className={classes.button}
-          onClick={handleDelete}
-        >
-          Delete 
-        </Button>
-        </Grid>
-        </Grid>
       </Paper>}
     </>)
   }

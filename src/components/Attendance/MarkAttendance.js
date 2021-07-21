@@ -65,6 +65,11 @@ export default function MarkAttendance() {
     event.preventDefault()
     setLoading(true)
     setError("")
+
+    if (dateRef.current.value > today) {
+      setError("Failed to mark attendance. The date has not arrived yet!.")
+      return setLoading(false)
+    }
     
     //save data to firestore (to 2 different collections)
     db.collection("Attendance")

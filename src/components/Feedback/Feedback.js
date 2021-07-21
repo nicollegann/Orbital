@@ -62,6 +62,11 @@ export default function Feedback() {
     
     try {
       //save data to firestore 
+      if (feedbackRef.current.value === "") {
+        setError("Please input your feedback in the box below.")
+        return setLoading(false)
+      }
+      
       if (anonymous) {
         db.collection("Feedback")
           .doc(formattedMonth)

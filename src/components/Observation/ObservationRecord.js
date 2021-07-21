@@ -3,7 +3,7 @@ import { db } from "../../firebase"
 import { useGetRecord } from "../../hooks/useGetData"
 import { today } from "../Schedule/Date"
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import { Grid, Accordion, AccordionDetails, IconButton } from "@material-ui/core"
+import { Grid, Accordion, AccordionDetails, IconButton, Tooltip } from "@material-ui/core"
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography'
 import Alert from '@material-ui/lab/Alert'
@@ -134,9 +134,11 @@ function ObservationList(props) {
             <Grid container justifyContent="space-between">
               <Typography>{row.tutor}</Typography>
               {row.date === today && 
-              <IconButton aria-label="delete" className={classes.delete} onClick={() => handleDelete(index, row)}>
-                <DeleteIcon />
-              </IconButton>}
+              <Tooltip title="Delete">
+                <IconButton aria-label="delete" className={classes.delete} onClick={() => handleDelete(index, row)}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>}
             </Grid>
           </AccordionDetails>
         </Accordion>

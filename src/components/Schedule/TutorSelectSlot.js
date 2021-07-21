@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { db } from "../../firebase"
 import { useAuth } from "../../contexts/AuthContext"
 import moment from "moment"
-import { useGetSelectedSlots, useGetCurrUserName, useGetTutor } from "../../hooks/useGetData"
+import { useGetSelectedSlots, useGetCurrUserName, useGetTutorNamesAndEmail } from "../../hooks/useGetData"
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles'
 import { Button, TextField, Grid, Tabs, Tab, FormControl, InputLabel, MenuItem, Select, Typography, AppBar, Paper } from '@material-ui/core'
@@ -53,7 +53,7 @@ export default function TutorSelectSlot(props) {
   const { tutee, dateRange } = props
   const { getEmail } = useAuth()
   const user = useGetCurrUserName()
-  const tutors = useGetTutor()
+  const tutors = useGetTutorNamesAndEmail()
 
   function SelectSlotForm() {
     const [error, setError] = useState("")
@@ -90,19 +90,25 @@ export default function TutorSelectSlot(props) {
           selectedStartTime = startTimeRef.current.value
           selectedEndTime = endTimeRef.current.value 
         }
-
-        db.collection("Schedule")
-        .doc("ScheduledLesson")
-        .collection(dateRange)
-        .add({
-          tutee: tutee,
-          tutor: tutor || user,
-          date: selectedDate,
-          startTime: selectedStartTime,
-          endTime: selectedEndTime
-        })
-
-        setMessage("Successfully scheduled lesson.")
+        
+        
+        if ((getEmail() === "toinfinityandbeyond.orbital@gmail.com" && !tutor) || selectedDate === "" || selectedStartTime === "" || selectedEndTime === "") {
+          setError("Please fill in all fields.")
+        } else if (selectedStartTime >= selectedEndTime) {
+          setError("Failed to schedule lesson. Please change the lesson end time.")
+        } else {
+          db.collection("Schedule")
+          .doc("ScheduledLesson")
+          .collection(dateRange)
+          .add({
+            tutee: tutee,
+            tutor: tutor.id || user,
+            date: selectedDate,
+            startTime: selectedStartTime,
+            endTime: selectedEndTime
+          })
+          setMessage("Successfully scheduled lesson.")
+        }
       } catch (e) {
         console.log(e.message)
         setError("Failed to schedule lesson.")
@@ -200,7 +206,7 @@ export default function TutorSelectSlot(props) {
                 required
               >
                 <MenuItem value="">Select...</MenuItem>
-                {tutors.map((name, index) => name && <MenuItem key={index} value={name}>{name}</MenuItem>)}
+                {tutors.map((tutor, index) => tutor.id && <MenuItem key={index} value={tutor.value}>{tutor.id}</MenuItem>)}
               </Select>
             </FormControl>
           </Grid>

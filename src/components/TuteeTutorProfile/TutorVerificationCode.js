@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     alert: {
       marginTop: theme.spacing(6)
     },
+    emptyalert: {
+      marginBottom: theme.spacing(2)
+    }
   }));
   
   const StyledButton = withStyles((theme) => ({
@@ -57,20 +60,24 @@ export default function TutorVerificationCode() {
 
   function ChangeCode() {
     const [disabled, setDisabled] = useState(true)
+    const [error, setError] = useState("")
     const codeRef = useRef()
 
     function handleSetCode(event) {
       event.preventDefault()
+      setError("")
       
       if (disabled) {
-          setDisabled(false)
+        setDisabled(false)
+      } else if (codeRef.current.value === "") {
+        setError("You are not allowed to leave the field empty.")
       } else {
-          db.collection("TutorProfile")
-          .doc("VerificationCode")
-          .set({
-              code: codeRef.current.value
-          })
-          setDisabled(true)  
+        db.collection("TutorProfile")
+        .doc("VerificationCode")
+        .set({
+            code: codeRef.current.value
+        })
+        setDisabled(true)  
       }
     }
         
@@ -87,6 +94,8 @@ export default function TutorVerificationCode() {
               <p>Tutors will use this code to create their account.</p>
             </CardContent>
             <CardContent className={classes.cardcontent}>
+              {error && <Alert severity="error" className={classes.emptyalert} onClose={() => setError("")}>{error}</Alert>}
+              <form>
               <Grid container justifyContent="center" spacing={2}>
                 <Grid item>
                   <TextField
@@ -115,6 +124,7 @@ export default function TutorVerificationCode() {
                   </Button>
                 </Grid>
               </Grid>
+              </form>
             </CardContent>
             <Grid container justifyContent="center" alignItems="center">
               <StyledButton href="#view-tutor-profile">Back to View Tutor Profile</StyledButton>
