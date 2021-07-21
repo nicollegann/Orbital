@@ -65,6 +65,9 @@ export default function Feedback() {
       if (feedbackRef.current.value === "") {
         setError("Please input your feedback in the box below.")
         return setLoading(false)
+      } else if (dateRef.current.value > today) {
+        setError("Failed to submit feedback. The date selected has not arrived yet!")
+        return setLoading(false)
       }
       
       if (anonymous) {

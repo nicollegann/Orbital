@@ -67,7 +67,7 @@ export default function TuteeObservation() {
     setLoading(true)
     setError("")
     
-    if (dateRef.current.value >= today) {
+    if (dateRef.current.value > today) {
       setError("Failed to save observation record. The date has not arrived yet!")
       return setLoading(false)
     }
