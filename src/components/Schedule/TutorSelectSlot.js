@@ -105,7 +105,7 @@ export default function TutorSelectSlot(props) {
           .collection(dateRange)
           .add({
             tutee: tutee,
-            tutor: tutor.id || user,
+            tutor: tutor || user,
             date: selectedDate,
             startTime: selectedStartTime,
             endTime: selectedEndTime
@@ -134,7 +134,7 @@ export default function TutorSelectSlot(props) {
         {message && <Alert severity="success" onClose={() => {setMessage("")}}>{message}</Alert>}
         <TabPanel value={value} index={0}>
           {slots  
-            ? <Grid container className={classes.selectlesson}>
+            ? <><Grid container className={classes.selectlesson}>
                 <FormControl className={classes.availability}>
                   <InputLabel shrink id="availability-label">Lesson timings selected by tutee</InputLabel>
                   <Select
@@ -152,6 +152,37 @@ export default function TutorSelectSlot(props) {
                   </Select>
                 </FormControl>
               </Grid>
+              {(getEmail() === "toinfinityandbeyond.orbital@gmail.com") && tutors && <>
+                  <Grid container className={classes.selectlesson}>
+                    <FormControl className={classes.availability}>
+                      <InputLabel shrink id="tutee-name-label">Tutor</InputLabel>
+                      <Select
+                        labelId="tutor-name-label"
+                        id="tutor-name"
+                        value={tutor}
+                        onChange={(e) => setTutor(e.target.value)}
+                        displayEmpty
+                        className={classes.selectEmpty}
+                        required
+                      >
+                        <MenuItem value="">Select...</MenuItem>
+                        {tutors.map((tutor, index) => tutor.id && <MenuItem key={index} value={tutor.id}>{tutor.id}</MenuItem>)}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </> }
+              <Button 
+                variant="contained" 
+                color="secondary"
+                size="medium" 
+                type="submit"  
+                disabled={loading}
+                onClick={handleSubmit}
+                className={classes.button}
+              >
+              Confirm
+              </Button>
+              </>
             : <Alert severity="info">Tutee has not submitted availability.</Alert>
           }
         </TabPanel>
@@ -194,26 +225,25 @@ export default function TutorSelectSlot(props) {
               />
             </Grid>   
           </Grid>
-        </TabPanel>
-        {(getEmail() === "toinfinityandbeyond.orbital@gmail.com") && slots && <>
-          <Grid container className={classes.selectlesson}>
-            <FormControl className={classes.availability}>
-              <InputLabel shrink id="tutee-name-label">Tutor</InputLabel>
-              <Select
-                labelId="tutor-name-label"
-                id="tutor-name"
-                value={tutor}
-                onChange={(e) => setTutor(e.target.value)}
-                displayEmpty
-                className={classes.selectEmpty}
-                required
-              >
-                <MenuItem value="">Select...</MenuItem>
-                {tutors.map((tutor, index) => tutor.id && <MenuItem key={index} value={tutor.value}>{tutor.id}</MenuItem>)}
-              </Select>
-            </FormControl>
-          </Grid>
-        </> }
+          {(getEmail() === "toinfinityandbeyond.orbital@gmail.com") && tutors && <>
+            <Grid container className={classes.selectlesson}>
+              <FormControl className={classes.availability}>
+                <InputLabel shrink id="tutee-name-label">Tutor</InputLabel>
+                <Select
+                  labelId="tutor-name-label"
+                  id="tutor-name"
+                  value={tutor}
+                  onChange={(e) => setTutor(e.target.value)}
+                  displayEmpty
+                  className={classes.selectEmpty}
+                  required
+                >
+                  <MenuItem value="">Select...</MenuItem>
+                  {tutors.map((tutor, index) => tutor.id && <MenuItem key={index} value={tutor.id}>{tutor.id}</MenuItem>)}
+                </Select>
+              </FormControl>
+            </Grid>
+          </> }
           <Button 
             variant="contained" 
             color="secondary"
@@ -225,6 +255,7 @@ export default function TutorSelectSlot(props) {
           >
           Confirm
           </Button>
+        </TabPanel>
        </form>
       </Paper>
       </>
