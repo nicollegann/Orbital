@@ -195,7 +195,7 @@ function AvailableSlots(props) {
     <>
     <CardContent>
       <center><h2 className="bottomBorder" style={{width: "40%"}}>Lesson Slots For Selection</h2></center>
-      <p>List of available time slots for tutees to select for {nextWeek}.</p>
+      <p>List of available lesson slots for tutees to select.</p>
     </CardContent>
     <CardContent className={classes.cardcontent}>
       {deleteError && <Alert variant="error">{deleteError}</Alert>}
