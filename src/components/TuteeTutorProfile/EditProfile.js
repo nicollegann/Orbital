@@ -112,7 +112,7 @@ export default function EditProfile() {
           {details && <>
             <Card className={classes.card}>
               <CardContent>
-                <center><h2 className="bottomBorder" style={{width: "30%"}}>Edit Profile</h2></center>
+                <center><h2 className="bottomBorder" style={{width: "30%"}}>Edit Tutee Profile</h2></center>
               </CardContent>
               <CardContent className={classes.cardcontent}>
                 {error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}
@@ -140,7 +140,6 @@ export default function EditProfile() {
                     defaultValue={details.email}
                     inputRef={emailRef}
                     fullWidth
-                    disabled
                     required
                   />
                   <TextField 

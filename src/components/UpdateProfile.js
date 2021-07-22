@@ -59,7 +59,7 @@ const StyledButton = withStyles((theme) => ({
 export default function UpdateTutorProfile() {
   const classes = useStyles()
   
-  const { currentUser } = useAuth()
+  const { currentUser, getEmail } = useAuth()
   const getUserData = useGetProfile()
 
   const nameRef = useRef()
@@ -111,7 +111,7 @@ export default function UpdateTutorProfile() {
           <CardContent className={classes.cardcontent}>
           {error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}
           {message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}
-          {getUserData && <form onSubmit={saveData}>
+          {<form onSubmit={saveData}>
             <TextField 
               className={classes.textfield}
               label="Name" 
@@ -119,7 +119,7 @@ export default function UpdateTutorProfile() {
               InputLabelProps={{
                 shrink: true,
               }}
-              defaultValue={getUserData.name}
+              defaultValue={getUserData && getUserData.name}
               inputRef={nameRef}
               fullWidth
               required
@@ -131,7 +131,7 @@ export default function UpdateTutorProfile() {
               InputLabelProps={{
                 shrink: true,
               }}
-              defaultValue={getUserData.email}
+              defaultValue={getEmail()}
               inputRef={emailRef}
               fullWidth
               disabled
@@ -144,7 +144,7 @@ export default function UpdateTutorProfile() {
               InputLabelProps={{
                 shrink: true,
               }}
-              defaultValue={getUserData.contact}
+              defaultValue={getUserData && getUserData.contact}
               inputRef={contactRef}
               fullWidth
               required
@@ -156,7 +156,7 @@ export default function UpdateTutorProfile() {
               InputLabelProps={{
                 shrink: true,
               }}
-              defaultValue={getUserData.emergencyContact}
+              defaultValue={getUserData && getUserData.emergencyContact}
               inputRef={emergencyRef}
               fullWidth
               required
@@ -168,7 +168,7 @@ export default function UpdateTutorProfile() {
               InputLabelProps={{
                 shrink: true,
               }}
-              defaultValue={getUserData.dateOfBirth}
+              defaultValue={getUserData && getUserData.dateOfBirth}
               inputRef={dobRef}
               fullWidth
               required
@@ -180,7 +180,7 @@ export default function UpdateTutorProfile() {
               InputLabelProps={{
                 shrink: true,
               }}
-              defaultValue={getUserData.school}
+              defaultValue={getUserData && getUserData.school}
               inputRef={schoolRef}
               fullWidth
               required
