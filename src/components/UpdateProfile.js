@@ -111,7 +111,7 @@ export default function UpdateTutorProfile() {
           <CardContent className={classes.cardcontent}>
           {error && <Alert severity="error" className={classes.alert} onClose={() => {setError("")}}>{error}</Alert>}
           {message && <Alert severity="success" className={classes.alert} onClose={() => {setMessage("")}}>{message}</Alert>}
-          {<form onSubmit={saveData}>
+          {getUserData && <form onSubmit={saveData}>
             <TextField 
               className={classes.textfield}
               label="Name" 

@@ -62,7 +62,7 @@ export default function Login() {
       setError("")
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      history.push("/")
+      history.replace("/")
     } catch {
       setError("Failed to sign in.")
     }  
@@ -80,7 +80,6 @@ export default function Login() {
             <center>
               <FormControl className={classes.formControl}>
                 <TextField
-                  textAlign="center"
                   label="Email" 
                   type="email"
                   inputRef={emailRef} 

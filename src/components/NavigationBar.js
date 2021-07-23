@@ -54,7 +54,7 @@ export default function NavigationBar() {
     try {
       window.localStorage.clear()
       await logout()
-      history.push("/login")
+      history.replace("/login")
     } catch {
       setError("Failed to log out.")
     }

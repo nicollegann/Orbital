@@ -99,7 +99,6 @@ export default function CreateTutorAccount() {
               <form onSubmit={handleSubmit}>
               <center><FormControl className={classes.formControl}>
                 <TextField
-                  textAlign="center"
                   label="Email" 
                   type="email"
                   inputRef={emailRef} 

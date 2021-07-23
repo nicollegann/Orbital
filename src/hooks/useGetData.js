@@ -40,7 +40,7 @@ export const useGetTuteeNames = () => {
 
 export const useGetCurrUserName = () => {
   const { currentUser, getEmail } = useAuth()
-  const [currName, setCurrName] = useState("")
+  const [currName, setCurrName] = useState()
   useEffect(() => {
     const role = currentUser.email
     const collectionName = (role !== "toinfinityandbeyond.orbital@gmail.com") ? "TutorProfile" : "AdminProfile"
@@ -51,6 +51,8 @@ export const useGetCurrUserName = () => {
     .then((doc) => {
       if (doc.exists) {
         setCurrName(doc.data().name)
+      } else {
+        setCurrName("")
       }
     })
   })
@@ -60,7 +62,7 @@ export const useGetCurrUserName = () => {
 //Get current user profile
 export const useGetProfile = () => {
   const { currentUser } = useAuth()
-  const [data, setData] = useState() 
+  const [data, setData] = useState()
   
   useEffect(() => {
     const role = currentUser.email
@@ -70,8 +72,12 @@ export const useGetProfile = () => {
       .doc(currentUser.email)
       .get()
       .then((doc) => {
-        const userData = doc.data()
-        setData(userData)
+        if (doc.exists) {
+          const userData = doc.data()
+          setData(userData)
+        } else {
+          setData({})
+        }
       })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [db])

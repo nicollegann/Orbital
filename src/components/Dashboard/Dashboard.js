@@ -54,25 +54,30 @@ export default function Dashboard() {
 
   const count = useGetCounter()
   const [feedbackNotif, setFeedbackNotif] = useState(false)
+  const [updateProfileNotif, setUpdateProfileNotif] = useState(false)
   
   useEffect(() => {
     if (isAdmin && count && count !== 0) {
       setFeedbackNotif(true)
     }
-  }, [count, isAdmin])
+    
+    if (getUserData === "") {
+      setUpdateProfileNotif(true)
+    } 
+  }, [count, isAdmin, getUserData])
 
   function FeedbackRouting() {
     if (isAdmin) {
       return (
         <>
-          <Buttons img={Feedback} link="/view-feedback"/>
+          <Buttons img={Feedback} link="/view-feedback" disabled={updateProfileNotif}/>
           <center><h5>View Feedback</h5></center>
         </> 
       )
     } else {
       return (
         <>
-          <Buttons tooltip="Submit Feedback" img={Feedback} link="/feedback"/>
+          <Buttons tooltip="Submit Feedback" img={Feedback} link="/feedback" disabled={updateProfileNotif}/>
           <center><h5>Submit Feedback</h5></center>
         </>
       )
@@ -99,39 +104,47 @@ export default function Dashboard() {
               </Typography>
             </Alert>}
         </Grid>
+        <Grid container alignItems="center" justifyContent="center" className={classes.heading}>
+          {updateProfileNotif && 
+            <Alert severity="warning" onClose={() => setUpdateProfileNotif(false)} style={{ width: "100%" }}>
+              <Typography align="left" color="textSecondary" variant="button">
+                Please update your profile before proceeding! Click {<Link to="/profile" style={{color: '#818e7d'}}>here</Link>} to go to profile.
+              </Typography>
+            </Alert>}
+        </Grid>
         <Grid container justifyContent="space-evenly" className={classes.buttonsgrid}> 
           <Grid item>
-            <Buttons style={{backgroundColor: "secondary"}} tooltip="Mark Attendance" className={classes.icons} img={Attendance} link="/mark-attendance" />
+            <Buttons style={{backgroundColor: "secondary"}} className={classes.icons} img={Attendance} link="/mark-attendance" disabled={updateProfileNotif}/>
             <center><h5>Mark Attendance</h5></center>
           </Grid>
           <Grid item>
-            <Buttons tooltip="View Attendance Record" rel="stylesheet" href="./TutorManager.css" img={AttendanceRecord} link="/view-attendance"/>
+            <Buttons rel="stylesheet" href="./TutorManager.css" img={AttendanceRecord} link="/view-attendance" disabled={updateProfileNotif}/>
             <center><h5>Attendance Records</h5></center>
           </Grid>
           <Grid item>
-            <Buttons tooltip="Input Tutee Observation" img={Observation} link="/tutee-observation"/>  
+            <Buttons img={Observation} link="/tutee-observation" disabled={updateProfileNotif}/>  
             <center><h5>Tutee Observation</h5></center>
           </Grid>
           <Grid item>
-            <Buttons tooltip="View Observation Record" img={ObservationRecord} link="/view-observation"/>  
+            <Buttons img={ObservationRecord} link="/view-observation" disabled={updateProfileNotif}/>  
             <center><h5>Observation Records</h5></center>
           </Grid>
         </Grid>
         <Grid container justifyContent="space-evenly" className={isAdmin ? classes.buttonsgrid : classes.buttonsgrid2}>
           <Grid item>
-            <Buttons tooltip="Lesson Schedule" img={Schedule} link="/view-upcoming-lesson" />
+            <Buttons img={Schedule} link="/view-upcoming-lesson" disabled={updateProfileNotif}/>
             <center><h5>Lesson Schedule</h5></center>
           </Grid>
           <Grid item>
             <FeedbackRouting/> 
           </Grid>
           <Grid item>
-            <Buttons tooltip="Tutee Profiles" img={TuteeProfile} link="/tutee-profile"/>  
+            <Buttons img={TuteeProfile} link="/tutee-profile" disabled={updateProfileNotif}/>  
             <center><h5>Tutee Profiles</h5></center>
           </Grid>
           {isAdmin && 
             <Grid item>
-              <Buttons tooltip="Tutor Profiles" img={TuteeProfile} link="/view-tutor-profile"/>
+              <Buttons img={TuteeProfile} link="/view-tutor-profile" disabled={updateProfileNotif}/>
               <center><h5>Tutor Profiles</h5></center>
             </Grid>
           } 

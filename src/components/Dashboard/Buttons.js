@@ -26,7 +26,7 @@ export default function Buttons(props) {
   
 
   return (
-    <ColorButton variant="contained" color="secondary" className={classes.margin}>
+    <ColorButton variant="contained" color="secondary" className={classes.margin} disabled={props.disabled}>
       <Image src={props.img} alt={props.img + "-img"} roundedCircle onClick={ () => history.push(props.link)} />
     </ColorButton>
   )
