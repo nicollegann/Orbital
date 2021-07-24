@@ -40,6 +40,13 @@ const StyledButton = withStyles((theme) => ({
   },
 }))(Button);
 
+const StyledIconButton = withStyles((theme) => ({
+  root: {
+    '&:hover': {
+      color: theme.palette.common.white,
+   },
+  },
+}))(IconButton);
 
 export default function NavigationBar() {
   const classes = useStyles()
@@ -64,9 +71,9 @@ export default function NavigationBar() {
     <div className={classes.root}>  
       <StyledAppBar position="static">
         <Toolbar>
-          <IconButton edge="start" color="inherit">
+          <StyledIconButton edge="start" color="inherit" href="#">
             <MenuBookIcon fontSize="medium"/>
-          </IconButton>
+          </StyledIconButton>
           <Typography variant="h6" className={classes.title} style={{ fontFamily: "Georgia" }}>
             TutorManager
           </Typography>
