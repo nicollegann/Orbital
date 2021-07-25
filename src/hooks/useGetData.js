@@ -4,24 +4,24 @@ import { db } from "../firebase"
 import { useAuth } from "../contexts/AuthContext"
 import { today } from "../components/Schedule/Date"
 
-//Get tutee names (for dropdown box)
+//Get tutee names (for dropdown options)
 export const useGetTutee = () => {
-  const [tutee, setTutee] = useState([]);
+  const [tutee, setTutee] = useState()
+
   useEffect(() => {
     db.collection("TuteeProfile")
-      .doc("NameList")
       .get()
-      .then((doc) => {
-        const arr = doc.data().names
-        let newArr = arr.map((name, index) => {
-          return { key: index, value: name }
-        })
-        setTutee(newArr)
+      .then((querySnapShot) => {
+        let arr = []
+        querySnapShot.forEach((doc) => 
+          arr.push(doc.data().name)
+          )
+        setTutee(arr)  
       })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [db]);
-  return [tutee];
-};
+  }, [db])
+  return tutee
+}
 
 //Get tutee names (for TuteeAvailability page)
 export const useGetTuteeNames = () => {

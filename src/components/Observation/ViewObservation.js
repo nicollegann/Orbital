@@ -47,7 +47,7 @@ export default function ViewObservation() {
   const dateRef = useRef()
   const tuteeRef = useRef()
 
-  const [tuteeNames] = useGetTutee()
+  const tuteeNames = useGetTutee()
   const currName = useGetCurrUserName()
 
   const [ date, setDate ] = useState("")
@@ -94,7 +94,7 @@ export default function ViewObservation() {
                     inputRef={tuteeRef}
                   >
                     <MenuItem key="ALL" value="ALL">All Tutees</MenuItem>
-                    {tuteeNames.map((n) => <MenuItem key={n.key} value={n.value}>{n.value}</MenuItem>)}
+                    {tuteeNames && tuteeNames.map((n) => n && <MenuItem key={n} value={n}>{n}</MenuItem>)}
                   </TextField>    
               </Grid>
               <Grid item>

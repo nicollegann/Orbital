@@ -44,7 +44,7 @@ export default function ViewTuteeProfile() {
   const classes = useStyles()
 
   const history = useHistory()
-  const [tutees] = useGetTutee()
+  const tutees = useGetTutee()
   const [ tutee, setTutee ] = useState("")
 
 
@@ -74,7 +74,7 @@ export default function ViewTuteeProfile() {
                       required
                     >
                       <MenuItem value="">Select...</MenuItem>
-                      {tutees.map((tutee) => <MenuItem key={tutee.key} value={tutee.value}>{tutee.value}</MenuItem>)}
+                      {tutees.map((tutee) => tutee && <MenuItem key={tutee} value={tutee}>{tutee}</MenuItem>)}
                     </Select>
                 </FormControl>
                 </form>

@@ -56,7 +56,7 @@ const StyledButton = withStyles((theme) => ({
 export default function TutorSchedule() {
   const classes = useStyles()
   
-  const [tuteeNames] = useGetTutee()
+  const tuteeNames = useGetTutee()
   const [tutee, setTutee] = useState("")
 
   return (
@@ -83,7 +83,7 @@ export default function TutorSchedule() {
                   required
                 >
                   <MenuItem key="select" value="">Select...</MenuItem>
-                  {tuteeNames.map((n) => <MenuItem key={n.key} value={n.value}>{n.value}</MenuItem>)}
+                  {tuteeNames && tuteeNames.map((n) => n && <MenuItem key={n} value={n}>{n}</MenuItem>)}
                 </Select>
               </FormControl>
             </form>

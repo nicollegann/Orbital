@@ -59,7 +59,7 @@ export default function EditProfile() {
     const [loading, setLoading] = useState(false)
 
     const details = useGetTuteeProfile(profile)
-    const [tuteeNameList] = useGetTutee() 
+    const tuteeNameList = useGetTutee() 
 
     const nameRef = useRef()
     const emailRef = useRef()
@@ -88,7 +88,7 @@ export default function EditProfile() {
         })
 
       let newNameList = []
-      tuteeNameList.map(tutee => (tutee.value === details.name) ? newNameList.push(nameRef.current.value) : newNameList.push(tutee.value))
+      tuteeNameList.map(tutee => (tutee === details.name) ? newNameList.push(nameRef.current.value) : newNameList.push(tutee.value))
       db.collection("TuteeProfile")
         .doc("NameList")
         .set({

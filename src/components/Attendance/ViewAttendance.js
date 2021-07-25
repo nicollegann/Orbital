@@ -49,7 +49,7 @@ export default function ViewAttendance() {
   const [ date, setDate ] = useState("")
   const [ tuteeName, setTuteeName ]= useState("")
 
-  const [tuteeNames] = useGetTutee()
+  const tuteeNames = useGetTutee()
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -93,7 +93,7 @@ export default function ViewAttendance() {
                   inputRef={tuteeRef}
                 >
                   <MenuItem key="ALL" value="ALL">All Tutees</MenuItem>
-                  {tuteeNames.map((n) => <MenuItem key={n.key} value={n.value}>{n.value}</MenuItem>)}
+                  {tuteeNames && tuteeNames.map((n) => n && <MenuItem key={n} value={n}>{n}</MenuItem>)}
                 </TextField>    
               </Grid>
               <Grid item>

@@ -56,7 +56,7 @@ export default function TuteeObservation() {
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   
-  let [tuteeNames] = useGetTutee()
+  let tuteeNames = useGetTutee()
   const currName = useGetCurrUserName()
   const [tuteeName, setTuteeName]= useState("")
   const dateRef = useRef()
@@ -147,7 +147,7 @@ export default function TuteeObservation() {
                       required
                     >
                       <MenuItem value="">Select...</MenuItem>
-                      {tuteeNames.map((n) => <MenuItem key={n.key} value={n.value}>{n.value}</MenuItem>)}
+                      {tuteeNames && tuteeNames.map((n) => n && <MenuItem key={n} value={n}>{n}</MenuItem>)}
                     </Select>
                   </FormControl>
                 </Grid> 

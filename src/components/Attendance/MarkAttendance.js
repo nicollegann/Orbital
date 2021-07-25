@@ -51,7 +51,7 @@ export default function MarkAttendance() {
   const classes = useStyles()
 
   const history = useHistory()
-  let [tuteeNames] = useGetTutee()
+  let tuteeNames = useGetTutee()
   const currName = useGetCurrUserName()
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
@@ -164,7 +164,7 @@ export default function MarkAttendance() {
                   required
                 >
                   <MenuItem value="">Select...</MenuItem>
-                  {tuteeNames.map((n) => <MenuItem key={n.key} value={n.value}>{n.value}</MenuItem>)}
+                  {tuteeNames && tuteeNames.map((n) => n && <MenuItem key={n} value={n}>{n}</MenuItem>)}
                 </Select>
               </FormControl>
               <FormControl className={classes.formControl}>

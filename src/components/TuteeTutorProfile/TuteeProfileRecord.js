@@ -51,7 +51,7 @@ export default function TuteeProfileRecord(props) {
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
 
-    const currentNameList = (props.allTutees).map(tutee => tutee.value)
+    const currentNameList = props.allTutees
     
     function handleDelete(e) {
       e.preventDefault() 
@@ -64,7 +64,7 @@ export default function TuteeProfileRecord(props) {
           .then(doc => doc.ref.delete())
   
         let newNameList = []
-        currentNameList.map(tutee => (tutee !== props.tutee) && newNameList.push(tutee))
+        currentNameList.map(tutee => (tutee && tutee !== props.tutee) && newNameList.push(tutee))
         db.collection("TuteeProfile")
           .doc("NameList")
           .set({
