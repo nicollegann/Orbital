@@ -88,13 +88,19 @@ export default function EditProfile() {
         })
 
       let newNameList = []
-      tuteeNameList.map(tutee => (tutee === details.name) ? newNameList.push(nameRef.current.value) : newNameList.push(tutee.value))
+      tuteeNameList.map(tutee => (tutee === details.name) ? newNameList.push(nameRef.current.value) : tutee && newNameList.push(tutee))
       db.collection("TuteeProfile")
         .doc("NameList")
         .set({
           names: newNameList
         })
 
+      if (details.name !== nameRef.current.value) {
+        db.collection("TuteeProfile")
+          .doc(details.name)
+          .delete()
+      }  
+      
       setMessage("Successfully updated tutee profile.")
     } catch(e) {
       console.log(e.message)
